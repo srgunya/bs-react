@@ -1,8 +1,24 @@
 .itemsList {
 	flex: 1;
 	display: flex;
-	flex-flow: row wrap;
+	flex-flow: column nowrap;
 	margin-left: 2.4rem;
+}
+.itemsList__block {
+	display: flex;
+	flex-flow: row wrap;
+	flex: 1;
+}
+.itemsList__block_more {
+	.img_tr {
+		opacity: 0;
+	}
+}
+.img_tr {
+	position: absolute;
+	left: 0;
+	top: 0;
+	transition: opacity 0.3s ease;
 }
 .item__link {
 	align-self: flex-start;

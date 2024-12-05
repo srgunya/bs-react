@@ -1,22 +1,16 @@
 const client = require('./elk')
 
-async function getList(req, res) {
+async function pagination(req, res) {
 	let result
 	let unisex = ''
-	let skip = req.params['page'] == 0 ? 0 : 20 * (Number(req.params['page']) - 1)
-	let size = 20
-	size = skip > 10000 ? 0 : size
-	skip = skip > 10000 ? 0 : skip
 	if (req.params['props'].includes('мужское') || req.params['props'].includes('женское')) {
 		unisex = req.params['props'].replace('мужское', 'унисекс').replace('женское', 'унисекс')
 	}
 	if (req.params['props'].includes('sale') && req.params['props'].length > 4) {
 		unisex = unisex.replace('sale', '').trim()
 		const params = req.params['props'].replace('sale', '').trim()
-		result = await client.search({
+		result = await client.count({
 			index: 'bs_item',
-			from: skip,
-			size: size,
 			query: {
 				bool: {
 					must: [
@@ -54,23 +48,17 @@ async function getList(req, res) {
 					],
 				},
 			},
-			sort: [{ class: { order: 'desc' } }, { category: { order: 'asc' } }],
 		})
 	} else if (req.params['props'] == 'new') {
-		result = await client.search({
+		result = await client.count({
 			index: 'bs_item',
-			from: skip,
-			size: size,
 			query: {
 				match_all: {},
 			},
-			sort: [{ class: { order: 'desc' } }, { category: { order: 'asc' } }],
 		})
 	} else if (req.params['props'] == 'sale') {
-		result = await client.search({
+		result = await client.count({
 			index: 'bs_item',
-			from: skip,
-			size: size,
 			query: {
 				range: {
 					sale: {
@@ -78,13 +66,10 @@ async function getList(req, res) {
 					},
 				},
 			},
-			sort: [{ class: { order: 'desc' } }, { category: { order: 'asc' } }],
 		})
 	} else {
-		result = await client.search({
+		result = await client.count({
 			index: 'bs_item',
-			from: skip,
-			size: size,
 			query: {
 				bool: {
 					should: [
@@ -109,11 +94,9 @@ async function getList(req, res) {
 					],
 				},
 			},
-			sort: [{ class: { order: 'desc' } }, { category: { order: 'asc' } }],
 		})
 	}
-	result = result.hits.hits.map(el => el._source)
-	res.send(result)
+	res.send(`${result.count}`)
 }
 
-module.exports = getList
+module.exports = pagination

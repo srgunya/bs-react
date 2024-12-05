@@ -20,6 +20,7 @@ a {
 	padding: 13.1rem 4.2rem 7rem;
 	max-width: 148.8rem;
 	margin: 0 auto;
+	transition: opacity 0.3s ease;
 }
 .wrap_tr {
 	display: block;
@@ -35,5 +36,15 @@ a {
 	.img_tr {
 		transition: opacity 0.3s ease;
 		opacity: 1;
+	}
+}
+.list_loading {
+	opacity: 0.5;
+	pointer-events: none;
+	.ListPagination__more {
+		color: transparent;
+	}
+	.ListPagination__load {
+		display: block;
 	}
 }

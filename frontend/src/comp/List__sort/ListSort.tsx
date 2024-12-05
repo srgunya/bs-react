@@ -65,7 +65,7 @@ export function ListSort() {
 					Показывать: 20
 				</li>
 				<li className={styles['listSort__li']}>Показывать: 40</li>
-				<li className={styles['listSort__li']}>Показывать: 60</li>
+				<li className={styles['listSort__li']}>Показывать: 80</li>
 			</ul>
 			<ul
 				className={cn(styles['listSort__ul'], styles['listSort__ul_sort'])}

@@ -5,7 +5,7 @@ import { createBrowserRouter, defer, RouterProvider } from 'react-router-dom'
 import { itemData } from './comp/Index__slider_item/IndexSliderItem.props'
 import { logoData } from './comp/Index__slider_logo/IndexSliderLogo.props'
 import { Layout } from './layout/Layout/Layout'
-import { getItems, isTranslit } from './loaders/getDataList'
+import { getItems, isTranslit, pagination } from './loaders/getDataList'
 import { getDataSlider } from './loaders/getDataSlider'
 import './main.scss'
 import { Brandlist } from './pages/BrandList/BrandList'
@@ -35,18 +35,29 @@ const router = createBrowserRouter([
 			{
 				path: '*',
 				element: <List />,
-				loader: async params => {
+				loader: async ({ params, request }) => {
+					let props = ['']
+					const searchParams = new URL(request.url).searchParams
+					const page =
+						searchParams.get('page') === null
+							? 1
+							: Number.isInteger(Number(searchParams.get('page'))) &&
+							  Number(searchParams.get('page')) > 0
+							? Number(searchParams.get('page'))
+							: 1
+
 					return defer({
 						params: await new Promise(resolve => {
 							setTimeout(() => {
-								isTranslit(typeof params.params['*'] == 'string' ? params.params['*'] : '').then(
-									data => resolve(data)
-								)
+								isTranslit(typeof params['*'] == 'string' ? params['*'] : '').then(data => {
+									props = data
+									resolve(data)
+								})
 							}, 300)
 						}),
-						items: await getItems(
-							await isTranslit(typeof params.params['*'] == 'string' ? params.params['*'] : '')
-						),
+						items: await getItems(props, page),
+						pagination: await pagination(props),
+						page: page,
 					})
 				},
 			},

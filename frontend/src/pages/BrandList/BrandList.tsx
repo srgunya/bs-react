@@ -1,12 +1,8 @@
-import { useEffect, useRef } from 'react'
 import { Footer } from '../../comp/Footer/Footer'
-import { pageIsLoad } from '../../helpers/pageIsLoad'
+import { useLoadPage } from '../../hooks/use-loadPage.hook'
 
 export function Brandlist() {
-	const mainRef = useRef<HTMLDivElement>(null)
-	useEffect(() => {
-		pageIsLoad(mainRef)
-	}, [])
+	const mainRef = useLoadPage()
 
 	return (
 		<div className={'main'} ref={mainRef}>

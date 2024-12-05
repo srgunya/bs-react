@@ -20,7 +20,7 @@ export function ListNav({ params, items }: ListNavProps) {
 							to={
 								i == params.length - 1
 									? location.pathname
-									: location.pathname.split('/').filter(el => el != '')[i]
+									: location.pathname.split('/').filter(el => el != '')[i] + '/'
 							}
 							className={cn(styles['listNav__link'], {
 								[styles['listNav__link_active']]: i == params.length - 1,

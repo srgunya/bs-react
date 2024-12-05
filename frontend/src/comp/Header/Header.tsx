@@ -7,7 +7,7 @@ export function Header() {
 	return (
 		<header className={styles['header']}>
 			<div className={styles['headerSale']}>
-				<Link to='/sale' className={styles['headerSale__a']}>
+				<Link to='/sale/' className={styles['headerSale__a']}>
 					SALE
 				</Link>
 			</div>

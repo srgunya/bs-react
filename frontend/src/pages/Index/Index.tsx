@@ -1,5 +1,5 @@
-import { Suspense, useEffect, useLayoutEffect, useRef } from 'react'
-import { Await, useLoaderData, useLocation } from 'react-router-dom'
+import { Suspense } from 'react'
+import { Await, useLoaderData } from 'react-router-dom'
 import { IndexBanner } from '../../comp/Index__banner/IndexBanner'
 import { IndexInfo } from '../../comp/Index__info/IndexInfo'
 import { IndexSex } from '../../comp/Index__sex/IndexSex'
@@ -7,24 +7,15 @@ import { IndexSliderItem } from '../../comp/Index__slider_item/IndexSliderItem'
 import { itemData } from '../../comp/Index__slider_item/IndexSliderItem.props'
 import { IndexSliderLogo } from '../../comp/Index__slider_logo/IndexSliderLogo'
 import { logoData } from '../../comp/Index__slider_logo/IndexSliderLogo.props'
-import { pageIsLoad, pageRefresh } from '../../helpers/pageIsLoad'
+import { useLoadPage } from '../../hooks/use-loadPage.hook'
 
 export function Index() {
-	const mainRef = useRef<HTMLDivElement>(null)
-	const location = useLocation()
+	const mainRef = useLoadPage()
 	const { logos, news, pop } = useLoaderData() as {
 		logos: logoData[]
 		news: itemData[]
 		pop: itemData[]
 	}
-
-	useEffect(() => {
-		pageIsLoad(mainRef)
-	}, [location])
-
-	useLayoutEffect(() => {
-		pageRefresh(mainRef)
-	}, [location])
 
 	return (
 		<Suspense>
