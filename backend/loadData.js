@@ -13,15 +13,22 @@ function loadIndex(name_mysql, name_elk) {
 	let mas_for_elk = []
 	let query = `SELECT * FROM ${name_mysql}`
 	bs.query(query, async (err, result, field) => {
-		await result.forEach(el => {
-			mas_for_elk.push({
-				index: {
-					_index: `${name_elk}`,
-					_id: el.id,
-				},
+		await result
+			.map(el => {
+				if ('size' in el) {
+					el.size = el.size.split(',')
+				}
+				return el
 			})
-			mas_for_elk.push(el)
-		})
+			.forEach(el => {
+				mas_for_elk.push({
+					index: {
+						_index: `${name_elk}`,
+						_id: el.id,
+					},
+				})
+				mas_for_elk.push(el)
+			})
 		const response = await client.bulk({
 			body: mas_for_elk,
 		})
@@ -144,11 +151,11 @@ async function createItemIndex() {
 						index: false,
 					},
 					sale: {
-						type: 'integer',
+						type: 'float',
 						index: false,
 					},
 					price: {
-						type: 'integer',
+						type: 'float',
 						index: false,
 					},
 				},

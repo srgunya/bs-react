@@ -11,7 +11,7 @@ export interface itemData {
 	price: number
 	sale: number
 	sex: string
-	size: string
+	size: string[]
 	type: string
 }
 export interface IndexSliderItemProps {

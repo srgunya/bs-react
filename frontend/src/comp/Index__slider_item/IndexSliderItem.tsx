@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { SwiperSlide } from 'swiper/react'
 import { PREFIX } from '../../helpers/API'
+import { ListItemsPrice, ListItemsSale } from '../List__items_price/ListItemsPrice'
 import { Slider } from '../Slider/Slider'
 import styles from './IndexSliderItem.module.scss'
 import { IndexSliderItemProps } from './IndexSliderItem.props'
@@ -16,7 +17,11 @@ export function IndexSliderItem({ items, name }: IndexSliderItemProps) {
 					<span className={styles['indexSlider__brand']}>{el.brand}</span>
 					<span className={styles['indexSlider__type']}>{el.type}</span>
 					<span className={styles['indexSlider__model']}>{el.model}</span>
-					{el.sale ? sale(el.price, el.sale) : price(el.price)}
+					{el.sale ? (
+						<ListItemsSale price={el.price} sale={el.sale} />
+					) : (
+						<ListItemsPrice price={el.price} />
+					)}
 					<div className={styles['itemIcon']}>
 						<img src='/img/item/star.png' alt='' className={styles['itemIcon__icon']} />
 						<img src='/img/item/lupa.png' alt='' className={styles['itemIcon__icon']} />
@@ -25,22 +30,6 @@ export function IndexSliderItem({ items, name }: IndexSliderItemProps) {
 				</Link>
 			</SwiperSlide>
 		))
-	}
-	function sale(price: number, sale: number) {
-		return (
-			<div className={styles['itemSale']}>
-				<div className={styles['itemSale__block']}>
-					<span className={styles['itemSale__price']}>{price.toLocaleString('ru-RU') + ' ₽'}</span>
-					<span className={styles['itemSale__percent']}>{'–' + sale + '%'}</span>
-				</div>
-				<span className={styles['itemSale__sale']}>
-					{Math.round(price - (price * sale) / 100).toLocaleString('ru-RU') + ' ₽'}
-				</span>
-			</div>
-		)
-	}
-	function price(price: number) {
-		return <span className={styles['item__price']}>{price.toLocaleString('ru-RU') + ' ₽'}</span>
 	}
 
 	return (

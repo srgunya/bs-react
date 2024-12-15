@@ -5,7 +5,7 @@ import { createBrowserRouter, defer, RouterProvider } from 'react-router-dom'
 import { itemData } from './comp/Index__slider_item/IndexSliderItem.props'
 import { logoData } from './comp/Index__slider_logo/IndexSliderLogo.props'
 import { Layout } from './layout/Layout/Layout'
-import { getItems, isTranslit, pagination } from './loaders/getDataList'
+import { getFilter, getList, getPagination, getParams } from './loaders/getDataList'
 import { getDataSlider } from './loaders/getDataSlider'
 import './main.scss'
 import { Brandlist } from './pages/BrandList/BrandList'
@@ -39,10 +39,8 @@ const router = createBrowserRouter([
 					let props = ['']
 					const searchParams = new URL(request.url).searchParams
 					const page =
-						searchParams.get('page') === null
-							? 1
-							: Number.isInteger(Number(searchParams.get('page'))) &&
-							  Number(searchParams.get('page')) > 0
+						Number.isInteger(Number(searchParams.get('page'))) &&
+						Number(searchParams.get('page')) > 0
 							? Number(searchParams.get('page'))
 							: 1
 					const limit =
@@ -58,20 +56,34 @@ const router = createBrowserRouter([
 							? 'priceDESC'
 							: 'default'
 
+					const pol = searchParams.get('pol')?.split(',') ?? []
+					const kategoriya = searchParams.get('kategoriya')?.split(',') ?? []
+					const tsvet = searchParams.get('tsvet')?.split(',') ?? []
+					const razmer = searchParams.get('razmer')?.split(',') ?? []
+					const brand = searchParams.get('brand')?.split(',') ?? []
+					const filterParams = {
+						pol: pol,
+						kategoriya: kategoriya,
+						tsvet: tsvet,
+						razmer: razmer,
+						brand: brand,
+					}
 					return defer({
 						params: await new Promise(resolve => {
 							setTimeout(() => {
-								isTranslit(typeof params['*'] == 'string' ? params['*'] : '').then(data => {
+								getParams(typeof params['*'] == 'string' ? params['*'] : '').then(data => {
 									props = data
 									resolve(data)
 								})
 							}, 300)
 						}),
-						items: await getItems(props, page, limit, sort),
-						pagination: await pagination(props),
+						items: await getList(props, page, limit, sort, filterParams),
+						filter: await getFilter(props, filterParams),
+						pagination: await getPagination(props, filterParams),
 						page: page,
 						limit: limit,
 						sort: sort,
+						filterParams: filterParams,
 					})
 				},
 			},

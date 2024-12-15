@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import styles from './ListNav.module.scss'
 import { ListNavProps } from './ListNav.props'
 
-export function ListNav({ params, items }: ListNavProps) {
+export function ListNav({ params, brand }: ListNavProps) {
 	const location = useLocation()
 	function createUl() {
 		return (
@@ -26,13 +26,7 @@ export function ListNav({ params, items }: ListNavProps) {
 								[styles['listNav__link_active']]: i == params.length - 1,
 							})}
 						>
-							{el == 'sale'
-								? 'Скидки'
-								: el == 'new'
-								? 'Новинки'
-								: /[a-zA-Z]/.test(el)
-								? items[0].brand
-								: el}
+							{el == 'sale' ? 'Скидки' : el == 'new' ? 'Новинки' : /[a-zA-Z]/.test(el) ? brand : el}
 						</Link>
 					</li>
 				))}

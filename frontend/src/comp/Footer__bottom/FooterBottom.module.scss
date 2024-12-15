@@ -1,0 +1,40 @@
+.footerBottom {
+	padding: 3.6rem 0;
+	background-color: $primary-5;
+}
+.footerIcons {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	gap: 3rem;
+	max-width: 148.8rem;
+	margin: 0 auto;
+	padding: 0 4.2rem;
+	margin-bottom: 1.6rem;
+}
+.footerIcons__img {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+.footerCopy {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	gap: 3rem;
+	max-width: 148.8rem;
+	margin: 0 auto;
+	padding: 0 4.2rem;
+}
+.footerCopy__item {
+	font-size: 1.2rem;
+	color: $primary-40;
+}
+.footerCopy__link {
+	font-size: 1.2rem;
+	color: $primary-40;
+	text-decoration: underline;
+	&:hover {
+		text-decoration: none;
+	}
+}

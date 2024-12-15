@@ -1,0 +1,55 @@
+.filter__search_wrap {
+	width: 20.7rem;
+	position: relative;
+	display: flex;
+	align-items: center;
+	margin-bottom: 1.2rem;
+	&::after {
+		content: '';
+		background-image: url('/img/item/lupa.png');
+		background-size: 100%;
+		width: 1.8rem;
+		height: 1.8rem;
+		position: absolute;
+		opacity: 0.3;
+		transition: opacity 0.3s ease;
+	}
+}
+.filter__search_clear {
+	cursor: pointer;
+	display: none;
+	width: 1.8rem;
+	height: 1.8rem;
+	position: absolute;
+	right: 0;
+	opacity: 0.3;
+	transition: opacity 0.3s ease;
+	&:hover {
+		opacity: 1;
+	}
+}
+.filter__search_focus {
+	&::after {
+		opacity: 1;
+	}
+}
+.filter__search_change {
+	.filter__search_clear {
+		display: block;
+	}
+}
+
+.filter__search {
+	width: 100%;
+	padding: 0.8rem 3rem;
+	line-height: 2rem;
+	background-color: $background;
+	border: none;
+	outline: none;
+	&::placeholder {
+		color: $primary-40;
+	}
+}
+.filter__li_none {
+	display: none;
+}

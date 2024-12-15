@@ -1,0 +1,30 @@
+.item__price {
+	height: 3.62rem;
+	display: flex;
+	align-items: end;
+	justify-content: center;
+	text-align: center;
+	overflow: hidden;
+}
+
+.itemSale {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+.itemSale__block {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.itemSale__price {
+	text-decoration: line-through;
+	color: $primary-40;
+}
+.itemSale__percent {
+	margin-left: 0.4rem;
+}
+.itemSale__sale {
+	margin-top: 0.4rem;
+	color: $red;
+}

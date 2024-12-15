@@ -1,6 +1,6 @@
 const client = require('./elk')
 
-async function isTranslit(req, res) {
+async function getParams(req, res) {
 	const result = await client.count({
 		index: 'bs_item',
 		query: {
@@ -12,4 +12,4 @@ async function isTranslit(req, res) {
 	res.send(`${result.count}`)
 }
 
-module.exports = isTranslit
+module.exports = getParams

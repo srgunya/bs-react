@@ -1,4 +1,3 @@
-import { Footer } from '../../comp/Footer/Footer'
 import { useLoadPage } from '../../hooks/use-loadPage.hook'
 
 export function Brandlist() {
@@ -7,7 +6,6 @@ export function Brandlist() {
 	return (
 		<div className={'main'} ref={mainRef}>
 			<div className={'cont'}></div>
-			<Footer />
 		</div>
 	)
 }

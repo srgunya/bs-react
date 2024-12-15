@@ -1,19 +1,21 @@
 import { itemData } from '../comp/Index__slider_item/IndexSliderItem.props'
+import { filterData, filterParamsType } from '../comp/List__filter/ListFilter.props'
 import { PREFIX } from '../helpers/API'
+import { translitToRus } from '../helpers/translitToRus'
 
-export async function isTranslit(url: string) {
+export async function getParams(url: string) {
 	const words = url
 		.split('/')
 		.filter(el => el != '')
 		.map(el => el.replace(/-/gi, ' '))
 
-	async function getCount(el: string) {
-		const res = await fetch(`${PREFIX}/isTranslit/${el}`)
+	async function isTranslit(el: string) {
+		const res = await fetch(`${PREFIX}/getParams/${el}`)
 		const data = await res.text()
 		return data
 	}
 	async function getData() {
-		const data = await Promise.all(words.map(el => getCount(el)))
+		const data = await Promise.all(words.map(el => isTranslit(el)))
 		return data
 	}
 	const count = await getData()
@@ -31,55 +33,45 @@ export async function isTranslit(url: string) {
 	})
 }
 
-export async function getItems(props: string[], page: number, limit: number, sort: string) {
-	const res = await fetch(`${PREFIX}/getList/${props.join(' ')}/${page}/${limit}/${sort}`)
+export async function getList(
+	props: string[],
+	page: number,
+	limit: number,
+	sort: string,
+	filterParams: filterParamsType
+) {
+	const res = await fetch(`${PREFIX}/getList/${props.join(' ')}/${page}/${limit}/${sort}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(filterParams),
+	})
 	const data: itemData[] = await res.json()
 	return data
 }
 
-export async function pagination(props: string[]) {
-	const res = await fetch(`${PREFIX}/pagination/${props.join(' ')}`)
-	const data = await res.text()
+export async function getFilter(props: string[], filterParams: filterParamsType) {
+	const res = await fetch(`${PREFIX}/getFilter/${props.join(' ')}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(filterParams),
+	})
+	const data: filterData = await res.json()
+	console.log(data)
 	return data
 }
 
-function translitToRus(word: string) {
-	const converter = {
-		obuv: 'обувь',
-		bele: 'белье',
-		ashi: 'ащи',
-		yo: 'ё',
-		zh: 'ж',
-		ch: 'ч',
-		sh: 'ш',
-		yu: 'ю',
-		ya: 'я',
-		a: 'а',
-		b: 'б',
-		v: 'в',
-		g: 'г',
-		d: 'д',
-		e: 'е',
-		z: 'з',
-		i: 'и',
-		j: 'й',
-		k: 'к',
-		l: 'л',
-		m: 'м',
-		n: 'н',
-		o: 'о',
-		p: 'п',
-		r: 'р',
-		s: 'с',
-		t: 'т',
-		u: 'у',
-		f: 'ф',
-		h: 'х',
-		c: 'ц',
-		y: 'ы',
-	}
-	for (const [key, value] of Object.entries(converter)) {
-		word = word.replaceAll(key, value)
-	}
-	return word
+export async function getPagination(props: string[], filterParams: filterParamsType) {
+	const res = await fetch(`${PREFIX}/getPagination/${props.join(' ')}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(filterParams),
+	})
+	const data = await res.text()
+	return data
 }

@@ -1,0 +1,21 @@
+.filter__block {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+}
+.filter__title {
+	font-size: 1.4;
+	padding: 1.4rem 0;
+}
+.filter__reset {
+	cursor: pointer;
+	color: $primary-40;
+	transition: color 0.3s ease;
+	&:hover {
+		color: $primary;
+	}
+}
+.filter__reset_none {
+	display: none;
+}

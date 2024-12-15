@@ -3,14 +3,16 @@ const router = express.Router()
 
 const getCount = require('./getCount')
 const getById = require('./getById')
-const isTranslit = require('./isTranslit')
+const getParams = require('./getParams')
 const getList = require('./getList')
-const pagination = require('./pagination')
+const getPagination = require('./getPagination')
+const getFilter = require('./getFilter')
 
 router.use('/', getCount)
 router.use('/', getById)
-router.use('/', isTranslit)
+router.use('/', getParams)
 router.use('/', getList)
-router.use('/', pagination)
+router.use('/', getPagination)
+router.use('/', getFilter)
 
 module.exports = router
