@@ -1,15 +1,34 @@
 require('dotenv').config()
-const bs = require('./controllers/mysql')
-const client = require('./controllers/elk')
+const bs = require('./helpers/mysql')
+const client = require('./helpers/elk')
 
-function load() {
-	createItemIndex()
-	createLogoIndex()
-	loadIndex('item', 'bs_item')
-	loadIndex('logo', 'bs_logo')
+async function load() {
+	try {
+		await deleteIndex('bs_item')
+		await deleteIndex('bs_logo')
+		await createItemIndex()
+		await createLogoIndex()
+		await loadIndex('item', 'bs_item')
+		await loadIndex('logo', 'bs_logo')
+	} catch (error) {
+		console.error(error)
+		await createItemIndex()
+		await createLogoIndex()
+		await loadIndex('item', 'bs_item')
+		await loadIndex('logo', 'bs_logo')
+	}
 }
 
-function loadIndex(name_mysql, name_elk) {
+async function deleteIndex(index_name) {
+	const response = await client.indices.delete({
+		index: index_name,
+	})
+	if (!response.err) {
+		console.log('Удалили индекс')
+	}
+}
+
+async function loadIndex(name_mysql, name_elk) {
 	let mas_for_elk = []
 	let query = `SELECT * FROM ${name_mysql}`
 	bs.query(query, async (err, result, field) => {
@@ -38,7 +57,7 @@ function loadIndex(name_mysql, name_elk) {
 	})
 }
 async function createLogoIndex() {
-	return await client.indices.create({
+	const response = await client.indices.create({
 		index: 'bs_logo',
 		body: {
 			mappings: {
@@ -57,9 +76,12 @@ async function createLogoIndex() {
 			},
 		},
 	})
+	if (!response.err) {
+		console.log('Создали индекс')
+	}
 }
 async function createItemIndex() {
-	return await client.indices.create({
+	const response = await client.indices.create({
 		index: 'bs_item',
 		body: {
 			settings: {
@@ -88,21 +110,16 @@ async function createItemIndex() {
 			},
 			mappings: {
 				properties: {
-					all_prop: {
-						type: 'text',
-						analyzer: 'all_prop_analyzer',
-					},
 					list_prop: {
 						type: 'text',
 						analyzer: 'all_prop_analyzer',
 					},
 					id: {
 						type: 'keyword',
-						copy_to: 'all_prop',
 					},
 					brand: {
 						type: 'text',
-						copy_to: ['all_prop', 'list_prop'],
+						copy_to: ['list_prop'],
 						analyzer: 'brand_analyzer',
 						fields: {
 							keyword: {
@@ -112,31 +129,28 @@ async function createItemIndex() {
 					},
 					class: {
 						type: 'keyword',
-						copy_to: ['all_prop', 'list_prop'],
+						copy_to: ['list_prop'],
 					},
 					category: {
 						type: 'keyword',
-						copy_to: ['all_prop', 'list_prop'],
+						copy_to: ['list_prop'],
 					},
 					type: {
 						type: 'keyword',
-						copy_to: ['all_prop', 'list_prop'],
+						copy_to: ['list_prop'],
 					},
 					sex: {
 						type: 'keyword',
-						copy_to: ['all_prop', 'list_prop'],
+						copy_to: ['list_prop'],
 					},
 					model: {
 						type: 'keyword',
-						copy_to: 'all_prop',
 					},
 					color: {
 						type: 'keyword',
-						copy_to: 'all_prop',
 					},
 					size: {
 						type: 'keyword',
-						copy_to: 'all_prop',
 					},
 					info: {
 						type: 'keyword',
@@ -162,5 +176,8 @@ async function createItemIndex() {
 			},
 		},
 	})
+	if (!response.err) {
+		console.log('Создали индекс')
+	}
 }
 load()

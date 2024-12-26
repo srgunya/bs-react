@@ -21,7 +21,7 @@ export function FooterTop() {
 						key={i}
 					>
 						<Link to={el.to} className={styles['footerTop__link']}>
-							<img src={el.img} alt='' className={styles['footerTop__img']} />
+							<img src={el.img} className={styles['footerTop__img']} />
 							{el.text}
 						</Link>
 					</li>

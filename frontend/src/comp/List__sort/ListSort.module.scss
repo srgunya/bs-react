@@ -1,4 +1,4 @@
-.listSort {
+.sort {
 	display: flex;
 	flex-flow: row nowrap;
 	gap: 1.5rem;
@@ -6,23 +6,23 @@
 	right: 0;
 	z-index: 2;
 }
-.listSort__ul {
+.sort__ul {
 	border: 1px solid $primary-20;
 	border-radius: 0.4rem;
 	overflow: hidden;
 	background: white;
 	height: 3.2rem;
 }
-.listSort__ul_active {
+.sort__ul_active {
 	transition: height 0.25s ease;
-	.listSort__img {
+	.sort__img {
 		transform: rotate(90deg);
 	}
 }
-.listSort__ul_active {
+.sort__ul_active {
 	height: 12.8rem;
 }
-.listSort__li {
+.sort__li {
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
@@ -40,20 +40,21 @@
 		background-color: $primary-10;
 	}
 }
-.listSort__li:first-child {
+.sort__li:first-child {
 	background-color: $background;
 	border-top-right-radius: 0.4rem;
 	border-top-left-radius: 0.4rem;
 }
-.listSort__li:last-child {
+.sort__li:last-child {
 	border-bottom-right-radius: 0.4rem;
 	border-bottom-left-radius: 0.4rem;
 	border-bottom: none;
 }
-.listSort__li_active {
+.sort__li_active {
 	background-color: $primary-10;
 }
-.listSort__img {
+.sort__img {
+	pointer-events: none;
 	width: 1rem;
 	transition: transform 0.25s ease;
 	transform: rotate(270deg);

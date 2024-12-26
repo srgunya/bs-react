@@ -1,11 +1,11 @@
-import styles from './ListItemsPrice.module.scss'
-import { ListItemsPriceProps } from './ListItemsPrice.props'
+import styles from './IndexItemPrice.module.scss'
+import { ListItemsPriceProps } from './IndexItemPrice.props'
 
-export function ListItemsPrice({ price }: ListItemsPriceProps) {
+export function IndexItemPrice({ price }: ListItemsPriceProps) {
 	return <span className={styles['item__price']}>{price.toLocaleString('ru-RU') + ' ₽'}</span>
 }
 
-export function ListItemsSale({ price, sale = 0 }: ListItemsPriceProps) {
+export function IndexItemSale({ price, sale = 0 }: ListItemsPriceProps) {
 	const salePrice = Math.round(price - (price * sale) / 100)
 	return (
 		<div className={styles['itemSale']}>

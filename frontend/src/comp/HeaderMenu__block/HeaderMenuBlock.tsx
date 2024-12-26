@@ -1,27 +1,24 @@
 import cn from 'classnames'
-import { ReactNode, useContext, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { MouseEvent, useContext, useEffect, useRef } from 'react'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { HeaderContext } from '../../context/header.context'
-import { PREFIX } from '../../helpers/API'
-import { sortHeader } from '../../helpers/sort'
+import { ListContext } from '../../context/list.context'
+import { HeaderMenuImg } from '../HeaderMenu__img/HeaderMenuImg'
+import { HeaderMenuNav } from '../HeaderMenu__nav/HeaderMenuNav'
 import styles from './HeaderMenuBlock.module.scss'
 import { HeaderMenuBlockProps } from './HeaderMenuBlock.props'
 
-export function HeaderMenuBlock({
-	ul1,
-	ul2,
-	ul3,
-	ul4,
-	img,
-	apperance,
-	menuActive,
-}: HeaderMenuBlockProps) {
+export function HeaderMenuBlock({ params, name }: HeaderMenuBlockProps) {
+	const location = useLocation()
+	const [searchParams] = useSearchParams()
+	const navi = useNavigate()
 	const menuNav = useRef<HTMLDivElement>(null)
-	const { setMenuActive } = useContext(HeaderContext)
+	const { menuActive, setMenuActive } = useContext(HeaderContext)
+	const { setListState } = useContext(ListContext)
 
 	useEffect(() => {
 		let timerId: number
-		if (menuActive === apperance) {
+		if (menuActive === name) {
 			menuNav.current?.classList.add(styles['menu_active'], 'menu_active')
 		} else {
 			if (menuActive === '') {
@@ -33,73 +30,37 @@ export function HeaderMenuBlock({
 			}
 		}
 		return () => clearTimeout(timerId)
-	}, [menuActive, apperance])
+	}, [menuActive, name])
 
-	function createUl(ul: typeof ul1): ReactNode {
-		return (
-			<ul className={styles['menuNav__ul']}>
-				{ul.map((el, i, arr) => (
-					<li
-						key={el.text}
-						className={cn('menuNav__li', {
-							[styles['menuNav__li_capital']]: arr.length === 14 && i === 0,
-							[styles['menuNav__li_brand']]: apperance === 'Бренды' && arr.length < 14 && i === 0,
-						})}
-					>
-						<Link
-							to={el.to}
-							className={cn(styles['menuNav__a'], {
-								[styles['menuNav__a_capital']]: arr.length === 14 && i === 0,
-							})}
-							onClick={() => {
-								setMenuActive('')
-							}}
-						>
-							{el.text}
-						</Link>
-					</li>
-				))}
-			</ul>
-		)
+	function link(e: MouseEvent, to: string) {
+		e.preventDefault()
+		setMenuActive('')
+		if (location.pathname == to && !searchParams.size) {
+			return false
+		} else {
+			setListState({ lazy: true, loading: true })
+			navi(to)
+		}
 	}
-	function createImg(): ReactNode {
-		return img.map(i => (
-			<Link
-				to={i.to}
-				key={i.text}
-				className={cn(styles['menuImg__a'], {
-					[styles['menuImg__a_brand']]: apperance === 'Бренды',
-					[styles['menuImg__a_sex']]: apperance === 'Мужское' || apperance === 'Женское',
-				})}
-				onClick={() => {
-					setMenuActive('')
-				}}
-			>
-				<picture className={styles['menuImg__img']}>
-					<img src={PREFIX + i.img} className={styles['menuImg__img']} />
-				</picture>
-				<span className={styles['menuImg__span']}>{i.text}</span>
-			</Link>
-		))
-	}
+
 	return (
 		<div className={styles['menu']} ref={menuNav}>
 			<div
 				className={cn(styles['menuNav'], {
-					[styles['menuNav_brand']]: apperance === 'Бренды',
+					[styles['menuNav_brand']]: name === 'Бренды',
 				})}
 			>
-				{createUl(sortHeader(ul1))}
-				{createUl(sortHeader(ul2))}
-				{ul3 && createUl(sortHeader(ul3))}
-				{ul4 && createUl(sortHeader(ul4))}
+				<HeaderMenuNav name={name} ul={params.ul1} link={link} />
+				<HeaderMenuNav name={name} ul={params.ul2} link={link} />
+				{params.ul3 && <HeaderMenuNav name={name} ul={params.ul3} link={link} />}
+				{params.ul4 && <HeaderMenuNav name={name} ul={params.ul4} link={link} />}
 			</div>
 			<div
 				className={cn(styles['menuImg'], {
-					[styles['menuImg_brand']]: apperance === 'Бренды',
+					[styles['menuImg_brand']]: name === 'Бренды',
 				})}
 			>
-				{createImg()}
+				<HeaderMenuImg name={name} img={params.img} link={link} />
 			</div>
 		</div>
 	)

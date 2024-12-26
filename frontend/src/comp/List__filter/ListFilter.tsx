@@ -6,7 +6,7 @@ import { ListFilterPrice } from '../List__filter_price/ListFilterPrice'
 import styles from './ListFilter.module.scss'
 import { ListFilterProps } from './ListFilter.props'
 
-export function ListFilter({ facets, filterParams, startFilter }: ListFilterProps) {
+export function ListFilter({ facets }: ListFilterProps) {
 	const [params, setParams] = useState({
 		minPrice: 0,
 		maxPrice: 0,
@@ -44,41 +44,11 @@ export function ListFilter({ facets, filterParams, startFilter }: ListFilterProp
 			</div>
 			<div className={styles['filter__title']}>Цена</div>
 			<ListFilterPrice />
-			<ListFilterCategory
-				category={params.sex}
-				name='Пол'
-				paramName='pol'
-				categoryParams={filterParams.pol}
-				startFilter={startFilter}
-			/>
-			<ListFilterCategory
-				category={params.category}
-				name='Категория'
-				paramName='kategoriya'
-				categoryParams={filterParams.kategoriya}
-				startFilter={startFilter}
-			/>
-			<ListFilterCategory
-				category={params.color}
-				name='Цвет'
-				paramName='tsvet'
-				categoryParams={filterParams.tsvet}
-				startFilter={startFilter}
-			/>
-			<ListFilterCategory
-				category={params.size}
-				name='Размер'
-				paramName='razmer'
-				categoryParams={filterParams.razmer}
-				startFilter={startFilter}
-			/>
-			<ListFilterCategory
-				category={params.brand}
-				name='Бренд'
-				paramName='brand'
-				categoryParams={filterParams.brand}
-				startFilter={startFilter}
-			/>
+			<ListFilterCategory name='Пол' searchName='pol' facets={params.sex} />
+			<ListFilterCategory name='Категория' searchName='kategoriya' facets={params.category} />
+			<ListFilterCategory name='Цвет' searchName='tsvet' facets={params.color} />
+			<ListFilterCategory name='Размер' searchName='razmer' facets={params.size} />
+			<ListFilterCategory name='Бренд' searchName='brand' facets={params.brand} />
 		</div>
 	)
 }

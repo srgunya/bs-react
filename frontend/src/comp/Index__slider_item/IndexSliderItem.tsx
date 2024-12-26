@@ -1,39 +1,26 @@
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import { SwiperSlide } from 'swiper/react'
-import { PREFIX } from '../../helpers/API'
-import { ListItemsPrice, ListItemsSale } from '../List__items_price/ListItemsPrice'
+import { IndexItem } from '../Index__item/IndexItem'
+import { itemData } from '../Index__item/IndexItem.props'
 import { Slider } from '../Slider/Slider'
 import styles from './IndexSliderItem.module.scss'
 import { IndexSliderItemProps } from './IndexSliderItem.props'
 
-export function IndexSliderItem({ items, name }: IndexSliderItemProps) {
+export function IndexSliderItem({ items, name, divideArr }: IndexSliderItemProps) {
+	const [newItems] = useState(divideArr<itemData>(5, items))
+
 	function itemSlider() {
-		return items.map(el => (
-			<SwiperSlide key={el.id} className={styles['indexSlider__slide']}>
-				<Link to='' className={styles['indexSlider__link']}>
-					<picture className={styles['indexSlider__pic'] + ' wrap_tr'}>
-						<img src={PREFIX + el.img} alt='' className={styles['indexSlider__img'] + ' img_tr'} />
-					</picture>
-					<span className={styles['indexSlider__brand']}>{el.brand}</span>
-					<span className={styles['indexSlider__type']}>{el.type}</span>
-					<span className={styles['indexSlider__model']}>{el.model}</span>
-					{el.sale ? (
-						<ListItemsSale price={el.price} sale={el.sale} />
-					) : (
-						<ListItemsPrice price={el.price} />
-					)}
-					<div className={styles['itemIcon']}>
-						<img src='/img/item/star.png' alt='' className={styles['itemIcon__icon']} />
-						<img src='/img/item/lupa.png' alt='' className={styles['itemIcon__icon']} />
-					</div>
-					<div className={styles['itemIcon__shadow']}></div>
-				</Link>
+		return newItems.map((arr, i) => (
+			<SwiperSlide className={styles['indexSlider__slide']} key={i}>
+				{arr.map(el => (
+					<IndexItem item={el} key={el.id} />
+				))}
 			</SwiperSlide>
 		))
 	}
 
 	return (
-		<Slider className={styles['indexSlider_item']} slidesPerView={5} slidesPerGroup={5} name={name}>
+		<Slider className={styles['indexSlider_item']} slidesPerView={1} slidesPerGroup={1} name={name}>
 			{itemSlider()}
 		</Slider>
 	)

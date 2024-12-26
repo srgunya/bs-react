@@ -1,6 +1,5 @@
 .ListPagination {
 	width: 100%;
-	margin-left: 28.8rem;
 	display: flex;
 	flex-flow: row wrap;
 	margin-top: 4.8rem;
@@ -74,6 +73,12 @@
 .ListPagination_hide,
 .ListPagination__more_hide {
 	display: none;
+}
+.ListPagination__more_load {
+	color: transparent;
+	.ListPagination__load {
+		display: block;
+	}
 }
 
 @keyframes load {

@@ -3,8 +3,13 @@
 	max-height: 150.8px;
 }
 .indexSlider__slide {
-	height: auto !important;
+	display: flex;
+	flex-flow: row nowrap;
+	gap: 2.4rem;
+}
+.indexSlider__link {
 	user-select: none;
+	flex: 1;
 }
 .indexSlider__pic {
 	padding-top: 100%;
