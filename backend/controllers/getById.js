@@ -1,4 +1,4 @@
-const client = require('./elk')
+const client = require('../helpers/elk')
 
 async function getById(req, res) {
 	let index

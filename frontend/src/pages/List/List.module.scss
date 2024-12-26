@@ -1,7 +1,7 @@
 .list_background {
 	background-color: $background;
 }
-.listHeader {
+.sideBar {
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
@@ -12,4 +12,13 @@
 .catalog {
 	display: flex;
 	flex-flow: row wrap;
+}
+.catalog__list {
+	flex: 1;
+	margin-left: 2.4rem;
+	transition: opacity 0.3s ease;
+}
+.catalog__list_loading {
+	opacity: 0.3;
+	pointer-events: none;
 }

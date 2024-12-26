@@ -1,12 +1,13 @@
 import cn from 'classnames'
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { sortByAlphabet, sortSize } from '../../helpers/sort'
 import { ListFilterCategory } from '../List__filter_category/ListFilterCategory'
 import { ListFilterPrice } from '../List__filter_price/ListFilterPrice'
 import styles from './ListFilter.module.scss'
 import { ListFilterProps } from './ListFilter.props'
 
-export function ListFilter({ facets, filterParams, startFilter }: ListFilterProps) {
+export function ListFilter({ facets }: ListFilterProps) {
+	const filterRef = useRef<HTMLDivElement>(null)
 	const [params, setParams] = useState({
 		minPrice: 0,
 		maxPrice: 0,
@@ -31,8 +32,39 @@ export function ListFilter({ facets, filterParams, startFilter }: ListFilterProp
 		setParams({ minPrice, maxPrice, sex, category, color, size, brand })
 	}, [facets])
 
+	useEffect(() => {
+		let lastScrollTop = 0
+		window.onscroll = sticky
+		function sticky() {
+			const top = window.pageYOffset
+			if (lastScrollTop > top) {
+				if (filterRef.current instanceof Element) {
+					const styles = window.getComputedStyle(filterRef.current).top
+					let del = parseInt(styles) + (lastScrollTop - top)
+					if (del >= 110) {
+						del = 110
+					}
+					filterRef.current.style.top = `${del}px`
+				}
+				// console.log('top')
+			} else if (lastScrollTop < top) {
+				if (filterRef.current instanceof Element) {
+					const styles = window.getComputedStyle(filterRef.current)
+					let del = parseInt(styles.top) + (lastScrollTop - top)
+					const hieght = 1000 - (1745.5 - parseInt(styles.height))
+					if (del <= -hieght) {
+						del = -hieght
+					}
+					filterRef.current.style.top = `${del}px`
+				}
+				// console.log('down')
+			}
+			lastScrollTop = top
+		}
+	}, [])
+
 	return (
-		<div className={styles['filter']}>
+		<div className={styles['filter']} ref={filterRef}>
 			<div className={styles['filterHeader']}>
 				<div className={styles['filterHeader__title']}>Фильтр</div>
 				<div className={cn(styles['filterHeader__reset'], styles['filterHeader__reset_none'])}>
@@ -44,41 +76,11 @@ export function ListFilter({ facets, filterParams, startFilter }: ListFilterProp
 			</div>
 			<div className={styles['filter__title']}>Цена</div>
 			<ListFilterPrice />
-			<ListFilterCategory
-				category={params.sex}
-				name='Пол'
-				paramName='pol'
-				categoryParams={filterParams.pol}
-				startFilter={startFilter}
-			/>
-			<ListFilterCategory
-				category={params.category}
-				name='Категория'
-				paramName='kategoriya'
-				categoryParams={filterParams.kategoriya}
-				startFilter={startFilter}
-			/>
-			<ListFilterCategory
-				category={params.color}
-				name='Цвет'
-				paramName='tsvet'
-				categoryParams={filterParams.tsvet}
-				startFilter={startFilter}
-			/>
-			<ListFilterCategory
-				category={params.size}
-				name='Размер'
-				paramName='razmer'
-				categoryParams={filterParams.razmer}
-				startFilter={startFilter}
-			/>
-			<ListFilterCategory
-				category={params.brand}
-				name='Бренд'
-				paramName='brand'
-				categoryParams={filterParams.brand}
-				startFilter={startFilter}
-			/>
+			<ListFilterCategory name='Пол' searchName='pol' facets={params.sex} />
+			<ListFilterCategory name='Категория' searchName='kategoriya' facets={params.category} />
+			<ListFilterCategory name='Цвет' searchName='tsvet' facets={params.color} />
+			<ListFilterCategory name='Размер' searchName='razmer' facets={params.size} />
+			<ListFilterCategory name='Бренд' searchName='brand' facets={params.brand} />
 		</div>
 	)
 }

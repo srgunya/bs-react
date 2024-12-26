@@ -2,19 +2,28 @@ import { Suspense } from 'react'
 import { Await, useLoaderData } from 'react-router-dom'
 import { IndexBanner } from '../../comp/Index__banner/IndexBanner'
 import { IndexInfo } from '../../comp/Index__info/IndexInfo'
+import { itemData } from '../../comp/Index__item/IndexItem.props'
 import { IndexSex } from '../../comp/Index__sex/IndexSex'
 import { IndexSliderItem } from '../../comp/Index__slider_item/IndexSliderItem'
-import { itemData } from '../../comp/Index__slider_item/IndexSliderItem.props'
 import { IndexSliderLogo } from '../../comp/Index__slider_logo/IndexSliderLogo'
 import { logoData } from '../../comp/Index__slider_logo/IndexSliderLogo.props'
 import { useLoadPage } from '../../hooks/use-loadPage.hook'
 
 export function Index() {
-	const mainRef = useLoadPage()
 	const { logos, news, pop } = useLoaderData() as {
 		logos: logoData[]
 		news: itemData[]
 		pop: itemData[]
+	}
+	const mainRef = useLoadPage()
+
+	function divideArr<T>(num: number, arr: T[]) {
+		const size = num
+		const subarray: T[][] = []
+		for (let i = 0; i < Math.ceil(arr.length / size); i++) {
+			subarray[i] = arr.slice(i * size, i * size + size)
+		}
+		return subarray
 	}
 
 	return (
@@ -24,11 +33,11 @@ export function Index() {
 					return (
 						<div className={'main'} ref={mainRef}>
 							<IndexSex />
-							<IndexSliderLogo name='Популярные бренды' logos={logos} />
+							<IndexSliderLogo name='Популярные бренды' logos={logos} divideArr={divideArr} />
 							<IndexBanner />
-							<IndexSliderItem name='Новые поступления' items={news} />
+							<IndexSliderItem name='Новые поступления' items={news} divideArr={divideArr} />
 							<IndexInfo />
-							<IndexSliderItem name='Популярные товары' items={pop} />
+							<IndexSliderItem name='Популярные товары' items={pop} divideArr={divideArr} />
 						</div>
 					)
 				}}

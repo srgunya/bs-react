@@ -1,151 +1,129 @@
-import { Suspense, useLayoutEffect, useState } from 'react'
-import { Await, useLoaderData, useSearchParams } from 'react-router-dom'
-import { itemData } from '../../comp/Index__slider_item/IndexSliderItem.props'
+import { Suspense, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { Await, useLoaderData } from 'react-router-dom'
+import { itemData } from '../../comp/Index__item/IndexItem.props'
 import { ListFilter } from '../../comp/List__filter/ListFilter'
-import { filterData, filterParamsType } from '../../comp/List__filter/ListFilter.props'
+import { filterData } from '../../comp/List__filter/ListFilter.props'
 import { ListItems } from '../../comp/List__items/ListItems'
 import { ListNav } from '../../comp/List__nav/ListNav'
 import { ListPagination } from '../../comp/List__pagination/ListPagination'
 import { ListSort } from '../../comp/List__sort/ListSort'
+import { ListContext } from '../../context/list.context'
+import { allLink } from '../../helpers/linksHeader'
 import { useLoadPage } from '../../hooks/use-loadPage.hook'
-import { getFilter, getList, getPagination } from '../../loaders/getDataList'
 import styles from './List.module.scss'
 
 export function List() {
-	const { params, items, pagination, page, limit, sort, filter, filterParams } =
-		useLoaderData() as {
-			params: string[]
-			items: itemData[]
-			pagination: string
+	const { params, items, filter, pagination, listSearchParams } = useLoaderData() as {
+		params: string[]
+		items: itemData[]
+		filter: filterData
+		pagination: number
+		listSearchParams: {
 			page: number
 			limit: number
 			sort: string
-			filter: filterData
-			filterParams: filterParamsType
 		}
-	const [search] = useSearchParams()
-	const mainRef = useLoadPage(search)
-	const [itemsData, setItemsData] = useState(items)
-	const [more, setMore] = useState<itemData[]>([])
-	const [searchParams, setSearchParams] = useState({ page: page, limit: limit, sort: sort })
-	const [filParams, setFilParams] = useState(filterParams)
-	const [pag, setPag] = useState(pagination)
-	const [fil, setFil] = useState(filter)
+	}
+	const { page, limit, sort } = listSearchParams
+	const mainRef = useLoadPage()
+	const listRef = useRef<HTMLDivElement>(null)
+	const [itemsData, setItemsData] = useState<itemData[]>(items)
+	const [moreData, setMoreData] = useState<itemData[]>([])
+	const { listState, setListState } = useContext(ListContext)
 
 	useLayoutEffect(() => {
-		mainRef.current?.classList.remove('list_loading')
-		window.scrollTo(0, 0)
-		setSearchParams({ page: page, limit: limit, sort: sort })
-		setFilParams(filterParams)
-		setPag(pagination)
-		setFil(filter)
-		setMore([])
-		setItemsData(items)
-	}, [params, items, pagination, page, limit, sort, filterParams, filter, mainRef])
+		if (sessionStorage.getItem('more')) {
+			const oldItems = JSON.parse(sessionStorage.getItem('more') + '')
+			setItemsData(oldItems)
+			setMoreData(items)
+		} else {
+			setItemsData(items)
+			setMoreData([])
+		}
+		sessionStorage.removeItem('more')
+	}, [items])
 
-	async function loadMoreData() {
-		mainRef.current?.classList.add('list_loading')
-		await new Promise(resolve => {
-			setTimeout(() => {
-				getList(
-					params,
-					searchParams.page + 1,
-					searchParams.limit,
-					searchParams.sort,
-					filParams
-				).then(data => {
-					if (more.length > 0) {
-						setItemsData(state => [...state, ...more])
-					}
-					setMore(data)
-					setSearchParams(state => ({ ...state, page: state.page + 1 }))
-					setTimeout(() => {
-						mainRef.current?.classList.remove('list_loading')
-					}, 1)
-					resolve(data)
-				})
-			}, 300)
-		})
-	}
+	useLayoutEffect(() => {
+		if (listState.loading) {
+			listRef.current?.classList.add(styles['catalog__list_loading'])
+		} else {
+			listRef.current?.classList.remove(styles['catalog__list_loading'])
+		}
+	}, [listState.loading])
 
-	async function reRender(limit: number, sort: string) {
-		mainRef.current?.classList.add('list_loading')
-		await new Promise(resolve => {
-			setTimeout(() => {
-				getList(params, 1, limit, sort, filParams).then(data => {
-					setItemsData(data)
-					setMore([])
-					setSearchParams({ page: 1, limit: limit, sort: sort })
-					setTimeout(() => {
-						mainRef.current?.classList.remove('list_loading')
-					}, 1)
-					resolve(data)
-				})
-			}, 300)
-		})
-	}
+	useLayoutEffect(() => {
+		sessionStorage.setItem('lazy', JSON.stringify(items))
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [listState.lazy])
 
-	async function startFilter(name: string, search: string[]) {
-		mainRef.current?.classList.add('list_loading')
-		setFilParams(state => {
-			return { ...state, [name]: search }
-		})
-		const bodyPost = { ...filParams, [name]: search }
-		const p1 = new Promise(resolve => {
-			getPagination(params, bodyPost).then(data => {
-				setPag(data)
-				resolve(data)
-			})
-		})
-		const p2 = new Promise(resolve => {
-			getFilter(params, bodyPost).then(data => {
-				setFil(data)
-				resolve(data)
-			})
-		})
-		const p3 = new Promise(resolve => {
+	useLayoutEffect(() => {
+		const bool = sessionStorage.getItem('lazy') !== JSON.stringify(items)
+		if (listState.lazy && bool) {
+			mainRef.current?.classList.remove('lazy__img')
 			setTimeout(() => {
-				getList(params, 1, searchParams.limit, searchParams.sort, bodyPost).then(data => {
-					setItemsData(data)
-					setMore([])
-					setSearchParams(state => {
-						return { ...state, page: 1 }
-					})
-					resolve(data)
-				})
+				mainRef.current?.classList.add('lazy__img')
 			}, 300)
-		})
-		Promise.all([p1, p2, p3]).then(() => {
-			setTimeout(() => {
-				mainRef.current?.classList.remove('list_loading')
-			}, 1)
-		})
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [items])
+
+	useEffect(() => {
+		setListState({ lazy: false, loading: false })
+		sessionStorage.removeItem('lazy')
+	}, [items, setListState])
+
+	useEffect(() => {
+		window.onpopstate = () => {
+			const searchTerm = location.pathname
+			const effect = allLink().find(el => el == searchTerm)
+			if (effect) {
+				setListState({ lazy: true, loading: true })
+			}
+		}
+	}, [setListState])
+
+	function loadMoreItems() {
+		sessionStorage.setItem('more', JSON.stringify([...itemsData, ...moreData]))
 	}
 
 	return (
 		<Suspense>
-			<Await resolve={{ params, items, pagination, filter, filterParams }}>
-				{({ params, items }: { params: string[]; items: itemData[] }) => {
+			<Await resolve={{ params, items, filter, pagination }}>
+				{({
+					params,
+					items,
+					filter,
+					pagination,
+				}: {
+					params: string[]
+					items: itemData[]
+					filter: filterData
+					pagination: number
+				}) => {
 					return (
-						items.length > 0 && (
+						items.length != 0 && (
 							<div className={styles['list_background']}>
 								<div className={'main'} ref={mainRef}>
-									<div className={styles['listHeader']}>
+									<div className={styles['sideBar']}>
 										<ListNav params={params} brand={items[0].brand} />
-										<ListSort
-											limit={searchParams.limit}
-											sort={searchParams.sort}
-											reRender={reRender}
-										/>
+										<ListSort limit={limit} sort={sort} />
 									</div>
 									<div className={styles['catalog']}>
-										<ListFilter facets={fil} filterParams={filParams} startFilter={startFilter} />
-										<ListItems items={itemsData} more={more} />
-										<ListPagination
-											pagination={pag}
-											searchParams={searchParams}
-											loadMoreData={loadMoreData}
-										/>
+										<ListFilter facets={filter} />
+										<div className={styles['catalog__list']} ref={listRef}>
+											<ListItems
+												items={itemsData}
+												more={moreData}
+												style={{
+													paddingBottom: Math.ceil(pagination / limit) == 1 ? '72px' : '0',
+												}}
+											/>
+											<ListPagination
+												countPagination={pagination}
+												params={{ page, limit }}
+												loadMoreItems={loadMoreItems}
+											/>
+										</div>
 									</div>
 								</div>
 							</div>

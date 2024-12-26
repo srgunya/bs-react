@@ -1,4 +1,5 @@
-import { itemData } from '../comp/Index__slider_item/IndexSliderItem.props'
+import { Params } from 'react-router-dom'
+import { itemData } from '../comp/Index__item/IndexItem.props'
 import { filterData, filterParamsType } from '../comp/List__filter/ListFilter.props'
 import { PREFIX } from '../helpers/API'
 import { translitToRus } from '../helpers/translitToRus'
@@ -60,7 +61,6 @@ export async function getFilter(props: string[], filterParams: filterParamsType)
 		body: JSON.stringify(filterParams),
 	})
 	const data: filterData = await res.json()
-	console.log(data)
 	return data
 }
 
@@ -73,5 +73,42 @@ export async function getPagination(props: string[], filterParams: filterParamsT
 		body: JSON.stringify(filterParams),
 	})
 	const data = await res.text()
-	return data
+	return Number(data)
+}
+
+export async function getSearchParams(params: Params<string>, request: Request) {
+	const props: string[] = await new Promise(resolve => {
+		setTimeout(() => {
+			getParams(typeof params['*'] == 'string' ? params['*'] : '').then(data => {
+				resolve(data)
+			})
+		}, 300)
+	})
+	const searchParams = new URL(request.url).searchParams
+	const page =
+		Number.isInteger(Number(searchParams.get('page'))) && Number(searchParams.get('page')) > 0
+			? Number(searchParams.get('page'))
+			: 1
+	const limit =
+		Number(searchParams.get('limit')) == 40 ? 40 : Number(searchParams.get('limit')) == 80 ? 80 : 20
+	const sort =
+		searchParams.get('sort') == 'priceASC'
+			? 'priceASC'
+			: searchParams.get('sort') == 'priceDESC'
+			? 'priceDESC'
+			: 'default'
+
+	const pol = searchParams.get('pol')?.split(',') ?? []
+	const kategoriya = searchParams.get('kategoriya')?.split(',') ?? []
+	const tsvet = searchParams.get('tsvet')?.split(',') ?? []
+	const razmer = searchParams.get('razmer')?.split(',') ?? []
+	const brand = searchParams.get('brand')?.split(',') ?? []
+	const filterParams = {
+		pol,
+		kategoriya,
+		tsvet,
+		razmer,
+		brand,
+	}
+	return { props, page, limit, sort, filterParams }
 }

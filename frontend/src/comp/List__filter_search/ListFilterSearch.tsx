@@ -1,16 +1,14 @@
-import { FormEvent, useRef, useState } from 'react'
+import { FormEvent, useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import styles from './ListFilterSearch.module.scss'
 import { ListFilterSearchProps } from './ListFilterSearch.props'
 
 export function ListFilterSearch({ ulRef, setError }: ListFilterSearchProps) {
 	const searchRef = useRef<HTMLDivElement>(null)
 	const [searchValue, setSearchValue] = useState('')
+	const location = useLocation()
 
-	function focus() {
-		searchRef.current?.classList.toggle(styles['filter__search_focus'])
-	}
-
-	function clear() {
+	const clear = useCallback(() => {
 		setSearchValue('')
 		setError('')
 		ulRef.current?.childNodes.forEach(el => {
@@ -19,6 +17,14 @@ export function ListFilterSearch({ ulRef, setError }: ListFilterSearchProps) {
 			}
 		})
 		searchRef.current?.classList.remove(styles['filter__search_change'])
+	}, [setError, ulRef])
+
+	useLayoutEffect(() => {
+		clear()
+	}, [location.pathname, clear])
+
+	function focus() {
+		searchRef.current?.classList.toggle(styles['filter__search_focus'])
 	}
 
 	function search(e: FormEvent<HTMLInputElement>) {

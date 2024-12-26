@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 export interface ListFilterTitleProps {
-	name: string
+	children: ReactNode
 }

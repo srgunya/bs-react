@@ -1,0 +1,30 @@
+.menuImg__a {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	transition: opacity 0.3s ease;
+	width: 50%;
+	padding: 1.2rem;
+	&:hover {
+		opacity: 0.8;
+	}
+}
+.menuImg__img {
+	width: 100%;
+	height: 100%;
+	border-radius: 0.4rem;
+	object-fit: cover;
+}
+.menuImg__span {
+	margin-top: 1.4rem;
+	text-transform: uppercase;
+	font-size: 1.2rem;
+	letter-spacing: 1.6px;
+}
+.menuImg__a_brand {
+	width: 100%;
+	height: 100%;
+}
+.menuImg__a_sex {
+	height: 100%;
+}

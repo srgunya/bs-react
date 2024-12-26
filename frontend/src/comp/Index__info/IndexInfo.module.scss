@@ -1,15 +1,30 @@
-.IndexInfo {
+.info {
 	display: flex;
 	flex-flow: row wrap;
 	gap: 2.4rem;
 	margin-bottom: 6.4rem;
 }
-.IndexInfo__item {
+.info__item {
 	flex: 1;
 	display: flex;
 	flex-flow: column nowrap;
 }
-.IndexInfo__link {
+.info__item_first {
+	min-width: 100%;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 2.4rem;
+	.info__link {
+		grid-column: span 3;
+	}
+	.info__block {
+		max-height: none;
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: center;
+	}
+}
+.info__link {
 	display: block;
 	height: 100%;
 	transition: opacity 0.3s ease;
@@ -17,25 +32,25 @@
 		opacity: 0.8;
 	}
 }
-.IndexInfo__pic_big {
+.info__pic_big {
 	padding-top: 50.6%;
 }
-.IndexInfo__pic_smal {
+.info__pic_smal {
 	padding-top: 100%;
 }
-.IndexInfo__img {
+.info__img {
 	display: block;
 	width: 100%;
 	height: 100%;
 	border-radius: 0.4rem;
 	object-fit: cover;
 }
-.IndexInfo__block {
+.info__block {
 	padding: 2rem 1rem 0;
 	max-height: 11.39rem;
 }
-.IndexInfo__h1,
-.IndexInfo__span {
+.info__h1,
+.info__span {
 	font-size: 1.2rem;
 	letter-spacing: 1.4px;
 	color: $primary-40;
@@ -45,14 +60,18 @@
 	display: inline-flex;
 	flex-flow: column nowrap;
 	transition: color 0.3s ease;
+	position: relative;
+	line-height: 2rem;
+	height: 2rem;
 	&::after {
 		content: '';
 		display: inline-block;
 		width: 0;
-		height: 0.1rem;
-		margin-top: 0.2rem;
+		height: 0.05rem;
 		background-color: black;
 		transition: width 0.3s ease;
+		position: absolute;
+		bottom: 0;
 	}
 	&:hover {
 		color: black;
@@ -61,33 +80,11 @@
 		}
 	}
 }
-.IndexInfo__span {
+.info__span {
 	color: black;
 }
-.IndexInfo__p {
+.info__p {
 	margin: 0.8rem 0;
 	font-size: 1.8rem;
 	line-height: 2.4rem;
-}
-.IndexInfo__item_first {
-	min-width: 100%;
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 2.4rem;
-	.IndexInfo__link {
-		grid-column: span 3;
-	}
-	.IndexInfo__block {
-		max-height: none;
-		display: flex;
-		flex-flow: column nowrap;
-		justify-content: center;
-	}
-	.IndexInfo__h1,
-	.IndexInfo__span {
-		&::after {
-			height: 0.05rem;
-			margin-top: 0.25rem;
-		}
-	}
 }

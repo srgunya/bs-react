@@ -29,6 +29,4 @@ export interface filterParamsType {
 
 export interface ListFilterProps {
 	facets: filterData
-	filterParams: filterParamsType
-	startFilter: (name: string, params: string[]) => Promise<void>
 }

@@ -1,0 +1,53 @@
+.menuNav__ul {
+	margin-right: 2.4rem;
+	flex: 1;
+}
+.menuNav__ul:nth-child(1) {
+	margin-left: 7.4rem;
+}
+.menuNav__li_capital {
+	margin-bottom: 2.7rem;
+}
+.menuNav__li_brand {
+	margin-top: 4.54rem;
+}
+.menuNav__a {
+	height: 3.2rem;
+	line-height: 3.2rem;
+	white-space: nowrap;
+	display: inline-flex;
+	flex-flow: column nowrap;
+	position: relative;
+	&::after {
+		content: '';
+		display: inline-block;
+		width: 0;
+		height: 0.2rem;
+		background-color: black;
+		transition: width 0.3s ease;
+		position: absolute;
+		bottom: 0.1rem;
+	}
+	&:hover {
+		&::after {
+			width: 100%;
+		}
+	}
+}
+.menuNav__a_capital {
+	text-transform: uppercase;
+	font-size: 1.2rem;
+	letter-spacing: 1.4px;
+	color: $primary-40;
+	transition: color 0.3s ease;
+	line-height: inherit;
+	height: 2rem;
+	line-height: 2rem;
+	&::after {
+		height: 0.05rem;
+		bottom: 0;
+	}
+	&:hover {
+		color: black;
+	}
+}

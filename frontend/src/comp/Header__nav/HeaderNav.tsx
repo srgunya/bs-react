@@ -1,10 +1,11 @@
 import { MouseEvent, useContext, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { HeaderContext } from '../../context/header.context'
+import { HeaderNavProps } from './HeaderNam.props'
 import styles from './HeaderNav.module.scss'
 import { header_nav } from './HeaderNav.params'
 
-export function HeaderNav() {
+export function HeaderNav({ link }: HeaderNavProps) {
 	const { menuActive, setMenuActive } = useContext(HeaderContext)
 	const nav = useRef<HTMLElement>(null)
 
@@ -40,19 +41,17 @@ export function HeaderNav() {
 	}
 
 	return (
-		<nav
-			className={styles['headerNav']}
-			onMouseOver={showMenu}
-			onMouseLeave={closeMenu}
-			ref={nav}
-			onClick={() => {
-				setMenuActive('')
-			}}
-		>
+		<nav className={styles['headerNav']} onMouseOver={showMenu} onMouseLeave={closeMenu} ref={nav}>
 			<ul className={styles['headerNav__ul']}>
 				{header_nav.map(el => (
 					<li className={styles['headerNav__li']} key={el.text}>
-						<Link to={el.to} className={styles['headerNav__a']}>
+						<Link
+							to={el.to}
+							className={styles['headerNav__a']}
+							onClick={e => {
+								link(e, el.to)
+							}}
+						>
 							{el.text}
 						</Link>
 					</li>

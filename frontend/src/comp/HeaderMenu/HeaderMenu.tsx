@@ -20,50 +20,12 @@ export default function HeaderMenu() {
 			})}
 			onMouseLeave={() => setMenuActive('')}
 		>
-			<HeaderMenuBlock
-				ul1={news.ul1}
-				ul2={news.ul2}
-				img={news.img}
-				apperance='Новинки'
-				menuActive={menuActive}
-			/>
-			<HeaderMenuBlock
-				ul1={brand.ul1}
-				ul2={brand.ul2}
-				ul3={brand.ul3}
-				ul4={brand.ul4}
-				img={brand.img}
-				apperance='Бренды'
-				menuActive={menuActive}
-			/>
-			<HeaderMenuBlock
-				ul1={man.ul1}
-				ul2={man.ul2}
-				img={man.img}
-				apperance='Мужское'
-				menuActive={menuActive}
-			/>
-			<HeaderMenuBlock
-				ul1={woman.ul1}
-				ul2={woman.ul2}
-				img={woman.img}
-				apperance='Женское'
-				menuActive={menuActive}
-			/>
-			<HeaderMenuBlock
-				ul1={access.ul1}
-				ul2={access.ul2}
-				img={access.img}
-				apperance='Аксессуары'
-				menuActive={menuActive}
-			/>
-			<HeaderMenuBlock
-				ul1={sale.ul1}
-				ul2={sale.ul2}
-				img={sale.img}
-				apperance='Скидки'
-				menuActive={menuActive}
-			/>
+			<HeaderMenuBlock params={news} name='Новинки' />
+			<HeaderMenuBlock params={brand} name='Бренды' />
+			<HeaderMenuBlock params={man} name='Мужское' />
+			<HeaderMenuBlock params={woman} name='Женское' />
+			<HeaderMenuBlock params={access} name='Аксессуары' />
+			<HeaderMenuBlock params={sale} name='Скидки' />
 		</nav>
 	)
 }

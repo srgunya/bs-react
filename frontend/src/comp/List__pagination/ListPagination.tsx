@@ -1,63 +1,56 @@
 import cn from 'classnames'
-import { MouseEvent, useRef } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { MouseEvent, useContext, useLayoutEffect, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { ListContext } from '../../context/list.context'
 import styles from './ListPagination.module.scss'
 import { ListPaginationProps } from './ListPagination.props'
-export function ListPagination({ pagination, searchParams, loadMoreData }: ListPaginationProps) {
-	const location = useLocation()
-	const navigate = useNavigate()
-	const activeRef = useRef<HTMLAnchorElement>(null)
-	const { page, limit } = searchParams
+
+export function ListPagination({ countPagination, params, loadMoreItems }: ListPaginationProps) {
+	const moreRef = useRef<HTMLButtonElement>(null)
+	const activeRef = useRef<HTMLButtonElement>(null)
+	const { page, limit } = params
+	const [searchParams, setSearchParams] = useSearchParams()
+	const { setListState } = useContext(ListContext)
+
+	useLayoutEffect(() => {
+		moreRef.current?.classList.remove(styles['ListPagination__more_load'])
+	}, [page])
 
 	function next() {
-		if (activeRef.current?.nextElementSibling instanceof HTMLAnchorElement) {
+		if (activeRef.current?.nextElementSibling instanceof HTMLButtonElement) {
 			activeRef.current?.nextElementSibling.click()
 		}
 	}
 	function prev() {
-		if (activeRef.current?.previousElementSibling instanceof HTMLAnchorElement) {
+		if (activeRef.current?.previousElementSibling instanceof HTMLButtonElement) {
 			activeRef.current?.previousElementSibling.click()
 		}
 	}
 
 	function more(e: MouseEvent) {
-		if (
-			e.target instanceof Element &&
-			e.target.parentNode?.parentNode?.parentNode instanceof Element
-		) {
-			if (e.target.parentNode?.parentNode?.parentNode.classList.contains('list_loading')) {
-				return false
-			} else {
-				const url = new URL(window.location.href)
-				url.searchParams.set('page', `${page + 1}`)
-				history.pushState(null, '', url.toString())
-				loadMoreData()
-			}
+		if (e.target instanceof Element) {
+			moreRef.current?.classList.add(styles['ListPagination__more_load'])
+			searchParams.set('page', `${page + 1}`)
+			loadMoreItems()
+			setSearchParams(searchParams, { preventScrollReset: true })
+			setListState(state => ({ ...state, loading: true }))
 		}
 	}
 	function link(e: MouseEvent) {
-		e.preventDefault()
-		if (
-			e.target instanceof Element &&
-			e.target.parentNode?.parentNode?.parentNode?.parentNode instanceof Element &&
-			e.target.textContent
-		) {
-			if (
-				!e.target.parentNode?.parentNode?.parentNode?.parentNode.classList.contains('list_loading')
-			) {
-				e.target.parentNode?.parentNode?.parentNode?.parentNode.classList.add('list_loading')
-				const url = new URL(window.location.href)
-				url.searchParams.set('page', e.target.textContent)
-				if (url.searchParams.get('page') == '1') {
-					url.searchParams.delete('page')
-				}
-				navigate(location.pathname + '?' + url.searchParams.toString())
+		window.scrollTo(0, 0)
+		if (e.target instanceof Element && e.target.textContent) {
+			if (e.target.textContent == '1') {
+				searchParams.delete('page')
+			} else {
+				searchParams.set('page', e.target.textContent)
 			}
+			setSearchParams(searchParams, { preventScrollReset: true })
+			setListState({ lazy: true, loading: true })
 		}
 	}
 
 	function createPagination() {
-		const length = Math.ceil(Number(pagination) / limit)
+		const length = Math.ceil(countPagination / limit)
 		const pagi: number[] = []
 		for (let i = 1; i <= length; i++) {
 			pagi.push(i)
@@ -69,17 +62,14 @@ export function ListPagination({ pagination, searchParams, loadMoreData }: ListP
 				})}
 			>
 				<button
-					className={cn(styles['ListPagination__more'], 'ListPagination__more', {
+					className={cn(styles['ListPagination__more'], {
 						[styles['ListPagination__more_hide']]: page >= pagi.length,
 					})}
 					onClick={more}
+					ref={moreRef}
 				>
 					Показать ещё товары
-					<img
-						src='/img/load/load.png'
-						alt=''
-						className={cn(styles['ListPagination__load'], 'ListPagination__load')}
-					/>
+					<img src='/img/load/load.png' alt='' className={styles['ListPagination__load']} />
 				</button>
 				<div className={styles['pagination']}>
 					<button
@@ -99,8 +89,7 @@ export function ListPagination({ pagination, searchParams, loadMoreData }: ListP
 						<img src='/img/slider/arrow.png' alt='' className={styles['pagination__img_next']} />
 					</button>
 					{pagi.map(el => (
-						<Link
-							to='/'
+						<button
 							onClick={link}
 							className={cn(styles['pagination__link'], {
 								[styles['pagination__link_active']]: el == page,
@@ -111,7 +100,7 @@ export function ListPagination({ pagination, searchParams, loadMoreData }: ListP
 							ref={el == page ? activeRef : undefined}
 						>
 							{el}
-						</Link>
+						</button>
 					))}
 				</div>
 			</div>

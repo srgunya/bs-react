@@ -1,31 +1,34 @@
-.listNav {
+.nav {
 	display: flex;
 	align-items: center;
 }
-.listNav__ul,
-.listNav__li {
+.nav__ul,
+.nav__li {
 	display: flex;
 	flex-flow: row nowrap;
 	gap: 1rem;
 }
 
-.listNav__span,
-.listNav__link {
+.nav__span,
+.nav__link {
 	color: $primary-40;
 }
-.listNav__span {
+.nav__span {
 	cursor: default;
 }
-.listNav__link {
-	transition: color 0.3s ease;
+.nav__link {
 	&::first-letter {
 		text-transform: uppercase;
 	}
+	transition: color 0.3s ease;
 	&:hover {
 		color: black;
 	}
 }
-.listNav__link_active {
+.nav__link_active {
 	transition: none;
 	color: black;
+}
+.nav__link_transition-none {
+	transition: none;
 }

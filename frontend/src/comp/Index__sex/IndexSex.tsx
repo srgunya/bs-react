@@ -9,14 +9,14 @@ export function IndexSex() {
 	]
 
 	return (
-		<div className={styles['indexSex']}>
+		<div className={styles['sex']}>
 			{index_sex.map((el, i) => (
-				<Link to={el.to} className={styles['indexSex__link']} key={i}>
-					<picture className={styles['indexSex__pic'] + ' wrap_tr'}>
-						<img src={el.img} alt='' className={styles['indexSex__img'] + ' img_tr'} />
+				<Link to={el.to} className={styles['sex__link']} key={i}>
+					<picture className={styles['sex__pic'] + ' wrap_tr'}>
+						<img src={el.img} alt='' className={styles['sex__img'] + ' img_tr'} />
 					</picture>
-					<div className={styles['indexSex__block']}>
-						<span className={styles['indexSex__span']}>{el.text}</span>
+					<div className={styles['sex__block']}>
+						<span className={styles['sex__span']}>{el.text}</span>
 					</div>
 				</Link>
 			))}
