@@ -5,10 +5,9 @@ const { elasticSearch } = require('./elasticSearch')
 
 async function getFilter(req, res) {
 	const unisex = getUnisex(req)
-	const price = getPrice()
 	const filter = getBlockFilter(req)
 	const filterBoolean = getBooleanFilter(req)
-	const aggs = getAggs(req, price, filterBoolean, filter)
+	const aggs = getAggs(req, filterBoolean, filter)
 
 	const result = await elasticSearch({
 		req: req,
@@ -25,6 +24,7 @@ async function getFilter(req, res) {
 	if (filterBoolean) {
 		const resultAggs = [
 			result.aggregations.inavtive,
+			result.aggregations.discount_price,
 			result.aggregations.pol,
 			result.aggregations.kategoriya,
 			result.aggregations.tsvet,

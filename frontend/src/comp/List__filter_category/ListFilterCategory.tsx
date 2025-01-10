@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import { ChangeEvent, useContext, useLayoutEffect, useRef, useState } from 'react'
+import { ChangeEvent, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import { ListContext } from '../../context/list.context'
 import { ListFilterSearch } from '../List__filter_search/ListFilterSearch'
@@ -8,10 +8,11 @@ import styles from './ListFilterCategory.module.scss'
 import { ListFilterCategoryProps } from './ListFilterCategory.props'
 
 export function ListFilterCategory({ facets, name, searchName }: ListFilterCategoryProps) {
-	const ulRef = useRef<HTMLUListElement>(null)
-	const [error, setError] = useState('')
 	const location = useLocation()
 	const [searchParams, setSearchParams] = useSearchParams()
+	const ulRef = useRef<HTMLUListElement>(null)
+	const [error, setError] = useState('')
+	const [checked, setChecked] = useState(false)
 	const { setListState } = useContext(ListContext)
 
 	useLayoutEffect(() => {
@@ -19,6 +20,14 @@ export function ListFilterCategory({ facets, name, searchName }: ListFilterCateg
 			ulRef.current.scrollTop = 0
 		}
 	}, [location.pathname])
+
+	useEffect(() => {
+		if (searchParams.has(searchName)) {
+			setChecked(true)
+		} else {
+			setChecked(false)
+		}
+	}, [searchParams])
 
 	function click(e: ChangeEvent<HTMLInputElement>) {
 		const oldUrl = searchParams.get(searchName)
@@ -46,31 +55,37 @@ export function ListFilterCategory({ facets, name, searchName }: ListFilterCateg
 	function createCategory() {
 		return (
 			<>
-				<ListFilterTitle>{name}</ListFilterTitle>
+				{facets.length != 0 && (
+					<ListFilterTitle searchName={searchName} checked={checked}>
+						{name}
+					</ListFilterTitle>
+				)}
 				{facets.length > 7 && <ListFilterSearch ulRef={ulRef} setError={setError} />}
-				<ul
-					className={cn(styles['filter__ul'], {
-						[styles['filter__ul_size']]: name == 'Размер',
-					})}
-					ref={ulRef}
-				>
-					{facets.map(el => {
-						return (
-							<li key={el} className={styles['filter__li']} data-category={el}>
-								<input
-									type='checkbox'
-									id={el}
-									className={styles['filter__checkbox']}
-									onChange={click}
-									checked={searchParams.get(searchName)?.split(',').includes(el) ? true : false}
-								/>
-								<label htmlFor={el} className={styles['filter__label']}>
-									{el}
-								</label>
-							</li>
-						)
-					})}
-				</ul>
+				{facets.length != 0 && (
+					<ul
+						className={cn(styles['filter__ul'], {
+							[styles['filter__ul_size']]: name == 'Размер',
+						})}
+						ref={ulRef}
+					>
+						{facets.map(el => {
+							return (
+								<li key={el} className={styles['filter__li']} data-category={el}>
+									<input
+										type='checkbox'
+										id={el}
+										className={styles['filter__checkbox']}
+										onChange={click}
+										checked={searchParams.get(searchName)?.split(',').includes(el) ? true : false}
+									/>
+									<label htmlFor={el} className={styles['filter__label']}>
+										{el}
+									</label>
+								</li>
+							)
+						})}
+					</ul>
+				)}
 			</>
 		)
 	}

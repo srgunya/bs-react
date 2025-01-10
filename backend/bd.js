@@ -11,7 +11,6 @@ async function load() {
 		await loadIndex('item', 'bs_item')
 		await loadIndex('logo', 'bs_logo')
 	} catch (error) {
-		console.error(error)
 		await createItemIndex()
 		await createLogoIndex()
 		await loadIndex('item', 'bs_item')
@@ -109,6 +108,15 @@ async function createItemIndex() {
 				},
 			},
 			mappings: {
+				runtime: {
+					discount_price: {
+						type: 'double',
+						script: {
+							source:
+								"emit(doc['sale'].value == 0? Math.round(doc['price'].value) : Math.round(doc['price'].value - doc['price'].value * doc['sale'].value / 100))",
+						},
+					},
+				},
 				properties: {
 					list_prop: {
 						type: 'text',
@@ -165,11 +173,11 @@ async function createItemIndex() {
 						index: false,
 					},
 					sale: {
-						type: 'float',
+						type: 'double',
 						index: false,
 					},
 					price: {
-						type: 'float',
+						type: 'double',
 						index: false,
 					},
 				},

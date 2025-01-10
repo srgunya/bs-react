@@ -98,12 +98,14 @@ export async function getSearchParams(params: Params<string>, request: Request) 
 			? 'priceDESC'
 			: 'default'
 
+	const price = searchParams.get('price')?.split(',') ?? []
 	const pol = searchParams.get('pol')?.split(',') ?? []
 	const kategoriya = searchParams.get('kategoriya')?.split(',') ?? []
 	const tsvet = searchParams.get('tsvet')?.split(',') ?? []
 	const razmer = searchParams.get('razmer')?.split(',') ?? []
 	const brand = searchParams.get('brand')?.split(',') ?? []
 	const filterParams = {
+		price,
 		pol,
 		kategoriya,
 		tsvet,

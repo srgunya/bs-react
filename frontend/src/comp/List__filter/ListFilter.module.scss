@@ -5,49 +5,11 @@
 	position: sticky;
 	top: 110px;
 }
+.filter_hide {
+	opacity: 0;
+}
 .filter__title {
 	font-size: 1.4;
 	padding: 1.4rem 0;
 	margin-top: inherit;
-}
-.filterHeader {
-	position: relative;
-	display: flex;
-}
-.filterHeader__title {
-	font-size: 1.8rem;
-	padding: 1.2rem 0;
-	line-height: 2.4rem;
-}
-.filterHeader__reset {
-	cursor: pointer;
-	display: flex;
-	flex-flow: row nowrap;
-	align-items: center;
-	position: absolute;
-	padding: 0.8rem;
-	transition: opacity 0.3s ease;
-	&:hover {
-		opacity: 0.4;
-	}
-}
-.filterHeader__reset_none {
-	display: none;
-}
-.filterHeader__button {
-	width: 3.2rem;
-	height: 3.2rem;
-	border-radius: 50%;
-	background-color: $primary-5;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.filterHeader__img {
-	width: 2rem;
-	height: 2rem;
-}
-.filterHeader__span {
-	margin-left: 1.2rem;
-	font-size: 1.4rem;
 }

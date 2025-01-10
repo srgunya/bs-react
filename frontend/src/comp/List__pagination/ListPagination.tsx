@@ -58,7 +58,7 @@ export function ListPagination({ countPagination, params, loadMoreItems }: ListP
 		return (
 			<div
 				className={cn(styles['ListPagination'], {
-					[styles['ListPagination_hide']]: length == 1,
+					[styles['ListPagination_hide']]: length == 1 || !length,
 				})}
 			>
 				<button

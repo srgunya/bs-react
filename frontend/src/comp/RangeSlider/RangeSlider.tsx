@@ -1,21 +1,30 @@
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
-import { useState } from 'react'
-export function RangeSlider() {
+import _ from 'lodash'
+import { useEffect, useState } from 'react'
+import { RangeSliderProps } from './RangeSlider.props'
+
+export function RangeSlider({ percent, sliderSetValue, setAcrive, off }: RangeSliderProps) {
 	const [value, setValue] = useState<number[]>([0, 100])
 
 	const handleChange = (event: Event, newValue: number | number[]) => {
-		if (event.type == 'keydown') {
+		if (event.type == 'keydown' || off) {
 			return false
 		}
-		setValue(newValue as number[])
+		sliderSetValue(newValue as number[])
 	}
+
+	useEffect(() => {
+		const x = percent[0] ? percent[0] : 0
+		const y = percent[1] ? percent[1] : percent[1] == 0 ? 0 : 100
+		setValue([x, y])
+	}, [percent])
 
 	return (
 		<Box
 			sx={{
 				width: 200,
-				paddingLeft: '7px',
+				paddingLeft: '8px',
 				color: 'success.main',
 				'& .MuiSlider-thumb': {
 					width: '22px',
@@ -33,7 +42,17 @@ export function RangeSlider() {
 				},
 			}}
 		>
-			<Slider value={value} onChange={handleChange} valueLabelDisplay='off' color='primary' />
+			<Slider
+				value={value}
+				onChange={handleChange}
+				onChangeCommitted={_.debounce(() => {
+					if (!off) {
+						setAcrive(true)
+					}
+				}, 200)}
+				valueLabelDisplay='off'
+				color='primary'
+			/>
 		</Box>
 	)
 }

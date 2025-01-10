@@ -12,8 +12,7 @@ async function getList(req, res) {
 	const size = req.params['page'] > 100 ? 0 : req.params['limit']
 	const skip = req.params['page'] > 100 ? 0 : size * (Number(req.params['page']) - 1)
 	const unisex = getUnisex(req)
-	const price = getPrice()
-	const sort = getSort(req, price)
+	const sort = getSort(req)
 	const filter = getBlockFilter(req)
 	const filterBoolean = getBooleanFilter(req)
 

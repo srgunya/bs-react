@@ -101,33 +101,31 @@ export function List() {
 					pagination: number
 				}) => {
 					return (
-						items.length != 0 && (
-							<div className={styles['list_background']}>
-								<div className={'main'} ref={mainRef}>
-									<div className={styles['sideBar']}>
-										<ListNav params={params} brand={items[0].brand} />
-										<ListSort limit={limit} sort={sort} />
-									</div>
-									<div className={styles['catalog']}>
-										<ListFilter facets={filter} />
-										<div className={styles['catalog__list']} ref={listRef}>
-											<ListItems
-												items={itemsData}
-												more={moreData}
-												style={{
-													paddingBottom: Math.ceil(pagination / limit) == 1 ? '72px' : '0',
-												}}
-											/>
-											<ListPagination
-												countPagination={pagination}
-												params={{ page, limit }}
-												loadMoreItems={loadMoreItems}
-											/>
-										</div>
+						<div className={styles['list_background']}>
+							<div className={'main'} ref={mainRef}>
+								<div className={styles['sideBar']}>
+									<ListNav params={params} brand={items[0]?.brand} />
+									<ListSort limit={limit} sort={sort} />
+								</div>
+								<div className={styles['catalog']}>
+									<ListFilter facets={filter} />
+									<div className={styles['catalog__list']} ref={listRef}>
+										<ListItems
+											items={itemsData}
+											more={moreData}
+											style={{
+												paddingBottom: Math.ceil(pagination / limit) == 1 ? '72px' : '0',
+											}}
+										/>
+										<ListPagination
+											countPagination={pagination}
+											params={{ page, limit }}
+											loadMoreItems={loadMoreItems}
+										/>
 									</div>
 								</div>
 							</div>
-						)
+						</div>
 					)
 				}}
 			</Await>

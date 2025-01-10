@@ -1,0 +1,48 @@
+.filterHeader {
+	position: relative;
+	display: flex;
+}
+.filterHeader__title {
+	font-size: 1.8rem;
+	padding: 1.2rem 0;
+	line-height: 2.4rem;
+	transition: opacity 0.3s ease;
+}
+.filterHeader__reset {
+	cursor: pointer;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	position: absolute;
+	left: -5px;
+	padding: 0.8rem;
+	padding-left: 0;
+	transition: opacity 0.3s ease;
+	&:hover {
+		opacity: 0.4;
+	}
+}
+.filterHeader_hide {
+	opacity: 0;
+}
+.filterHeader_none {
+	display: none;
+}
+.filterHeader__button {
+	width: 3.2rem;
+	height: 3.2rem;
+	border-radius: 50%;
+	background-color: $primary-5;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+.filterHeader__img {
+	width: 2rem;
+	height: 2rem;
+}
+.filterHeader__span {
+	margin-left: 1.2rem;
+	font-size: 1.4rem;
+}

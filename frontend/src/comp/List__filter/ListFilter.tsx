@@ -2,12 +2,14 @@ import cn from 'classnames'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { sortByAlphabet, sortSize } from '../../helpers/sort'
 import { ListFilterCategory } from '../List__filter_category/ListFilterCategory'
+import { ListFilterHeader } from '../List__filter_header/ListFilterHeader'
 import { ListFilterPrice } from '../List__filter_price/ListFilterPrice'
 import styles from './ListFilter.module.scss'
 import { ListFilterProps } from './ListFilter.props'
 
 export function ListFilter({ facets }: ListFilterProps) {
 	const filterRef = useRef<HTMLDivElement>(null)
+
 	const [params, setParams] = useState({
 		minPrice: 0,
 		maxPrice: 0,
@@ -18,8 +20,16 @@ export function ListFilter({ facets }: ListFilterProps) {
 		brand: [''],
 	})
 
+	useEffect(() => {
+		if (params.minPrice != 0 && params.maxPrice != 0) {
+			setTimeout(() => {
+				filterRef.current?.classList.remove(styles['filter_hide'])
+			}, 300)
+		}
+	}, [params])
+
 	useLayoutEffect(() => {
-		const price = facets.price.buckets.map(el => +el.key)
+		const price = facets.discount_price.buckets.map(el => +el.key)
 		const minPrice = Math.min(...price)
 		const maxPrice = Math.max(...price)
 		const sex = sortByAlphabet(facets.sex.buckets.map(el => el.key))
@@ -37,45 +47,31 @@ export function ListFilter({ facets }: ListFilterProps) {
 		window.onscroll = sticky
 		function sticky() {
 			const top = window.pageYOffset
-			if (lastScrollTop > top) {
-				if (filterRef.current instanceof Element) {
-					const styles = window.getComputedStyle(filterRef.current).top
-					let del = parseInt(styles) + (lastScrollTop - top)
+			if (filterRef.current instanceof Element) {
+				const styles = window.getComputedStyle(filterRef.current)
+				let del = parseInt(styles.top) + (lastScrollTop - top)
+				if (lastScrollTop > top) {
 					if (del >= 110) {
 						del = 110
 					}
-					filterRef.current.style.top = `${del}px`
-				}
-				// console.log('top')
-			} else if (lastScrollTop < top) {
-				if (filterRef.current instanceof Element) {
-					const styles = window.getComputedStyle(filterRef.current)
-					let del = parseInt(styles.top) + (lastScrollTop - top)
+				} else if (lastScrollTop < top) {
 					const hieght = 1000 - (1745.5 - parseInt(styles.height))
 					if (del <= -hieght) {
 						del = -hieght
 					}
-					filterRef.current.style.top = `${del}px`
 				}
-				// console.log('down')
+				filterRef.current.style.top = `${del}px`
 			}
+
 			lastScrollTop = top
 		}
 	}, [])
 
 	return (
-		<div className={styles['filter']} ref={filterRef}>
-			<div className={styles['filterHeader']}>
-				<div className={styles['filterHeader__title']}>Фильтр</div>
-				<div className={cn(styles['filterHeader__reset'], styles['filterHeader__reset_none'])}>
-					<button className={styles['filterHeader__button']}>
-						<img src='/img/filter/close.png' alt='' className={styles['filterHeader__img']} />
-					</button>
-					<span className={styles['filterHeader__span']}>Сбросить фильтр</span>
-				</div>
-			</div>
+		<div className={cn(styles['filter'], styles['filter_hide'])} ref={filterRef}>
+			<ListFilterHeader />
 			<div className={styles['filter__title']}>Цена</div>
-			<ListFilterPrice />
+			<ListFilterPrice minPrice={params.minPrice} maxPrice={params.maxPrice} />
 			<ListFilterCategory name='Пол' searchName='pol' facets={params.sex} />
 			<ListFilterCategory name='Категория' searchName='kategoriya' facets={params.category} />
 			<ListFilterCategory name='Цвет' searchName='tsvet' facets={params.color} />

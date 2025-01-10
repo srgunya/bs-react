@@ -8,7 +8,7 @@ export interface filterData {
 	color: {
 		buckets: { key: string }[]
 	}
-	price: {
+	discount_price: {
 		buckets: { key: string }[]
 	}
 	sex: {

@@ -1,17 +1,12 @@
 function count() {
 	return 10000
 }
-function getAggs(req, price, filterBoolean, filter) {
+function getAggs(req, filterBoolean, filter) {
 	const aggs = filterBoolean
 		? {
 				inavtive: {
 					aggs: {
-						price: {
-							terms: {
-								script: price,
-								size: count(),
-							},
-						},
+						...inavtive(req.body.price, 'discount_price'),
 						...inavtive(req.body.pol, 'sex'),
 						...inavtive(req.body.kategoriya, 'category'),
 						...inavtive(req.body.tsvet, 'color'),
@@ -21,6 +16,14 @@ function getAggs(req, price, filterBoolean, filter) {
 					filter: {
 						bool: {
 							filter: filter,
+						},
+					},
+				},
+				discount_price: {
+					aggs: active(req.body.price, filter, 'discount_price').aggs,
+					filter: {
+						bool: {
+							filter: filter.filter(el => !('range' in el)),
 						},
 					},
 				},
@@ -46,11 +49,8 @@ function getAggs(req, price, filterBoolean, filter) {
 				},
 		  }
 		: {
-				price: {
-					terms: {
-						script: price,
-						size: count(),
-					},
+				discount_price: {
+					terms: { field: 'discount_price', size: count() },
 				},
 				sex: {
 					terms: { field: 'sex', size: count() },
@@ -89,13 +89,15 @@ function active(req, fil, key, name) {
 				},
 			}),
 		},
-		filter: {
-			bool: {
-				filter: fil.filter(
-					el => JSON.stringify(el.terms) != JSON.stringify({ [name ? name : key]: [...req] })
-				),
+		...(key != 'discount_price' && {
+			filter: {
+				bool: {
+					filter: fil.filter(
+						el => JSON.stringify(el.terms) != JSON.stringify({ [name ? name : key]: [...req] })
+					),
+				},
 			},
-		},
+		}),
 	}
 }
 

@@ -1,5 +1,8 @@
 function getBlockFilter(req) {
 	const filter = [
+		req.body.price.length != 0 && {
+			range: { discount_price: { gte: req.body.price[0], lte: req.body.price[1] } },
+		},
 		req.body.pol.length != 0 && {
 			terms: { sex: [...req.body.pol] },
 		},
@@ -22,6 +25,7 @@ function getBlockFilter(req) {
 
 function getBooleanFilter(req) {
 	const filterBoolean =
+		req.body.price.length != 0 ||
 		req.body.pol.length != 0 ||
 		req.body.kategoriya.length != 0 ||
 		req.body.tsvet.length != 0 ||
@@ -32,24 +36,12 @@ function getBooleanFilter(req) {
 	return filterBoolean
 }
 
-function getSort(req, price) {
+function getSort(req) {
 	const sort =
 		req.params['sort'] == 'priceDESC'
-			? {
-					_script: {
-						script: price,
-						type: 'number',
-						order: 'desc',
-					},
-			  }
+			? { discount_price: { order: 'desc' } }
 			: req.params['sort'] == 'priceASC'
-			? {
-					_script: {
-						script: price,
-						type: 'number',
-						order: 'asc',
-					},
-			  }
+			? { discount_price: { order: 'asc' } }
 			: [{ class: { order: 'desc' } }, { category: { order: 'asc' } }]
 	return sort
 }
@@ -62,10 +54,4 @@ function getUnisex(req) {
 	return unisex
 }
 
-function getPrice() {
-	const price =
-		"doc['sale'].value == 0? Math.round(doc['price'].value) : Math.round(doc['price'].value - doc['price'].value * doc['sale'].value / 100)"
-	return price
-}
-
-module.exports = { getBlockFilter, getBooleanFilter, getUnisex, getPrice, getSort }
+module.exports = { getBlockFilter, getBooleanFilter, getUnisex, getSort }
