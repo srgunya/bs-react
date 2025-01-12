@@ -43,11 +43,6 @@ export function ListFilterHeader() {
 		searchParams.delete('razmer')
 		searchParams.delete('brand')
 		setSearchParams(searchParams, { preventScrollReset: true })
-		resetRef.current?.classList.add(styles['filterHeader_hide'])
-		setTimeout(() => {
-			resetRef.current?.classList.add(styles['filterHeader_none'])
-			titleRef.current?.classList.remove(styles['filterHeader_hide'])
-		}, 300)
 	}
 
 	return (

@@ -27,7 +27,7 @@ export function ListFilterCategory({ facets, name, searchName }: ListFilterCateg
 		} else {
 			setChecked(false)
 		}
-	}, [searchParams])
+	}, [searchName, searchParams])
 
 	function click(e: ChangeEvent<HTMLInputElement>) {
 		const oldUrl = searchParams.get(searchName)

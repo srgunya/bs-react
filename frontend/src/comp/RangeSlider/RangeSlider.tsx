@@ -49,7 +49,7 @@ export function RangeSlider({ percent, sliderSetValue, setAcrive, off }: RangeSl
 					if (!off) {
 						setAcrive(true)
 					}
-				}, 200)}
+				}, 500)}
 				valueLabelDisplay='off'
 				color='primary'
 			/>

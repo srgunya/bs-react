@@ -30,8 +30,14 @@ export function ListFilterPrice({ minPrice, maxPrice }: ListFilterPriceProps) {
 	}, [active])
 
 	useEffect(() => {
-		const min = Number(searchParams.get('price')?.split(',')[0] ?? minPrice)
-		const max = Number(searchParams.get('price')?.split(',')[1] ?? maxPrice)
+		const orderMin = Math.abs(Math.round(Number(searchParams.get('price')?.split(',')[0])))
+		const orderMax = Math.abs(Math.round(Number(searchParams.get('price')?.split(',')[1])))
+		const min = Number(
+			orderMin && searchParams.get('price')?.split(',').length == 2 ? orderMin : minPrice
+		)
+		const max = Number(
+			orderMax && searchParams.get('price')?.split(',').length == 2 ? orderMax : maxPrice
+		)
 		setPrice([min, max])
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [minPrice, maxPrice, location])

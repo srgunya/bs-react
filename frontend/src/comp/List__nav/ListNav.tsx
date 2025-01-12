@@ -1,16 +1,23 @@
 import cn from 'classnames'
-import { MouseEvent, useContext, useEffect, useLayoutEffect, useRef } from 'react'
+import { MouseEvent, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { ListContext } from '../../context/list.context'
 import styles from './ListNav.module.scss'
 import { ListNavProps } from './ListNav.props'
 
 export function ListNav({ params, brand }: ListNavProps) {
+	const [linkBrand, setLinkBrand] = useState(brand)
 	const { setListState } = useContext(ListContext)
 	const location = useLocation()
 	const ulRef = useRef<HTMLUListElement>(null)
 	const [searchParams] = useSearchParams()
 	const navi = useNavigate()
+
+	useLayoutEffect(() => {
+		if (brand) {
+			setLinkBrand(brand)
+		}
+	}, [brand])
 
 	useLayoutEffect(() => {
 		ulRef.current?.childNodes.forEach(el => {
@@ -66,7 +73,13 @@ export function ListNav({ params, brand }: ListNavProps) {
 								link(e, to)
 							}}
 						>
-							{el == 'sale' ? 'Скидки' : el == 'new' ? 'Новинки' : /[a-zA-Z]/.test(el) ? brand : el}
+							{el == 'sale'
+								? 'Скидки'
+								: el == 'new'
+								? 'Новинки'
+								: /[a-zA-Z]/.test(el)
+								? linkBrand
+								: el}
 						</Link>
 					</li>
 				))}

@@ -98,7 +98,16 @@ export async function getSearchParams(params: Params<string>, request: Request) 
 			? 'priceDESC'
 			: 'default'
 
-	const price = searchParams.get('price')?.split(',') ?? []
+	const orderPrice = searchParams
+		.get('price')
+		?.split(',')
+		.map(el => {
+			if (!isNaN(Number(el))) {
+				return Math.abs(Math.round(Number(el)))
+			}
+		})
+		.filter(el => el)
+	const price = orderPrice?.length == 2 ? orderPrice : []
 	const pol = searchParams.get('pol')?.split(',') ?? []
 	const kategoriya = searchParams.get('kategoriya')?.split(',') ?? []
 	const tsvet = searchParams.get('tsvet')?.split(',') ?? []

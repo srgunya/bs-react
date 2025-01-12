@@ -6,7 +6,7 @@ import { filterData } from '../../comp/List__filter/ListFilter.props'
 import { ListItems } from '../../comp/List__items/ListItems'
 import { ListNav } from '../../comp/List__nav/ListNav'
 import { ListPagination } from '../../comp/List__pagination/ListPagination'
-import { ListSort } from '../../comp/List__sort/ListSort'
+import { ListSideBar } from '../../comp/List__sidebar/ListSideBar'
 import { ListContext } from '../../context/list.context'
 import { allLink } from '../../helpers/linksHeader'
 import { useLoadPage } from '../../hooks/use-loadPage.hook'
@@ -105,7 +105,7 @@ export function List() {
 							<div className={'main'} ref={mainRef}>
 								<div className={styles['sideBar']}>
 									<ListNav params={params} brand={items[0]?.brand} />
-									<ListSort limit={limit} sort={sort} />
+									<ListSideBar limit={limit} sort={sort} />
 								</div>
 								<div className={styles['catalog']}>
 									<ListFilter facets={filter} />
