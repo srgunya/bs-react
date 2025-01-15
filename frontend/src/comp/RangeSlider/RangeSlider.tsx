@@ -4,11 +4,11 @@ import _ from 'lodash'
 import { useEffect, useState } from 'react'
 import { RangeSliderProps } from './RangeSlider.props'
 
-export function RangeSlider({ percent, sliderSetValue, setAcrive, off }: RangeSliderProps) {
+export function RangeSlider({ percent, sliderSetValue, setAcrive }: RangeSliderProps) {
 	const [value, setValue] = useState<number[]>([0, 100])
 
 	const handleChange = (event: Event, newValue: number | number[]) => {
-		if (event.type == 'keydown' || off) {
+		if (event.type == 'keydown') {
 			return false
 		}
 		sliderSetValue(newValue as number[])
@@ -46,9 +46,7 @@ export function RangeSlider({ percent, sliderSetValue, setAcrive, off }: RangeSl
 				value={value}
 				onChange={handleChange}
 				onChangeCommitted={_.debounce(() => {
-					if (!off) {
-						setAcrive(true)
-					}
+					setAcrive(true)
 				}, 500)}
 				valueLabelDisplay='off'
 				color='primary'

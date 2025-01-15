@@ -1,7 +1,7 @@
 import cn from 'classnames'
-import { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { ChangeEvent, useLayoutEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useLocation, useSearchParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { listActions } from '../../store/list.slice'
 import { AppDispatch } from '../../store/store'
 import { ListFilterSearch } from '../List__filter_search/ListFilterSearch'
@@ -9,12 +9,16 @@ import { ListFilterTitle } from '../List__filter_title/ListFilterTitle'
 import styles from './ListFilterCategory.module.scss'
 import { ListFilterCategoryProps } from './ListFilterCategory.props'
 
-export function ListFilterCategory({ facets, name, searchName }: ListFilterCategoryProps) {
+export function ListFilterCategory({
+	facets,
+	name,
+	searchName,
+	listSearchParams,
+}: ListFilterCategoryProps) {
 	const location = useLocation()
-	const [searchParams, setSearchParams] = useSearchParams()
+	const [searchParams, setSearchParams] = listSearchParams
 	const ulRef = useRef<HTMLUListElement>(null)
 	const [error, setError] = useState('')
-	const [checked, setChecked] = useState(false)
 	const dispatch = useDispatch<AppDispatch>()
 
 	useLayoutEffect(() => {
@@ -22,14 +26,6 @@ export function ListFilterCategory({ facets, name, searchName }: ListFilterCateg
 			ulRef.current.scrollTop = 0
 		}
 	}, [location.pathname])
-
-	useEffect(() => {
-		if (searchParams.has(searchName)) {
-			setChecked(true)
-		} else {
-			setChecked(false)
-		}
-	}, [searchName, searchParams])
 
 	function click(e: ChangeEvent<HTMLInputElement>) {
 		const oldUrl = searchParams.get(searchName)
@@ -58,7 +54,7 @@ export function ListFilterCategory({ facets, name, searchName }: ListFilterCateg
 		return (
 			<>
 				{facets.length != 0 && (
-					<ListFilterTitle searchName={searchName} checked={checked}>
+					<ListFilterTitle searchName={searchName} listSearchParams={listSearchParams}>
 						{name}
 					</ListFilterTitle>
 				)}

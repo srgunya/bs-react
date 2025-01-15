@@ -1,13 +1,12 @@
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
-import { useSearchParams } from 'react-router-dom'
 import { listActions } from '../../store/list.slice'
 import { AppDispatch } from '../../store/store'
 import styles from './ListFilterTitle.module.scss'
 import { ListFilterTitleProps } from './ListFilterTitle.props'
 
-export function ListFilterTitle({ children, searchName, checked }: ListFilterTitleProps) {
-	const [searchParams, setSearchParams] = useSearchParams()
+export function ListFilterTitle({ children, searchName, listSearchParams }: ListFilterTitleProps) {
+	const [searchParams, setSearchParams] = listSearchParams
 	const dispatch = useDispatch<AppDispatch>()
 
 	function reset() {
@@ -22,7 +21,7 @@ export function ListFilterTitle({ children, searchName, checked }: ListFilterTit
 			<div className={styles['filter__title']}>{children}</div>
 			<span
 				className={cn(styles['filter__reset'], {
-					[styles['filter__reset_none']]: checked == false,
+					[styles['filter__reset_none']]: !searchParams.has(`${searchName}`),
 				})}
 				onClick={reset}
 			>

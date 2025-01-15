@@ -1,8 +1,8 @@
 import { Params } from 'react-router-dom'
-import { itemData } from '../comp/Index__item/IndexItem.props'
-import { filterData, filterParamsType } from '../comp/List__filter/ListFilter.props'
 import { PREFIX } from '../helpers/API'
 import { translitToRus } from '../helpers/translitToRus'
+import { filterData, filterParamsType } from '../interfaces/filter.interface'
+import { itemData } from '../interfaces/item.interface'
 
 export async function getParams(url: string) {
 	const words = url

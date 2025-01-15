@@ -21,5 +21,4 @@ export const listSlice = createSlice({
 	},
 })
 
-export default listSlice.reducer
 export const listActions = listSlice.actions

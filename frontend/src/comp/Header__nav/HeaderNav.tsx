@@ -1,9 +1,9 @@
 import { MouseEvent, useContext, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { HeaderContext } from '../../context/header.context'
-import { HeaderNavProps } from './HeaderNam.props'
 import styles from './HeaderNav.module.scss'
 import { header_nav } from './HeaderNav.params'
+import { HeaderNavProps } from './HeaderNav.props'
 
 export function HeaderNav({ link }: HeaderNavProps) {
 	const { menuActive, setMenuActive } = useContext(HeaderContext)

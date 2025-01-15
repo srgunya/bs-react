@@ -1,39 +1,39 @@
 import cn from 'classnames'
 import { useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import { useSearchParams } from 'react-router-dom'
 import { listActions } from '../../store/list.slice'
 import { AppDispatch } from '../../store/store'
 import styles from './ListFilterHeader.module.scss'
+import { ListFilterHeaderProps } from './ListFilterHeader.props'
 
-export function ListFilterHeader() {
-	const [searchParams, setSearchParams] = useSearchParams()
+export function ListFilterHeader({ listSearchParams }: ListFilterHeaderProps) {
+	const [searchParams, setSearchParams] = listSearchParams
 	const titleRef = useRef<HTMLDivElement>(null)
 	const resetRef = useRef<HTMLDivElement>(null)
 	const dispatch = useDispatch<AppDispatch>()
 
 	useEffect(() => {
 		if (
-			searchParams.get('price') ||
-			searchParams.get('pol') ||
-			searchParams.get('kategoriya') ||
-			searchParams.get('tsvet') ||
-			searchParams.get('razmer') ||
-			searchParams.get('brand')
+			searchParams.has('price') ||
+			searchParams.has('pol') ||
+			searchParams.has('kategoriya') ||
+			searchParams.has('tsvet') ||
+			searchParams.has('razmer') ||
+			searchParams.has('brand')
 		) {
 			titleRef.current?.classList.add(styles['filterHeader_hide'])
 			resetRef.current?.classList.remove(styles['filterHeader_none'])
 			setTimeout(() => {
 				resetRef.current?.classList.remove(styles['filterHeader_hide'])
-			}, 300)
+			}, 100)
 		} else {
 			resetRef.current?.classList.add(styles['filterHeader_hide'])
 			setTimeout(() => {
 				resetRef.current?.classList.add(styles['filterHeader_none'])
 				titleRef.current?.classList.remove(styles['filterHeader_hide'])
-			}, 300)
+			}, 100)
 		}
-	}, [searchParams])
+	}, [listSearchParams, searchParams])
 
 	function reset() {
 		dispatch(listActions.change({ lazy: true, loading: true }))

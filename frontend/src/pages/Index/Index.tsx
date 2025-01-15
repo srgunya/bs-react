@@ -2,12 +2,12 @@ import { Suspense } from 'react'
 import { Await, useLoaderData } from 'react-router-dom'
 import { IndexBanner } from '../../comp/Index__banner/IndexBanner'
 import { IndexInfo } from '../../comp/Index__info/IndexInfo'
-import { itemData } from '../../comp/Index__item/IndexItem.props'
 import { IndexSex } from '../../comp/Index__sex/IndexSex'
 import { IndexSliderItem } from '../../comp/Index__slider_item/IndexSliderItem'
 import { IndexSliderLogo } from '../../comp/Index__slider_logo/IndexSliderLogo'
-import { logoData } from '../../comp/Index__slider_logo/IndexSliderLogo.props'
 import { useLoadPage } from '../../hooks/use-loadPage.hook'
+import { itemData } from '../../interfaces/item.interface'
+import { logoData } from '../../interfaces/logo.interface'
 
 export function Index() {
 	const { logos, news, pop } = useLoaderData() as {

@@ -1,18 +1,18 @@
 import cn from 'classnames'
 import { MouseEvent, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { listActions } from '../../store/list.slice'
 import { AppDispatch } from '../../store/store'
 import styles from './ListNav.module.scss'
 import { ListNavProps } from './ListNav.props'
 
-export function ListNav({ params, brand }: ListNavProps) {
+export function ListNav({ params, brand, listSearchParams }: ListNavProps) {
 	const [linkBrand, setLinkBrand] = useState(brand)
 	const dispatch = useDispatch<AppDispatch>()
 	const location = useLocation()
 	const ulRef = useRef<HTMLUListElement>(null)
-	const [searchParams] = useSearchParams()
+	const [searchParams] = listSearchParams
 	const navi = useNavigate()
 
 	useLayoutEffect(() => {

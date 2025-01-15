@@ -1,8 +1,5 @@
-export interface logoData {
-	id: number
-	brand: string
-	logo: string
-}
+import { logoData } from '../../interfaces/logo.interface'
+
 export interface IndexSliderLogoProps {
 	name: string
 	logos: logoData[]

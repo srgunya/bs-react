@@ -1,17 +1,21 @@
 import cn from 'classnames'
 import { MouseEvent, useLayoutEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import { useSearchParams } from 'react-router-dom'
 import { listActions } from '../../store/list.slice'
 import { AppDispatch } from '../../store/store'
 import styles from './ListPagination.module.scss'
 import { ListPaginationProps } from './ListPagination.props'
 
-export function ListPagination({ countPagination, params, loadMoreItems }: ListPaginationProps) {
+export function ListPagination({
+	countPagination,
+	params,
+	loadMoreItems,
+	listSearchParams,
+}: ListPaginationProps) {
 	const moreRef = useRef<HTMLButtonElement>(null)
 	const activeRef = useRef<HTMLButtonElement>(null)
 	const { page, limit } = params
-	const [searchParams, setSearchParams] = useSearchParams()
+	const [searchParams, setSearchParams] = listSearchParams
 	const dispatch = useDispatch<AppDispatch>()
 
 	useLayoutEffect(() => {

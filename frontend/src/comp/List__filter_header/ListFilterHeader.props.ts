@@ -1,7 +1,5 @@
 import { SetURLSearchParams } from 'react-router-dom'
 
-export interface ListFilterPriceProps {
-	minPrice: number
-	maxPrice: number
+export interface ListFilterHeaderProps {
 	listSearchParams: [URLSearchParams, SetURLSearchParams]
 }

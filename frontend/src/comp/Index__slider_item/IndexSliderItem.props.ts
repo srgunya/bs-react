@@ -1,4 +1,4 @@
-import { itemData } from '../Index__item/IndexItem.props'
+import { itemData } from '../../interfaces/item.interface'
 
 export interface IndexSliderItemProps {
 	name: string

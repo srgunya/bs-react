@@ -1,15 +1,15 @@
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useLocation, useSearchParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { listActions } from '../../store/list.slice'
 import { AppDispatch } from '../../store/store'
 import { RangeSlider } from '../RangeSlider/RangeSlider'
 import styles from './ListFilterPrice.module.scss'
 import { ListFilterPriceProps } from './ListFilterPrice.props'
 
-export function ListFilterPrice({ minPrice, maxPrice }: ListFilterPriceProps) {
+export function ListFilterPrice({ minPrice, maxPrice, listSearchParams }: ListFilterPriceProps) {
 	const location = useLocation()
-	const [searchParams, setSearchParams] = useSearchParams()
+	const [searchParams, setSearchParams] = listSearchParams
 	const dispatch = useDispatch<AppDispatch>()
 	const minRef = useRef<HTMLInputElement>(null)
 	const maxRef = useRef<HTMLInputElement>(null)
@@ -42,7 +42,7 @@ export function ListFilterPrice({ minPrice, maxPrice }: ListFilterPriceProps) {
 		)
 		setPrice([min, max])
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [minPrice, maxPrice, location])
+	}, [minPrice, maxPrice, location, listSearchParams])
 
 	useEffect(() => {
 		const difference = maxPrice - minPrice
@@ -56,7 +56,6 @@ export function ListFilterPrice({ minPrice, maxPrice }: ListFilterPriceProps) {
 		if (
 			minRef.current instanceof HTMLInputElement &&
 			maxRef.current instanceof HTMLInputElement &&
-			minPrice != maxPrice &&
 			(('data' in e.nativeEvent && Number(e.nativeEvent.data)) ||
 				('data' in e.nativeEvent && Number(e.nativeEvent.data) == 0))
 		) {
@@ -104,12 +103,7 @@ export function ListFilterPrice({ minPrice, maxPrice }: ListFilterPriceProps) {
 		<div className={styles['filterPrice']}>
 			{createPriceBlock('От', price[0])}
 			{createPriceBlock('До', price[1])}
-			<RangeSlider
-				percent={percent}
-				sliderSetValue={sliderSetValue}
-				setAcrive={setAcrive}
-				off={minPrice == maxPrice}
-			/>
+			<RangeSlider percent={percent} sliderSetValue={sliderSetValue} setAcrive={setAcrive} />
 		</div>
 	)
 }

@@ -1,6 +1,6 @@
 import { MouseEvent, useLayoutEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useLocation, useSearchParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { listActions } from '../../store/list.slice'
 import { AppDispatch } from '../../store/store'
 import { ListLimit } from '../List__sidebar_limit/ListLimit'
@@ -8,9 +8,9 @@ import { ListSort } from '../List__sidebar_sort/ListSort'
 import styles from './ListSideBar.module.scss'
 import { ListSideBarProps } from './ListSideBar.props'
 
-export function ListSideBar({ limit, sort }: ListSideBarProps) {
+export function ListSideBar({ limit, sort, listSearchParams }: ListSideBarProps) {
 	const location = useLocation()
-	const [searchParams, setSearchParams] = useSearchParams()
+	const [searchParams, setSearchParams] = listSearchParams
 	const firstRender = useRef(true)
 	const [sortState, setSortState] = useState('Сортировка')
 	const [limitState, setLimitState] = useState(limit)

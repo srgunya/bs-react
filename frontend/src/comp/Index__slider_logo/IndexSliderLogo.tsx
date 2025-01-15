@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SwiperSlide } from 'swiper/react'
 import { PREFIX } from '../../helpers/API'
+import { logoData } from '../../interfaces/logo.interface'
 import { Slider } from '../Slider/Slider'
 import styles from './IndexSliderLogo.module.scss'
-import { IndexSliderLogoProps, logoData } from './IndexSliderLogo.props'
+import { IndexSliderLogoProps } from './IndexSliderLogo.props'
 
 export function IndexSliderLogo({ logos, name, divideArr }: IndexSliderLogoProps) {
 	const [newLogos] = useState(divideArr<logoData>(10, logos))

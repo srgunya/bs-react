@@ -1,15 +1,15 @@
 import { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Await, useLoaderData } from 'react-router-dom'
-import { itemData } from '../../comp/Index__item/IndexItem.props'
+import { Await, useLoaderData, useSearchParams } from 'react-router-dom'
 import { ListFilter } from '../../comp/List__filter/ListFilter'
-import { filterData } from '../../comp/List__filter/ListFilter.props'
 import { ListItems } from '../../comp/List__items/ListItems'
 import { ListNav } from '../../comp/List__nav/ListNav'
 import { ListPagination } from '../../comp/List__pagination/ListPagination'
 import { ListSideBar } from '../../comp/List__sidebar/ListSideBar'
 import { allLink } from '../../helpers/linksHeader'
 import { useLoadPage } from '../../hooks/use-loadPage.hook'
+import { filterData } from '../../interfaces/filter.interface'
+import { itemData } from '../../interfaces/item.interface'
 import { listActions } from '../../store/list.slice'
 import { AppDispatch, RootState } from '../../store/store'
 import styles from './List.module.scss'
@@ -26,6 +26,7 @@ export function List() {
 			sort: string
 		}
 	}
+	const [searchParams, setSearchParams] = useSearchParams()
 	const { page, limit, sort } = listSearchParams
 	const mainRef = useLoadPage()
 	const listRef = useRef<HTMLDivElement>(null)
@@ -106,11 +107,19 @@ export function List() {
 						<div className={styles['list_background']}>
 							<div className={'main'} ref={mainRef}>
 								<div className={styles['sideBar']}>
-									<ListNav params={params} brand={items[0]?.brand} />
-									<ListSideBar limit={limit} sort={sort} />
+									<ListNav
+										params={params}
+										brand={items[0]?.brand}
+										listSearchParams={[searchParams, setSearchParams]}
+									/>
+									<ListSideBar
+										limit={limit}
+										sort={sort}
+										listSearchParams={[searchParams, setSearchParams]}
+									/>
 								</div>
 								<div className={styles['catalog']}>
-									<ListFilter facets={filter} />
+									<ListFilter facets={filter} listSearchParams={[searchParams, setSearchParams]} />
 									<div className={styles['catalog__list']} ref={listRef}>
 										<ListItems
 											items={itemsData}
@@ -123,6 +132,7 @@ export function List() {
 											countPagination={pagination}
 											params={{ page, limit }}
 											loadMoreItems={loadMoreItems}
+											listSearchParams={[searchParams, setSearchParams]}
 										/>
 									</div>
 								</div>

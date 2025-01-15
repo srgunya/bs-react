@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { SwiperSlide } from 'swiper/react'
+import { itemData } from '../../interfaces/item.interface'
 import { IndexItem } from '../Index__item/IndexItem'
-import { itemData } from '../Index__item/IndexItem.props'
 import { Slider } from '../Slider/Slider'
 import styles from './IndexSliderItem.module.scss'
 import { IndexSliderItemProps } from './IndexSliderItem.props'

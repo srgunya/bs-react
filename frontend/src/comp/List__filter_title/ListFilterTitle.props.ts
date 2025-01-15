@@ -1,7 +1,8 @@
 import { ReactNode } from 'react'
+import { SetURLSearchParams } from 'react-router-dom'
 
 export interface ListFilterTitleProps {
 	children: ReactNode
 	searchName: string
-	checked: boolean
+	listSearchParams: [URLSearchParams, SetURLSearchParams]
 }
