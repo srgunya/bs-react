@@ -1,6 +1,8 @@
-import { MouseEvent, useContext, useLayoutEffect, useRef, useState } from 'react'
+import { MouseEvent, useLayoutEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useLocation, useSearchParams } from 'react-router-dom'
-import { ListContext } from '../../context/list.context'
+import { listActions } from '../../store/list.slice'
+import { AppDispatch } from '../../store/store'
 import { ListLimit } from '../List__sidebar_limit/ListLimit'
 import { ListSort } from '../List__sidebar_sort/ListSort'
 import styles from './ListSideBar.module.scss'
@@ -10,9 +12,9 @@ export function ListSideBar({ limit, sort }: ListSideBarProps) {
 	const location = useLocation()
 	const [searchParams, setSearchParams] = useSearchParams()
 	const firstRender = useRef(true)
-	const { setListState } = useContext(ListContext)
 	const [sortState, setSortState] = useState('Сортировка')
 	const [limitState, setLimitState] = useState(limit)
+	const dispatch = useDispatch<AppDispatch>()
 
 	useLayoutEffect(() => {
 		if (firstRender.current) {
@@ -58,9 +60,9 @@ export function ListSideBar({ limit, sort }: ListSideBarProps) {
 				}
 			}
 			if (searchParams.get('page') || e.target.dataset.sort) {
-				setListState({ lazy: true, loading: true })
+				dispatch(listActions.change({ lazy: true, loading: true }))
 			} else {
-				setListState({ lazy: false, loading: true })
+				dispatch(listActions.change({ lazy: false, loading: true }))
 			}
 			searchParams.delete('page')
 			setSearchParams(searchParams, { preventScrollReset: true })

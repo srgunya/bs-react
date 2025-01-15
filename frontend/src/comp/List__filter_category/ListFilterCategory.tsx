@@ -1,7 +1,9 @@
 import cn from 'classnames'
-import { ChangeEvent, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useLocation, useSearchParams } from 'react-router-dom'
-import { ListContext } from '../../context/list.context'
+import { listActions } from '../../store/list.slice'
+import { AppDispatch } from '../../store/store'
 import { ListFilterSearch } from '../List__filter_search/ListFilterSearch'
 import { ListFilterTitle } from '../List__filter_title/ListFilterTitle'
 import styles from './ListFilterCategory.module.scss'
@@ -13,7 +15,7 @@ export function ListFilterCategory({ facets, name, searchName }: ListFilterCateg
 	const ulRef = useRef<HTMLUListElement>(null)
 	const [error, setError] = useState('')
 	const [checked, setChecked] = useState(false)
-	const { setListState } = useContext(ListContext)
+	const dispatch = useDispatch<AppDispatch>()
 
 	useLayoutEffect(() => {
 		if (ulRef.current?.scrollTop) {
@@ -47,7 +49,7 @@ export function ListFilterCategory({ facets, name, searchName }: ListFilterCateg
 		} else {
 			searchParams.set(searchName, newUrl)
 		}
-		setListState({ lazy: true, loading: true })
+		dispatch(listActions.change({ lazy: true, loading: true }))
 		searchParams.delete('page')
 		setSearchParams(searchParams, { preventScrollReset: true })
 	}

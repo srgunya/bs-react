@@ -1,7 +1,9 @@
 import { MouseEvent, useContext } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { HeaderContext } from '../../context/header.context'
-import { ListContext } from '../../context/list.context'
+import { listActions } from '../../store/list.slice'
+import { AppDispatch } from '../../store/store'
 import { HeaderButton } from '../Header__button/HeaderButton'
 import { HeaderNav } from '../Header__nav/HeaderNav'
 import styles from './Header.module.scss'
@@ -10,7 +12,7 @@ export function Header() {
 	const location = useLocation()
 	const [searchParams] = useSearchParams()
 	const navi = useNavigate()
-	const { setListState } = useContext(ListContext)
+	const dispatch = useDispatch<AppDispatch>()
 	const { setMenuActive } = useContext(HeaderContext)
 
 	function link(e: MouseEvent, to: string) {
@@ -19,7 +21,7 @@ export function Header() {
 		if (location.pathname == to && !searchParams.size) {
 			return false
 		} else {
-			setListState({ lazy: true, loading: true })
+			dispatch(listActions.change({ lazy: true, loading: true }))
 			navi(to)
 		}
 	}

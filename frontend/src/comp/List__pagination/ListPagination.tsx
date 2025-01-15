@@ -1,7 +1,9 @@
 import cn from 'classnames'
-import { MouseEvent, useContext, useLayoutEffect, useRef } from 'react'
+import { MouseEvent, useLayoutEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
-import { ListContext } from '../../context/list.context'
+import { listActions } from '../../store/list.slice'
+import { AppDispatch } from '../../store/store'
 import styles from './ListPagination.module.scss'
 import { ListPaginationProps } from './ListPagination.props'
 
@@ -10,7 +12,7 @@ export function ListPagination({ countPagination, params, loadMoreItems }: ListP
 	const activeRef = useRef<HTMLButtonElement>(null)
 	const { page, limit } = params
 	const [searchParams, setSearchParams] = useSearchParams()
-	const { setListState } = useContext(ListContext)
+	const dispatch = useDispatch<AppDispatch>()
 
 	useLayoutEffect(() => {
 		moreRef.current?.classList.remove(styles['ListPagination__more_load'])
@@ -33,7 +35,8 @@ export function ListPagination({ countPagination, params, loadMoreItems }: ListP
 			searchParams.set('page', `${page + 1}`)
 			loadMoreItems()
 			setSearchParams(searchParams, { preventScrollReset: true })
-			setListState(state => ({ ...state, loading: true }))
+			dispatch(listActions.change({ lazy: false, loading: true }))
+			// setListState(state => ({ ...state, loading: true }))
 		}
 	}
 	function link(e: MouseEvent) {
@@ -45,7 +48,7 @@ export function ListPagination({ countPagination, params, loadMoreItems }: ListP
 				searchParams.set('page', e.target.textContent)
 			}
 			setSearchParams(searchParams, { preventScrollReset: true })
-			setListState({ lazy: true, loading: true })
+			dispatch(listActions.change({ lazy: true, loading: true }))
 		}
 	}
 

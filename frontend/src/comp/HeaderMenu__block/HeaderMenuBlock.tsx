@@ -1,8 +1,10 @@
 import cn from 'classnames'
 import { MouseEvent, useContext, useEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { HeaderContext } from '../../context/header.context'
-import { ListContext } from '../../context/list.context'
+import { listActions } from '../../store/list.slice'
+import { AppDispatch } from '../../store/store'
 import { HeaderMenuImg } from '../HeaderMenu__img/HeaderMenuImg'
 import { HeaderMenuNav } from '../HeaderMenu__nav/HeaderMenuNav'
 import styles from './HeaderMenuBlock.module.scss'
@@ -14,7 +16,7 @@ export function HeaderMenuBlock({ params, name }: HeaderMenuBlockProps) {
 	const navi = useNavigate()
 	const menuNav = useRef<HTMLDivElement>(null)
 	const { menuActive, setMenuActive } = useContext(HeaderContext)
-	const { setListState } = useContext(ListContext)
+	const dispatch = useDispatch<AppDispatch>()
 
 	useEffect(() => {
 		let timerId: number
@@ -38,7 +40,7 @@ export function HeaderMenuBlock({ params, name }: HeaderMenuBlockProps) {
 		if (location.pathname == to && !searchParams.size) {
 			return false
 		} else {
-			setListState({ lazy: true, loading: true })
+			dispatch(listActions.change({ lazy: true, loading: true }))
 			navi(to)
 		}
 	}

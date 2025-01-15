@@ -1,13 +1,15 @@
 import cn from 'classnames'
-import { MouseEvent, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { MouseEvent, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import { ListContext } from '../../context/list.context'
+import { listActions } from '../../store/list.slice'
+import { AppDispatch } from '../../store/store'
 import styles from './ListNav.module.scss'
 import { ListNavProps } from './ListNav.props'
 
 export function ListNav({ params, brand }: ListNavProps) {
 	const [linkBrand, setLinkBrand] = useState(brand)
-	const { setListState } = useContext(ListContext)
+	const dispatch = useDispatch<AppDispatch>()
 	const location = useLocation()
 	const ulRef = useRef<HTMLUListElement>(null)
 	const [searchParams] = useSearchParams()
@@ -44,7 +46,7 @@ export function ListNav({ params, brand }: ListNavProps) {
 		if (location.pathname == to && !searchParams.size) {
 			return false
 		} else {
-			setListState({ lazy: true, loading: true })
+			dispatch(listActions.change({ lazy: true, loading: true }))
 			navi(to)
 		}
 	}

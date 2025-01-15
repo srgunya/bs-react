@@ -1,14 +1,16 @@
 import cn from 'classnames'
-import { useContext, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
-import { ListContext } from '../../context/list.context'
+import { listActions } from '../../store/list.slice'
+import { AppDispatch } from '../../store/store'
 import styles from './ListFilterHeader.module.scss'
 
 export function ListFilterHeader() {
 	const [searchParams, setSearchParams] = useSearchParams()
 	const titleRef = useRef<HTMLDivElement>(null)
 	const resetRef = useRef<HTMLDivElement>(null)
-	const { setListState } = useContext(ListContext)
+	const dispatch = useDispatch<AppDispatch>()
 
 	useEffect(() => {
 		if (
@@ -34,7 +36,7 @@ export function ListFilterHeader() {
 	}, [searchParams])
 
 	function reset() {
-		setListState({ lazy: true, loading: true })
+		dispatch(listActions.change({ lazy: true, loading: true }))
 		searchParams.delete('page')
 		searchParams.delete('price')
 		searchParams.delete('pol')

@@ -1,6 +1,7 @@
 import 'normalize.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Provider } from 'react-redux'
 import { createBrowserRouter, defer, RouterProvider } from 'react-router-dom'
 import { itemData } from './comp/Index__item/IndexItem.props'
 import { logoData } from './comp/Index__slider_logo/IndexSliderLogo.props'
@@ -11,6 +12,7 @@ import './main.scss'
 import { Brandlist } from './pages/BrandList/BrandList'
 import { Index } from './pages/Index/Index'
 import { List } from './pages/List/List'
+import { store } from './store/store'
 
 const router = createBrowserRouter([
 	{
@@ -52,6 +54,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
-		<RouterProvider router={router}></RouterProvider>
+		<Provider store={store}>
+			<RouterProvider router={router}></RouterProvider>
+		</Provider>
 	</StrictMode>
 )

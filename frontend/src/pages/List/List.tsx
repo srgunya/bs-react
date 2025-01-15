@@ -1,4 +1,5 @@
-import { Suspense, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Await, useLoaderData } from 'react-router-dom'
 import { itemData } from '../../comp/Index__item/IndexItem.props'
 import { ListFilter } from '../../comp/List__filter/ListFilter'
@@ -7,9 +8,10 @@ import { ListItems } from '../../comp/List__items/ListItems'
 import { ListNav } from '../../comp/List__nav/ListNav'
 import { ListPagination } from '../../comp/List__pagination/ListPagination'
 import { ListSideBar } from '../../comp/List__sidebar/ListSideBar'
-import { ListContext } from '../../context/list.context'
 import { allLink } from '../../helpers/linksHeader'
 import { useLoadPage } from '../../hooks/use-loadPage.hook'
+import { listActions } from '../../store/list.slice'
+import { AppDispatch, RootState } from '../../store/store'
 import styles from './List.module.scss'
 
 export function List() {
@@ -29,7 +31,8 @@ export function List() {
 	const listRef = useRef<HTMLDivElement>(null)
 	const [itemsData, setItemsData] = useState<itemData[]>(items)
 	const [moreData, setMoreData] = useState<itemData[]>([])
-	const { listState, setListState } = useContext(ListContext)
+	const listState = useSelector((state: RootState) => state.list)
+	const dispatch = useDispatch<AppDispatch>()
 
 	useLayoutEffect(() => {
 		if (sessionStorage.getItem('more')) {
@@ -64,23 +67,22 @@ export function List() {
 				mainRef.current?.classList.add('lazy__img')
 			}, 300)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [items])
+	}, [items, listState.lazy, mainRef])
 
 	useEffect(() => {
-		setListState({ lazy: false, loading: false })
+		dispatch(listActions.change({ lazy: false, loading: false }))
 		sessionStorage.removeItem('lazy')
-	}, [items, setListState])
+	}, [dispatch, items])
 
 	useEffect(() => {
 		window.onpopstate = () => {
 			const searchTerm = location.pathname
 			const effect = allLink().find(el => el == searchTerm)
 			if (effect) {
-				setListState({ lazy: true, loading: true })
+				dispatch(listActions.change({ lazy: true, loading: true }))
 			}
 		}
-	}, [setListState])
+	}, [dispatch])
 
 	function loadMoreItems() {
 		sessionStorage.setItem('more', JSON.stringify([...itemsData, ...moreData]))

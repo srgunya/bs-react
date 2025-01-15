@@ -1,6 +1,8 @@
-import { FormEvent, useContext, useEffect, useRef, useState } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useLocation, useSearchParams } from 'react-router-dom'
-import { ListContext } from '../../context/list.context'
+import { listActions } from '../../store/list.slice'
+import { AppDispatch } from '../../store/store'
 import { RangeSlider } from '../RangeSlider/RangeSlider'
 import styles from './ListFilterPrice.module.scss'
 import { ListFilterPriceProps } from './ListFilterPrice.props'
@@ -8,7 +10,7 @@ import { ListFilterPriceProps } from './ListFilterPrice.props'
 export function ListFilterPrice({ minPrice, maxPrice }: ListFilterPriceProps) {
 	const location = useLocation()
 	const [searchParams, setSearchParams] = useSearchParams()
-	const { setListState } = useContext(ListContext)
+	const dispatch = useDispatch<AppDispatch>()
 	const minRef = useRef<HTMLInputElement>(null)
 	const maxRef = useRef<HTMLInputElement>(null)
 	const [price, setPrice] = useState([minPrice, maxPrice])
@@ -17,7 +19,7 @@ export function ListFilterPrice({ minPrice, maxPrice }: ListFilterPriceProps) {
 
 	useEffect(() => {
 		if (active) {
-			setListState({ lazy: true, loading: true })
+			dispatch(listActions.change({ lazy: true, loading: true }))
 			searchParams.set('price', `${price[0]},${price[1]}`)
 			if (price[0] == minPrice && price[1] == maxPrice) {
 				searchParams.delete('price')
