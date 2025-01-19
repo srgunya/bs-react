@@ -3,6 +3,7 @@ import { MouseEvent, useLayoutEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { listActions } from '../../store/list.slice'
 import { AppDispatch } from '../../store/store'
+import { Button } from '../Button/Button'
 import styles from './ListPagination.module.scss'
 import { ListPaginationProps } from './ListPagination.props'
 
@@ -40,7 +41,6 @@ export function ListPagination({
 			loadMoreItems()
 			setSearchParams(searchParams, { preventScrollReset: true })
 			dispatch(listActions.change({ lazy: false, loading: true }))
-			// setListState(state => ({ ...state, loading: true }))
 		}
 	}
 	function link(e: MouseEvent) {
@@ -68,16 +68,14 @@ export function ListPagination({
 					[styles['ListPagination_hide']]: length == 1 || !length,
 				})}
 			>
-				<button
-					className={cn(styles['ListPagination__more'], {
-						[styles['ListPagination__more_hide']]: page >= pagi.length,
-					})}
-					onClick={more}
+				<Button
 					ref={moreRef}
+					style={{ display: page >= pagi.length ? 'none' : 'flex', marginTop: '48px' }}
+					onClick={more}
 				>
 					Показать ещё товары
 					<img src='/img/load/load.png' alt='' className={styles['ListPagination__load']} />
-				</button>
+				</Button>
 				<div className={styles['pagination']}>
 					<button
 						className={cn(styles['pagination__button'], {

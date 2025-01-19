@@ -107,11 +107,7 @@ export function List() {
 						<div className={styles['list_background']}>
 							<div className={'main'} ref={mainRef}>
 								<div className={styles['sideBar']}>
-									<ListNav
-										params={params}
-										brand={items[0]?.brand}
-										listSearchParams={[searchParams, setSearchParams]}
-									/>
+									<ListNav params={params} brand={items[0]?.brand} />
 									<ListSideBar
 										limit={limit}
 										sort={sort}

@@ -1,3 +1,4 @@
+import cn from 'classnames'
 import { lazy, Suspense } from 'react'
 import { Outlet, ScrollRestoration } from 'react-router-dom'
 import { Footer } from '../../comp/Footer/Footer'
@@ -9,7 +10,7 @@ const HeaderMenu = lazy(() => import('../../comp/HeaderMenu/HeaderMenu'))
 
 export function Layout() {
 	return (
-		<div className={styles['layout']}>
+		<div className={cn(styles['layout'])}>
 			<ScrollRestoration />
 			<HeaderContextProvider>
 				<Header />

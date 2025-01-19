@@ -1,19 +1,15 @@
 import cn from 'classnames'
 import { MouseEvent, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { listActions } from '../../store/list.slice'
-import { AppDispatch } from '../../store/store'
+import { Link, useLocation } from 'react-router-dom'
+import { useLink } from '../../hooks/use-link.hook'
 import styles from './ListNav.module.scss'
 import { ListNavProps } from './ListNav.props'
 
-export function ListNav({ params, brand, listSearchParams }: ListNavProps) {
+export function ListNav({ params, brand }: ListNavProps) {
 	const [linkBrand, setLinkBrand] = useState(brand)
-	const dispatch = useDispatch<AppDispatch>()
 	const location = useLocation()
 	const ulRef = useRef<HTMLUListElement>(null)
-	const [searchParams] = listSearchParams
-	const navi = useNavigate()
+	const linkTo = useLink()
 
 	useLayoutEffect(() => {
 		if (brand) {
@@ -42,13 +38,7 @@ export function ListNav({ params, brand, listSearchParams }: ListNavProps) {
 	}, [params])
 
 	function link(e: MouseEvent, to: string) {
-		e.preventDefault()
-		if (location.pathname == to && !searchParams.size) {
-			return false
-		} else {
-			dispatch(listActions.change({ lazy: true, loading: true }))
-			navi(to)
-		}
+		linkTo(e, to)
 	}
 
 	function createUl() {

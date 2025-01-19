@@ -1,0 +1,114 @@
+.basketItems {
+	width: 37.8rem;
+	padding: 2.4rem 0 1.6rem 2.4rem;
+	max-height: 31.1rem;
+	overflow-y: auto;
+	border-color: rgba(0, 0, 0, 0);
+	transition: border-color 0.3s ease;
+
+	&::-webkit-scrollbar {
+		width: 2px;
+	}
+	&::-webkit-scrollbar-thumb {
+		border-right-style: inset;
+		border-right-width: calc(100vw + 100vh);
+		border-color: inherit;
+	}
+}
+.basketItems_scroll {
+	border-color: black;
+}
+.item {
+	margin-bottom: 3.2rem;
+	padding-right: 2.4rem;
+}
+.item:last-child {
+	margin-bottom: 0;
+}
+.itemInfo {
+	display: flex;
+	flex-flow: row nowrap;
+}
+.itemInfo__link {
+	margin-right: 1.6rem;
+	padding: 0.2rem;
+	background-color: $background;
+	border-radius: 0.4rem;
+	align-self: flex-start;
+}
+.itemInfo__img {
+	width: 5rem;
+	height: 5rem;
+}
+.itemInfo__text {
+	line-height: 1.6rem;
+	margin-right: 1rem;
+	flex: 1;
+}
+.itemInfo__brand {
+	margin-bottom: 0.8rem;
+	line-height: 2rem;
+}
+.itemInfo__model {
+	font-size: 1.2rem;
+	color: $primary-40;
+	margin-bottom: 0.8rem;
+}
+.itemInfo__price {
+	font-size: 1.8rem;
+	white-space: nowrap;
+	text-align: right;
+}
+.itemPrice {
+	display: flex;
+	flex-flow: column nowrap;
+	white-space: nowrap;
+	line-height: 2.4rem;
+}
+.itemPrice__sale {
+	font-size: 1.8rem;
+	color: $red;
+}
+.itemPrice__price {
+	font-size: 1.4rem;
+	color: $primary-40;
+	text-decoration: line-through;
+	text-align: right;
+}
+.itemInterface {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	margin-left: 6.6rem;
+}
+.itemInterface__button {
+	width: 3.2rem;
+	height: 3.2rem;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	background-color: $primary-5;
+	&:hover {
+		background-color: $primary-10;
+	}
+}
+.itemInterface__img_minus,
+.itemInterface__img_plus {
+	pointer-events: none;
+}
+.itemInterface__img_minus {
+	width: 1.5rem;
+}
+.itemInterface__img_plus {
+	width: 1.3rem;
+}
+.itemInterface__count {
+	width: 3.9rem;
+	text-align: center;
+}
+.itemInterface__size {
+	margin-left: 1.6rem;
+}

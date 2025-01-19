@@ -1,11 +1,19 @@
 import { MouseEvent } from 'react'
+import { useDispatch } from 'react-redux'
+import { basketActions } from '../../store/basket.slice'
+import { AppDispatch } from '../../store/store'
 import styles from './ListItemsSize.module.scss'
 import { ListItemsSizeProps } from './ListItemsSize.props'
 
-export function ListItemsSize({ size }: ListItemsSizeProps) {
+export function ListItemsSize({ size, itemID }: ListItemsSizeProps) {
+	const dispatch = useDispatch<AppDispatch>()
+
 	function clickSize(e: MouseEvent) {
 		e.preventDefault()
 		if (e.target instanceof HTMLButtonElement) {
+			setTimeout(() => {
+				dispatch(basketActions.add({ id: itemID, size }))
+			}, 150)
 			e.target.classList.add(styles['itemSize__size_click'])
 			e.target.disabled = true
 			setTimeout(() => {
@@ -14,7 +22,7 @@ export function ListItemsSize({ size }: ListItemsSizeProps) {
 				}
 			}, 1000)
 			setTimeout(() => {
-				if (e.target instanceof HTMLButtonElement && e.target.classList) {
+				if (e.target instanceof HTMLButtonElement) {
 					e.target.disabled = false
 				}
 			}, 1500)

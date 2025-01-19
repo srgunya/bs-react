@@ -1,0 +1,37 @@
+.basket__empty {
+	width: 100%;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 2.4rem 2.4rem;
+	background-color: white;
+	border-radius: 0.4rem;
+	animation: vis 0.15s linear forwards;
+}
+.basket__h1 {
+	font-size: 1.8rem;
+	font-weight: normal;
+	margin-top: 2.2rem;
+}
+.basket__p {
+	color: $primary-40;
+	padding: 0 2rem;
+	text-align: center;
+	line-height: 2rem;
+	margin-top: 5rem;
+}
+.basket__button_new {
+	width: 17rem;
+}
+.basket__link {
+	margin-bottom: 5rem;
+}
+@keyframes vis {
+	from {
+		height: 31rem;
+	}
+	to {
+		height: 33.8rem;
+	}
+}

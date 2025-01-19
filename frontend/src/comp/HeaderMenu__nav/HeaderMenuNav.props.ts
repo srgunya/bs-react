@@ -6,5 +6,5 @@ export interface HeaderMenuNavProps {
 		to: string
 		text: string
 	}[]
-	link: (e: MouseEvent, to: string) => false | undefined
+	link: (e: MouseEvent, to: string) => void
 }

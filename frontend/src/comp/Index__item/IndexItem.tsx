@@ -49,7 +49,7 @@ export function IndexItem({ item, name }: IndexItemProps) {
 						})}
 					>
 						{item.size.map(el => (
-							<ListItemsSize size={el} key={el} />
+							<ListItemsSize size={el} key={el} itemID={item.id} />
 						))}
 					</div>
 				)}

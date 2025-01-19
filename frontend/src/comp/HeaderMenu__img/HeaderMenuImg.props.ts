@@ -7,5 +7,5 @@ export interface HeaderMenuImgProps {
 		text: string
 		img: string
 	}[]
-	link: (e: MouseEvent, to: string) => false | undefined
+	link: (e: MouseEvent, to: string) => void
 }

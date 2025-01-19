@@ -3,12 +3,11 @@
 	display: flex;
 	flex-flow: row wrap;
 }
-.ListPagination__more {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	user-select: none;
-	margin-top: 4.8rem;
+.ListPagination__more_load {
+	color: transparent;
+	.ListPagination__load {
+		display: block;
+	}
 }
 .ListPagination__load {
 	display: none;
@@ -26,7 +25,7 @@
 	gap: 0.4rem;
 	margin-top: 2.4rem;
 }
-.ListPagination__more,
+
 .pagination__link,
 .pagination__button {
 	width: 100%;
@@ -70,15 +69,8 @@
 }
 .pagination__link_hide,
 .pagination__button_hide,
-.ListPagination_hide,
-.ListPagination__more_hide {
+.ListPagination_hide {
 	display: none;
-}
-.ListPagination__more_load {
-	color: transparent;
-	.ListPagination__load {
-		display: block;
-	}
 }
 
 @keyframes load {

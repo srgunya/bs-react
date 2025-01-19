@@ -1,0 +1,28 @@
+.basket {
+	width: 37.8rem;
+	max-height: 33.8rem;
+	z-index: 3;
+	position: absolute;
+	top: 5.5rem;
+	right: 5rem;
+	border-radius: 0.4rem;
+	background: white;
+	box-shadow: 0 10px 30px 0 $primary-10;
+	transform: translateY(2rem);
+	opacity: 0;
+	transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.basket_list {
+	max-height: inherit;
+}
+.basket_none {
+	visibility: hidden;
+}
+.basket_open {
+	opacity: 1;
+	transform: translateY(0rem);
+}
+.basket__count_hover {
+	background-color: $primary;
+	color: white;
+}

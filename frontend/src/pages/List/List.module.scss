@@ -1,6 +1,3 @@
-.list_background {
-	background-color: $background;
-}
 .sideBar {
 	display: flex;
 	flex-flow: row nowrap;
@@ -21,4 +18,8 @@
 .catalog__list_loading {
 	opacity: 0.3;
 	pointer-events: none;
+}
+.list_background {
+	background-color: $background;
+	flex: 1;
 }

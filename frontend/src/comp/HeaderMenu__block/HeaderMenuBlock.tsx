@@ -1,22 +1,16 @@
 import cn from 'classnames'
 import { MouseEvent, useContext, useEffect, useRef } from 'react'
-import { useDispatch } from 'react-redux'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { HeaderContext } from '../../context/header.context'
-import { listActions } from '../../store/list.slice'
-import { AppDispatch } from '../../store/store'
+import { useLink } from '../../hooks/use-link.hook'
 import { HeaderMenuImg } from '../HeaderMenu__img/HeaderMenuImg'
 import { HeaderMenuNav } from '../HeaderMenu__nav/HeaderMenuNav'
 import styles from './HeaderMenuBlock.module.scss'
 import { HeaderMenuBlockProps } from './HeaderMenuBlock.props'
 
 export function HeaderMenuBlock({ params, name }: HeaderMenuBlockProps) {
-	const location = useLocation()
-	const [searchParams] = useSearchParams()
-	const navi = useNavigate()
 	const menuNav = useRef<HTMLDivElement>(null)
 	const { menuActive, setMenuActive } = useContext(HeaderContext)
-	const dispatch = useDispatch<AppDispatch>()
+	const linkTo = useLink()
 
 	useEffect(() => {
 		let timerId: number
@@ -35,14 +29,8 @@ export function HeaderMenuBlock({ params, name }: HeaderMenuBlockProps) {
 	}, [menuActive, name])
 
 	function link(e: MouseEvent, to: string) {
-		e.preventDefault()
 		setMenuActive('')
-		if (location.pathname == to && !searchParams.size) {
-			return false
-		} else {
-			dispatch(listActions.change({ lazy: true, loading: true }))
-			navi(to)
-		}
+		linkTo(e, to)
 	}
 
 	return (

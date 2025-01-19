@@ -22,15 +22,17 @@ export function ListFilterHeader({ listSearchParams }: ListFilterHeaderProps) {
 			searchParams.has('brand')
 		) {
 			titleRef.current?.classList.add(styles['filterHeader_hide'])
-			resetRef.current?.classList.remove(styles['filterHeader_none'])
 			setTimeout(() => {
-				resetRef.current?.classList.remove(styles['filterHeader_hide'])
+				if (titleRef.current?.classList.contains(styles['filterHeader_hide'])) {
+					resetRef.current?.classList.remove(styles['filterHeader_hide'])
+				}
 			}, 100)
 		} else {
 			resetRef.current?.classList.add(styles['filterHeader_hide'])
 			setTimeout(() => {
-				resetRef.current?.classList.add(styles['filterHeader_none'])
-				titleRef.current?.classList.remove(styles['filterHeader_hide'])
+				if (resetRef.current?.classList.contains(styles['filterHeader_hide'])) {
+					titleRef.current?.classList.remove(styles['filterHeader_hide'])
+				}
 			}, 100)
 		}
 	}, [listSearchParams, searchParams])
@@ -53,11 +55,7 @@ export function ListFilterHeader({ listSearchParams }: ListFilterHeaderProps) {
 				Фильтр
 			</div>
 			<div
-				className={cn(
-					styles['filterHeader__reset'],
-					styles['filterHeader_hide'],
-					styles['filterHeader_none']
-				)}
+				className={cn(styles['filterHeader__reset'], styles['filterHeader_hide'])}
 				ref={resetRef}
 				onClick={reset}
 			>

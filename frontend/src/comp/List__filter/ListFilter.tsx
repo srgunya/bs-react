@@ -109,6 +109,7 @@ export function ListFilter({ facets, listSearchParams }: ListFilterProps) {
 					searchName={el.searchName}
 					facets={el.facets}
 					listSearchParams={listSearchParams}
+					key={el.name}
 				/>
 			))}
 		</div>
