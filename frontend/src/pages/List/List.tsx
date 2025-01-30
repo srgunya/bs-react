@@ -6,7 +6,6 @@ import { ListItems } from '../../comp/List__items/ListItems'
 import { ListNav } from '../../comp/List__nav/ListNav'
 import { ListPagination } from '../../comp/List__pagination/ListPagination'
 import { ListSideBar } from '../../comp/List__sidebar/ListSideBar'
-import { allLink } from '../../helpers/linksHeader'
 import { useLoadPage } from '../../hooks/use-loadPage.hook'
 import { filterData } from '../../interfaces/filter.interface'
 import { itemData } from '../../interfaces/item.interface'
@@ -26,6 +25,7 @@ export function List() {
 			sort: string
 		}
 	}
+
 	const [searchParams, setSearchParams] = useSearchParams()
 	const { page, limit, sort } = listSearchParams
 	const mainRef = useLoadPage()
@@ -73,13 +73,12 @@ export function List() {
 	useEffect(() => {
 		dispatch(listActions.change({ lazy: false, loading: false }))
 		sessionStorage.removeItem('lazy')
+		sessionStorage.removeItem('loader')
 	}, [dispatch, items])
 
 	useEffect(() => {
 		window.onpopstate = () => {
-			const searchTerm = location.pathname
-			const effect = allLink().find(el => el == searchTerm)
-			if (effect) {
+			if (sessionStorage.getItem('loader') == 'List') {
 				dispatch(listActions.change({ lazy: true, loading: true }))
 			}
 		}

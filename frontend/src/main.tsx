@@ -38,6 +38,7 @@ const router = createBrowserRouter([
 				path: '*',
 				element: <List />,
 				loader: async ({ params, request }) => {
+					sessionStorage.setItem('loader', 'List')
 					const { props, page, limit, sort, filterParams } = await getSearchParams(params, request)
 					return defer({
 						items: await getList(props, page, limit, sort, filterParams),

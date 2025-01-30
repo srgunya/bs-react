@@ -1,11 +1,13 @@
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
-import _ from 'lodash'
 import { useEffect, useState } from 'react'
 import { RangeSliderProps } from './RangeSlider.props'
 
 export function RangeSlider({ percent, sliderSetValue, setAcrive }: RangeSliderProps) {
 	const [value, setValue] = useState<number[]>([0, 100])
+	const [min, max] = value
+	const [change, setChange] = useState(false)
+	let timer = 0
 
 	const handleChange = (event: Event, newValue: number | number[]) => {
 		if (event.type == 'keydown') {
@@ -19,6 +21,10 @@ export function RangeSlider({ percent, sliderSetValue, setAcrive }: RangeSliderP
 		const y = percent[1] ? percent[1] : percent[1] == 0 ? 0 : 100
 		setValue([x, y])
 	}, [percent])
+
+	useEffect(() => {
+		setChange(true)
+	}, [min, max])
 
 	return (
 		<Box
@@ -45,9 +51,15 @@ export function RangeSlider({ percent, sliderSetValue, setAcrive }: RangeSliderP
 			<Slider
 				value={value}
 				onChange={handleChange}
-				onChangeCommitted={_.debounce(() => {
-					setAcrive(true)
-				}, 500)}
+				onChangeCommitted={() => {
+					clearTimeout(timer)
+					timer = setTimeout(() => {
+						if (change) {
+							setAcrive(true)
+						}
+						setChange(false)
+					}, 500)
+				}}
 				valueLabelDisplay='off'
 				color='primary'
 			/>
