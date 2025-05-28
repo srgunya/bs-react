@@ -7,7 +7,11 @@ import { RangeSlider } from '../RangeSlider/RangeSlider'
 import styles from './ListFilterPrice.module.scss'
 import { ListFilterPriceProps } from './ListFilterPrice.props'
 
-export function ListFilterPrice({ minPrice, maxPrice, listSearchParams }: ListFilterPriceProps) {
+export function ListFilterPrice({
+	minPrice,
+	maxPrice,
+	listSearchParams,
+}: ListFilterPriceProps) {
 	const location = useLocation()
 	const [searchParams, setSearchParams] = listSearchParams
 	const dispatch = useDispatch<AppDispatch>()
@@ -32,13 +36,21 @@ export function ListFilterPrice({ minPrice, maxPrice, listSearchParams }: ListFi
 	}, [active])
 
 	useEffect(() => {
-		const orderMin = Math.abs(Math.round(Number(searchParams.get('price')?.split(',')[0])))
-		const orderMax = Math.abs(Math.round(Number(searchParams.get('price')?.split(',')[1])))
+		const orderMin = Math.abs(
+			Math.round(Number(searchParams.get('price')?.split(',')[0]))
+		)
+		const orderMax = Math.abs(
+			Math.round(Number(searchParams.get('price')?.split(',')[1]))
+		)
 		const min = Number(
-			orderMin && searchParams.get('price')?.split(',').length == 2 ? orderMin : minPrice
+			orderMin && searchParams.get('price')?.split(',').length == 2
+				? orderMin
+				: minPrice
 		)
 		const max = Number(
-			orderMax && searchParams.get('price')?.split(',').length == 2 ? orderMax : maxPrice
+			orderMax && searchParams.get('price')?.split(',').length == 2
+				? orderMax
+				: maxPrice
 		)
 		setPrice([min, max])
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,7 +75,13 @@ export function ListFilterPrice({ minPrice, maxPrice, listSearchParams }: ListFi
 			const xMax = Number(maxRef.current.value.replace(/\s+/g, ''))
 			const min = xMin > maxPrice ? maxPrice : xMin < minPrice ? minPrice : xMin
 			const max =
-				xMax > maxPrice ? maxPrice : xMax < minPrice ? minPrice : xMax < xMin ? xMin : xMax
+				xMax > maxPrice
+					? maxPrice
+					: xMax < minPrice
+					? minPrice
+					: xMax < xMin
+					? xMin
+					: xMax
 			setPrice([min, max])
 			if (JSON.stringify(price) != JSON.stringify([min, max])) {
 				setAcrive(true)
@@ -73,12 +91,28 @@ export function ListFilterPrice({ minPrice, maxPrice, listSearchParams }: ListFi
 
 	function sliderSetValue(percent: number[]) {
 		const difference = maxPrice - minPrice
-		const xMin = Math.round((minPrice + (percent[0] * difference) / 100) / 100) * 100
-		const xMax = Math.round((maxPrice - (difference - (percent[1] * difference) / 100)) / 100) * 100
+		const xMin =
+			Math.round((minPrice + (percent[0] * difference) / 100) / 100) * 100
+		const xMax =
+			Math.round(
+				(maxPrice - (difference - (percent[1] * difference) / 100)) / 100
+			) * 100
 		const min =
-			percent[0] == 0 ? minPrice : xMin > maxPrice ? maxPrice : xMin < minPrice ? minPrice : xMin
+			percent[0] == 0
+				? minPrice
+				: xMin > maxPrice
+				? maxPrice
+				: xMin < minPrice
+				? minPrice
+				: xMin
 		const max =
-			percent[1] == 100 ? maxPrice : xMax > maxPrice ? maxPrice : xMax < minPrice ? minPrice : xMax
+			percent[1] == 100
+				? maxPrice
+				: xMax > maxPrice
+				? maxPrice
+				: xMax < minPrice
+				? minPrice
+				: xMax
 		setPrice([min, max])
 	}
 
@@ -103,7 +137,11 @@ export function ListFilterPrice({ minPrice, maxPrice, listSearchParams }: ListFi
 		<div className={styles['filterPrice']}>
 			{createPriceBlock('От', price[0])}
 			{createPriceBlock('До', price[1])}
-			<RangeSlider percent={percent} sliderSetValue={sliderSetValue} setAcrive={setAcrive} />
+			<RangeSlider
+				percent={percent}
+				sliderSetValue={sliderSetValue}
+				setAcrive={setAcrive}
+			/>
 		</div>
 	)
 }

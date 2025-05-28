@@ -19,25 +19,29 @@ const initialState: basketState = {
 	items: [],
 }
 
-export const getItems = createAsyncThunk<itemData[], void, { state: RootState }>(
-	'basket/getItems',
-	async (_, thunkApi) => {
-		const basket = thunkApi
-			.getState()
-			.basket.basket.reduce((a: item[], c) => (a.map(e => e.id).includes(c.id) || a.push(c), a), [])
-		async function getItem(el: number) {
-			const res = await fetch(`${PREFIX}/getItemById/${el}`)
-			const data: itemData = await res.json()
-			return data
-		}
-		async function getData() {
-			const data = await Promise.all(basket.map(el => getItem(el.id)))
-			return data
-		}
-		const data = await getData()
+export const getItems = createAsyncThunk<
+	itemData[],
+	void,
+	{ state: RootState }
+>('basket/getItems', async (_, thunkApi) => {
+	const basket = thunkApi
+		.getState()
+		.basket.basket.reduce(
+			(a: item[], c) => (a.map(e => e.id).includes(c.id) || a.push(c), a),
+			[]
+		)
+	async function getItem(el: number) {
+		const res = await fetch(`${PREFIX}/getItemById/${el}`)
+		const data: itemData = await res.json()
 		return data
 	}
-)
+	async function getData() {
+		const data = await Promise.all(basket.map(el => getItem(el.id)))
+		return data
+	}
+	const data = await getData()
+	return data
+})
 
 export const basketSlice = createSlice({
 	name: 'basket',

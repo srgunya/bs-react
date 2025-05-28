@@ -1,0 +1,47 @@
+.table {
+	margin-top: 6.4rem;
+	display: flex;
+	flex-flow: row wrap;
+	row-gap: 6.4rem;
+}
+.table__block {
+	width: 20%;
+	display: flex;
+	flex-flow: row nowrap;
+	gap: 1.6rem;
+}
+.table__letter {
+	width: 6.8rem;
+	text-align: right;
+	font-size: 2.4rem;
+	line-height: 2.4rem;
+}
+.table__ul {
+	margin-top: 0.4rem;
+	width: 100%;
+}
+.table__brand {
+	margin-bottom: 1.2rem;
+	line-height: 2rem;
+	display: flex;
+	align-items: center;
+}
+.table__link {
+	transition: color 0.3s ease;
+	&:hover {
+		color: $primary-40;
+	}
+}
+.table__link_soon {
+	color: $primary-40;
+	cursor: default;
+	pointer-events: none;
+}
+.table__soon {
+	background-color: $primary-5;
+	border-radius: 0.4rem;
+	line-height: 1.3rem;
+	font-size: 1rem;
+	padding: 0.3rem 0.6rem;
+	margin-left: 0.4rem;
+}

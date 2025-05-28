@@ -37,6 +37,10 @@ export const woman = {
 			text: 'Обувь',
 			img: '/img/header-menu/women_footwear.jpg',
 		},
-		{ to: '/zhenskoe/odezhda/', text: 'Одежда', img: '/img/header-menu/woomen_clothing.jpg' },
+		{
+			to: '/zhenskoe/odezhda/',
+			text: 'Одежда',
+			img: '/img/header-menu/woomen_clothing.jpg',
+		},
 	],
 }

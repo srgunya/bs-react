@@ -1,7 +1,9 @@
 function getBlockFilter(req) {
 	const filter = [
 		req.body.price.length != 0 && {
-			range: { discount_price: { gte: req.body.price[0], lte: req.body.price[1] } },
+			range: {
+				discount_price: { gte: req.body.price[0], lte: req.body.price[1] },
+			},
 		},
 		req.body.pol.length != 0 && {
 			terms: { sex: [...req.body.pol] },
@@ -48,8 +50,11 @@ function getSort(req) {
 
 function getUnisex(req) {
 	const unisex =
-		req.params['props'].includes('мужское') || req.params['props'].includes('женское')
-			? req.params['props'].replace('мужское', 'унисекс').replace('женское', 'унисекс')
+		req.params['props'].includes('мужское') ||
+		req.params['props'].includes('женское')
+			? req.params['props']
+					.replace('мужское', 'унисекс')
+					.replace('женское', 'унисекс')
 			: ''
 	return unisex
 }

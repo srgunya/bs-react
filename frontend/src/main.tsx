@@ -6,7 +6,13 @@ import { createBrowserRouter, defer, RouterProvider } from 'react-router-dom'
 import { itemData } from './interfaces/item.interface'
 import { logoData } from './interfaces/logo.interface'
 import { Layout } from './layout/Layout/Layout'
-import { getFilter, getList, getPagination, getSearchParams } from './loaders/getDataList'
+import { getDataBrandlist } from './loaders/getDataBrandlist'
+import {
+	getFilter,
+	getList,
+	getPagination,
+	getSearchParams,
+} from './loaders/getDataList'
 import { getDataSlider } from './loaders/getDataSlider'
 import './main.scss'
 import { Brandlist } from './pages/BrandList/BrandList'
@@ -33,13 +39,20 @@ const router = createBrowserRouter([
 			{
 				path: '/brandlist',
 				element: <Brandlist />,
+				loader: async () => {
+					return defer({
+						lang: await getDataBrandlist('lang'),
+						table: await getDataBrandlist('table'),
+					})
+				},
 			},
 			{
 				path: '*',
 				element: <List />,
 				loader: async ({ params, request }) => {
 					sessionStorage.setItem('loader', 'List')
-					const { props, page, limit, sort, filterParams } = await getSearchParams(params, request)
+					const { props, page, limit, sort, filterParams } =
+						await getSearchParams(params, request)
 					return defer({
 						items: await getList(props, page, limit, sort, filterParams),
 						filter: await getFilter(props, filterParams),

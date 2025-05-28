@@ -3,7 +3,11 @@ import Slider from '@mui/material/Slider'
 import { useEffect, useState } from 'react'
 import { RangeSliderProps } from './RangeSlider.props'
 
-export function RangeSlider({ percent, sliderSetValue, setAcrive }: RangeSliderProps) {
+export function RangeSlider({
+	percent,
+	sliderSetValue,
+	setAcrive,
+}: RangeSliderProps) {
 	const [value, setValue] = useState<number[]>([0, 100])
 	const [min, max] = value
 	const [change, setChange] = useState(false)
@@ -54,7 +58,11 @@ export function RangeSlider({ percent, sliderSetValue, setAcrive }: RangeSliderP
 				onChangeCommitted={() => {
 					clearTimeout(timer)
 					timer = setTimeout(() => {
-						if (change) {
+						if (
+							change &&
+							!Number.isNaN(percent[0]) &&
+							!Number.isNaN(percent[1])
+						) {
 							setAcrive(true)
 						}
 						setChange(false)

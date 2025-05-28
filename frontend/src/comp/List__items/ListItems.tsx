@@ -14,7 +14,7 @@ export function ListItems({ items, more, style }: ListItemsProps) {
 	useEffect(() => {
 		setTimeout(() => {
 			moreRef.current?.classList.remove('lazy__img_more')
-		}, 300)
+		}, 100)
 	}, [more])
 
 	return (

@@ -14,17 +14,18 @@ import { AppDispatch, RootState } from '../../store/store'
 import styles from './List.module.scss'
 
 export function List() {
-	const { params, items, filter, pagination, listSearchParams } = useLoaderData() as {
-		params: string[]
-		items: itemData[]
-		filter: filterData
-		pagination: number
-		listSearchParams: {
-			page: number
-			limit: number
-			sort: string
+	const { params, items, filter, pagination, listSearchParams } =
+		useLoaderData() as {
+			params: string[]
+			items: itemData[]
+			filter: filterData
+			pagination: number
+			listSearchParams: {
+				page: number
+				limit: number
+				sort: string
+			}
 		}
-	}
 
 	const [searchParams, setSearchParams] = useSearchParams()
 	const { page, limit, sort } = listSearchParams
@@ -66,7 +67,7 @@ export function List() {
 			mainRef.current?.classList.remove('lazy__img')
 			setTimeout(() => {
 				mainRef.current?.classList.add('lazy__img')
-			}, 300)
+			}, 100)
 		}
 	}, [items, listState.lazy, mainRef])
 
@@ -79,7 +80,7 @@ export function List() {
 	useEffect(() => {
 		window.onpopstate = () => {
 			if (sessionStorage.getItem('loader') == 'List') {
-				dispatch(listActions.change({ lazy: true, loading: true }))
+				dispatch(listActions.change({ lazy: true, loading: false }))
 			}
 		}
 	}, [dispatch])
@@ -105,7 +106,7 @@ export function List() {
 					return (
 						<div className={styles['list_background']}>
 							<div className={'main'} ref={mainRef}>
-								<div className={styles['sideBar']}>
+								<div className={'sideBar'}>
 									<ListNav params={params} brand={items[0]?.brand} />
 									<ListSideBar
 										limit={limit}
@@ -114,13 +115,17 @@ export function List() {
 									/>
 								</div>
 								<div className={styles['catalog']}>
-									<ListFilter facets={filter} listSearchParams={[searchParams, setSearchParams]} />
+									<ListFilter
+										facets={filter}
+										listSearchParams={[searchParams, setSearchParams]}
+									/>
 									<div className={styles['catalog__list']} ref={listRef}>
 										<ListItems
 											items={itemsData}
 											more={moreData}
 											style={{
-												paddingBottom: Math.ceil(pagination / limit) == 1 ? '72px' : '0',
+												paddingBottom:
+													Math.ceil(pagination / limit) == 1 ? '72px' : '0',
 											}}
 										/>
 										<ListPagination

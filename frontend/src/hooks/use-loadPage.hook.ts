@@ -11,7 +11,7 @@ export function useLoadPage() {
 	useEffect(() => {
 		setTimeout(() => {
 			mainRef.current?.classList.add('lazy__img')
-		}, 300)
+		}, 100)
 	}, [location.pathname])
 
 	return mainRef

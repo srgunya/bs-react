@@ -25,7 +25,8 @@ export function BasketList({ setEmpty }: BasketListProps) {
 			let price = 0
 			if (item) {
 				if (item.sale) {
-					price = Math.round(item.price - (item.price * item.sale) / 100) * el.count
+					price =
+						Math.round(item.price - (item.price * item.sale) / 100) * el.count
 				} else {
 					price = item.price * el.count
 				}
@@ -43,17 +44,25 @@ export function BasketList({ setEmpty }: BasketListProps) {
 
 	useEffect(() => {
 		setTimeout(() => {
-			clearRef.current?.parentElement?.classList.remove(styles['basketHeader__trash_cursor'])
+			clearRef.current?.parentElement?.classList.remove(
+				styles['basketHeader__trash_cursor']
+			)
 			clearRef.current?.classList.remove(styles['basketHeader__trash_hide'])
-			clearRef.current?.previousElementSibling?.classList.add(styles['basketHeader__trash_hide'])
+			clearRef.current?.previousElementSibling?.classList.add(
+				styles['basketHeader__trash_hide']
+			)
 		}, 150)
 	}, [basketVisible])
 
 	function clearHide() {
 		clearRef.current?.classList.add(styles['basketHeader__trash_hide'])
 		setTimeout(() => {
-			clearRef.current?.previousElementSibling?.classList.remove(styles['basketHeader__trash_hide'])
-			clearRef.current?.parentElement?.classList.add(styles['basketHeader__trash_cursor'])
+			clearRef.current?.previousElementSibling?.classList.remove(
+				styles['basketHeader__trash_hide']
+			)
+			clearRef.current?.parentElement?.classList.add(
+				styles['basketHeader__trash_cursor']
+			)
 		}, 100)
 	}
 
@@ -74,7 +83,10 @@ export function BasketList({ setEmpty }: BasketListProps) {
 						{getNoun(countItems, 'товар', 'товара', 'товаров')}
 					</p>
 				</div>
-				<button className={styles['basketHeader__button_trash']} onClick={clearHide}>
+				<button
+					className={styles['basketHeader__button_trash']}
+					onClick={clearHide}
+				>
 					<span
 						className={cn(
 							styles['basketHeader__span_trash'],
@@ -99,7 +111,10 @@ export function BasketList({ setEmpty }: BasketListProps) {
 					Оформить заказ на {price.toLocaleString('ru-RU') + ' ₽'}
 				</Button>
 				<Button>Заказ в один клик</Button>
-				<Lable className={styles['basketInterface__lable']} price={Math.round(price / 4)} />
+				<Lable
+					className={styles['basketInterface__lable']}
+					price={Math.round(price / 4)}
+				/>
 			</div>
 		</div>
 	)

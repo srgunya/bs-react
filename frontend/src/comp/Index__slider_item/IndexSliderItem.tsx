@@ -6,7 +6,11 @@ import { Slider } from '../Slider/Slider'
 import styles from './IndexSliderItem.module.scss'
 import { IndexSliderItemProps } from './IndexSliderItem.props'
 
-export function IndexSliderItem({ items, name, divideArr }: IndexSliderItemProps) {
+export function IndexSliderItem({
+	items,
+	name,
+	divideArr,
+}: IndexSliderItemProps) {
 	const [newItems] = useState(divideArr<itemData>(5, items))
 
 	function itemSlider() {
@@ -20,7 +24,12 @@ export function IndexSliderItem({ items, name, divideArr }: IndexSliderItemProps
 	}
 
 	return (
-		<Slider className={styles['indexSlider_item']} slidesPerView={1} slidesPerGroup={1} name={name}>
+		<Slider
+			className={styles['indexSlider_item']}
+			slidesPerView={1}
+			slidesPerGroup={1}
+			name={name}
+		>
 			{itemSlider()}
 		</Slider>
 	)

@@ -31,7 +31,10 @@ export function FooterTop() {
 					<li className={styles['footerTop__li']} key={i}>
 						<Link
 							to={el.to}
-							className={cn(styles['footerTop__link_border'], styles['footerTop__link'])}
+							className={cn(
+								styles['footerTop__link_border'],
+								styles['footerTop__link']
+							)}
 							key={i}
 						>
 							{el.text}

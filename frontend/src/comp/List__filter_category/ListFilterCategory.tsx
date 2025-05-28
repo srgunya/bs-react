@@ -54,11 +54,16 @@ export function ListFilterCategory({
 		return (
 			<>
 				{facets.length != 0 && (
-					<ListFilterTitle searchName={searchName} listSearchParams={listSearchParams}>
+					<ListFilterTitle
+						searchName={searchName}
+						listSearchParams={listSearchParams}
+					>
 						{name}
 					</ListFilterTitle>
 				)}
-				{facets.length > 7 && <ListFilterSearch ulRef={ulRef} setError={setError} />}
+				{facets.length > 7 && (
+					<ListFilterSearch ulRef={ulRef} setError={setError} />
+				)}
 				{facets.length != 0 && (
 					<ul
 						className={cn(styles['filter__ul'], {
@@ -68,13 +73,21 @@ export function ListFilterCategory({
 					>
 						{facets.map(el => {
 							return (
-								<li key={el} className={styles['filter__li']} data-category={el}>
+								<li
+									key={el}
+									className={styles['filter__li']}
+									data-category={el}
+								>
 									<input
 										type='checkbox'
 										id={el}
 										className={styles['filter__checkbox']}
 										onChange={click}
-										checked={searchParams.get(searchName)?.split(',').includes(el) ? true : false}
+										checked={
+											searchParams.get(searchName)?.split(',').includes(el)
+												? true
+												: false
+										}
 									/>
 									<label htmlFor={el} className={styles['filter__label']}>
 										{el}
@@ -92,7 +105,10 @@ export function ListFilterCategory({
 			{createCategory()}
 			{error && (
 				<div className={styles['filter__error']}>
-					По запросу<span className={styles['filter__error_span']}>&nbsp;«{error}»&nbsp;</span>
+					По запросу
+					<span className={styles['filter__error_span']}>
+						&nbsp;«{error}»&nbsp;
+					</span>
 					ничего не найдено
 				</div>
 			)}

@@ -1,7 +1,13 @@
 import cn from 'classnames'
 import { useRef } from 'react'
 import { ListLimitProps } from './ListLimit.props'
-export function ListLimit({ styles, limitState, open, close, click }:ListLimitProps) {
+export function ListLimit({
+	styles,
+	limitState,
+	open,
+	close,
+	click,
+}: ListLimitProps) {
 	const lengthRef = useRef<HTMLUListElement>(null)
 
 	return (
@@ -20,7 +26,11 @@ export function ListLimit({ styles, limitState, open, close, click }:ListLimitPr
 		>
 			<li className={styles['sort__li']}>
 				Показывать: {limitState}
-				<img src='/img/slider/arrow.png' alt='' className={styles['sort__img']} />
+				<img
+					src='/img/slider/arrow.png'
+					alt=''
+					className={styles['sort__img']}
+				/>
 			</li>
 			<li
 				className={cn(styles['sort__li'], {

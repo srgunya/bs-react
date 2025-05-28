@@ -6,7 +6,9 @@ export function Lable({ className, price }: LableProps) {
 		<button className={cn(styles['lable'], className)}>
 			<div className={styles['lable__block']}>
 				<div className={styles['lable__price']}>
-					<span className={styles['lable__span']}>по {price.toLocaleString('ru-RU') + ' ₽'}</span>{' '}
+					<span className={styles['lable__span']}>
+						по {price.toLocaleString('ru-RU') + ' ₽'}
+					</span>{' '}
 					x4 платежами
 				</div>
 				<span className={styles['lable__partners']}>с партнерами BRANSHOP</span>

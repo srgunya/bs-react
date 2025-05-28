@@ -1,9 +1,13 @@
 const client = require('../helpers/elk')
 
 async function elasticSearch(body) {
-	const { req, unisex, aggs, from, size, sort, filter, filterBoolean, func } = body
+	const { req, unisex, aggs, from, size, sort, filter, filterBoolean, func } =
+		body
 
-	if (req.params['props'].includes('sale') && req.params['props'].length > 4) {
+	if (
+		req.params['props']?.includes('sale') &&
+		req.params['props']?.length > 4
+	) {
 		const uni = unisex.replace('sale', '').trim()
 		const params = req.params['props'].replace('sale', '').trim()
 		return await client[func]({
@@ -59,7 +63,7 @@ async function elasticSearch(body) {
 				sort: sort,
 			}),
 		})
-	} else if (req.params['props'] == 'new') {
+	} else if (req.params['props'] == 'new' || req.path == '/getBrands') {
 		return await client[func]({
 			index: 'bs_item',
 			...(from && {

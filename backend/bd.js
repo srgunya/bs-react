@@ -88,7 +88,12 @@ async function createItemIndex() {
 					char_filter: {
 						my_char_filter: {
 							type: 'mapping',
-							mappings: ['. =>', '- => \\u0020', '& =>', '\\u0020&\\u0020 => \\u0020'],
+							mappings: [
+								'. =>',
+								'- => \\u0020',
+								'& =>',
+								'\\u0020&\\u0020 => \\u0020',
+							],
 						},
 					},
 					analyzer: {

@@ -1,0 +1,29 @@
+.board {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-around;
+	padding: 1.6rem 0;
+	border-bottom: 1px solid $primary-10;
+	position: sticky;
+	top: 107px;
+	background-color: white;
+}
+.board__lang {
+	width: 4rem;
+	height: 4rem;
+	padding: 0 1.2rem;
+	border-radius: 0.4rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	font-size: 2.4rem;
+	transition: background-color 0.3s ease;
+	&:not(.board__lang_disable):hover {
+		background-color: $primary-5;
+	}
+}
+.board__lang_disable {
+	color: $primary-40;
+	cursor: not-allowed;
+}

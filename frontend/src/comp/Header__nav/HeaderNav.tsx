@@ -41,7 +41,12 @@ export function HeaderNav({ link }: HeaderNavProps) {
 	}
 
 	return (
-		<nav className={styles['headerNav']} onMouseOver={showMenu} onMouseLeave={closeMenu} ref={nav}>
+		<nav
+			className={styles['headerNav']}
+			onMouseOver={showMenu}
+			onMouseLeave={closeMenu}
+			ref={nav}
+		>
 			<ul className={styles['headerNav__ul']}>
 				{header_nav.map(el => (
 					<li className={styles['headerNav__li']} key={el.text}>

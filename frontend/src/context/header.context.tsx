@@ -19,7 +19,9 @@ export function HeaderContextProvider({ children }: { children: ReactNode }) {
 	const [basketVisible, setBasketVisible] = useState(false)
 
 	return (
-		<HeaderContext.Provider value={{ menuActive, setMenuActive, basketVisible, setBasketVisible }}>
+		<HeaderContext.Provider
+			value={{ menuActive, setMenuActive, basketVisible, setBasketVisible }}
+		>
 			{children}
 		</HeaderContext.Provider>
 	)

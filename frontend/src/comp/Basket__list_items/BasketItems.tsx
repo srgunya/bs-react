@@ -49,9 +49,10 @@ export function BasketItems({ countItems, setEmpty }: BasketItemsProps) {
 				) : (
 					<div className={styles['itemPrice']}>
 						<span className={styles['itemPrice__sale']}>
-							{(Math.round(item.price - (item.price * item.sale) / 100) * el.count).toLocaleString(
-								'ru-RU'
-							) + ' ₽'}
+							{(
+								Math.round(item.price - (item.price * item.sale) / 100) *
+								el.count
+							).toLocaleString('ru-RU') + ' ₽'}
 						</span>
 						<span className={styles['itemPrice__price']}>
 							{(item?.price * el.count).toLocaleString('ru-RU') + ' ₽'}
@@ -82,7 +83,10 @@ export function BasketItems({ countItems, setEmpty }: BasketItemsProps) {
 							remove(el.id, el.size)
 						}}
 					>
-						<img src='/img/basket/minus.png' className={styles['itemInterface__img_minus']} />
+						<img
+							src='/img/basket/minus.png'
+							className={styles['itemInterface__img_minus']}
+						/>
 					</button>
 					<span className={styles['itemInterface__count']}>{el.count}</span>
 					<button
@@ -91,7 +95,10 @@ export function BasketItems({ countItems, setEmpty }: BasketItemsProps) {
 							add(el.id, el.size)
 						}}
 					>
-						<img src='/img/basket/plus.png' className={styles['itemInterface__img_plus']} />
+						<img
+							src='/img/basket/plus.png'
+							className={styles['itemInterface__img_plus']}
+						/>
 					</button>
 					<span className={styles['itemInterface__size']}>{el.size}</span>
 				</div>
@@ -100,7 +107,11 @@ export function BasketItems({ countItems, setEmpty }: BasketItemsProps) {
 	}
 
 	return (
-		<div className={styles['basketItems']} ref={basketItemsRef} onScroll={scroll}>
+		<div
+			className={styles['basketItems']}
+			ref={basketItemsRef}
+			onScroll={scroll}
+		>
 			{basket.map(el => createItem(el))}
 		</div>
 	)

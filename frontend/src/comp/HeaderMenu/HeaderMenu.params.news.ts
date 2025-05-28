@@ -38,7 +38,15 @@ export const news = {
 			img: '/img/header-menu/saucony.jpg',
 		},
 		{ to: '/reebok/', text: 'Reebok', img: '/img/header-menu/reebok.jpg' },
-		{ to: '/alpha-indistries/', text: 'Alpha Indistries', img: '/img/header-menu/alpha.jpg' },
-		{ to: '/cp-company/', text: 'C.P. Company', img: '/img/header-menu/cp_company.jpg' },
+		{
+			to: '/alpha-indistries/',
+			text: 'Alpha Indistries',
+			img: '/img/header-menu/alpha.jpg',
+		},
+		{
+			to: '/cp-company/',
+			text: 'C.P. Company',
+			img: '/img/header-menu/cp_company.jpg',
+		},
 	],
 }

@@ -39,14 +39,18 @@ export default function Basket() {
 	}, [basketState.length])
 
 	function hover() {
-		if (basketRef.current?.parentNode?.children[2].children[1] instanceof Element) {
+		if (
+			basketRef.current?.parentNode?.children[2].children[1] instanceof Element
+		) {
 			basketRef.current?.parentNode?.children[2].children[1].classList.add(
 				styles['basket__count_hover']
 			)
 		}
 	}
 	function blur() {
-		if (basketRef.current?.parentNode?.children[2].children[1] instanceof Element) {
+		if (
+			basketRef.current?.parentNode?.children[2].children[1] instanceof Element
+		) {
 			basketRef.current?.parentNode?.children[2].children[1].classList.remove(
 				styles['basket__count_hover']
 			)
@@ -62,7 +66,8 @@ export default function Basket() {
 			onMouseOver={hover}
 			onMouseLeave={blur}
 		>
-			{(basketState.length == 0 && <BasketEmpty />) || (empty && <BasketEmpty />)}
+			{(basketState.length == 0 && <BasketEmpty />) ||
+				(empty && <BasketEmpty />)}
 			{basketState.length != 0 && !empty && <BasketList setEmpty={setEmpty} />}
 		</div>
 	)

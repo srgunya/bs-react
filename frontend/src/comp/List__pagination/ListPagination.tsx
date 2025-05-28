@@ -29,7 +29,9 @@ export function ListPagination({
 		}
 	}
 	function prev() {
-		if (activeRef.current?.previousElementSibling instanceof HTMLButtonElement) {
+		if (
+			activeRef.current?.previousElementSibling instanceof HTMLButtonElement
+		) {
 			activeRef.current?.previousElementSibling.click()
 		}
 	}
@@ -70,11 +72,18 @@ export function ListPagination({
 			>
 				<Button
 					ref={moreRef}
-					style={{ display: page >= pagi.length ? 'none' : 'flex', marginTop: '48px' }}
+					style={{
+						display: page >= pagi.length ? 'none' : 'flex',
+						marginTop: '48px',
+					}}
 					onClick={more}
 				>
 					Показать ещё товары
-					<img src='/img/load/load.png' alt='' className={styles['ListPagination__load']} />
+					<img
+						src='/img/load/load.png'
+						alt=''
+						className={styles['ListPagination__load']}
+					/>
 				</Button>
 				<div className={styles['pagination']}>
 					<button
@@ -83,15 +92,27 @@ export function ListPagination({
 						})}
 						onClick={prev}
 					>
-						<img src='/img/slider/arrow.png' alt='' className={styles['pagination__img_prev']} />
+						<img
+							src='/img/slider/arrow.png'
+							alt=''
+							className={styles['pagination__img_prev']}
+						/>
 					</button>
 					<button
-						className={cn(styles['pagination__button'], styles['pagination__button_next'], {
-							[styles['pagination__button_hide']]: page == pagi.length,
-						})}
+						className={cn(
+							styles['pagination__button'],
+							styles['pagination__button_next'],
+							{
+								[styles['pagination__button_hide']]: page == pagi.length,
+							}
+						)}
 						onClick={next}
 					>
-						<img src='/img/slider/arrow.png' alt='' className={styles['pagination__img_next']} />
+						<img
+							src='/img/slider/arrow.png'
+							alt=''
+							className={styles['pagination__img_next']}
+						/>
 					</button>
 					{pagi.map(el => (
 						<button
@@ -99,7 +120,8 @@ export function ListPagination({
 							className={cn(styles['pagination__link'], {
 								[styles['pagination__link_active']]: el == page,
 								[styles['pagination__link_hide']]:
-									(el > page + 2 && el > 5) || (el < page - 2 && el <= pagi.length - 5),
+									(el > page + 2 && el > 5) ||
+									(el < page - 2 && el <= pagi.length - 5),
 							})}
 							key={el}
 							ref={el == page ? activeRef : undefined}

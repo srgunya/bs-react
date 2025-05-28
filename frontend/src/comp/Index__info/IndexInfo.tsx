@@ -21,7 +21,11 @@ export function IndexInfo() {
 								[styles['info__pic_smal']]: i != 0,
 							})}
 						>
-							<img src={PREFIX + el.img} alt='' className={styles['info__img'] + ' img_tr'} />
+							<img
+								src={PREFIX + el.img}
+								alt=''
+								className={styles['info__img'] + ' img_tr'}
+							/>
 						</picture>
 					</Link>
 					<div className={styles['info__block']}>

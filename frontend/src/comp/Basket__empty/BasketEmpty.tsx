@@ -12,16 +12,20 @@ export function BasketEmpty() {
 	return (
 		<div className={styles['basket__empty']}>
 			<h1 className={styles['basket__h1']}>Корзина</h1>
-			<p className={styles['basket__p']}>Вы пока что еще ничего не добавили в корзину</p>
+			<p className={styles['basket__p']}>
+				Вы пока что еще ничего не добавили в корзину
+			</p>
 			<Link
 				to='/new/'
 				onClick={e => {
 					setBasketVisible(false)
-					linkTo(e, '/new/')
+					linkTo(e, '/new/', false)
 				}}
 				className={styles['basket__link']}
 			>
-				<Button className={styles['basket__button_new']}>Перейти к новинкам</Button>
+				<Button className={styles['basket__button_new']}>
+					Перейти к новинкам
+				</Button>
 			</Link>
 		</div>
 	)

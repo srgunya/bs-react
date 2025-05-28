@@ -29,15 +29,35 @@ export function Index() {
 	return (
 		<Suspense>
 			<Await resolve={{ logos, news, pop }}>
-				{({ logos, news, pop }: { logos: logoData[]; news: itemData[]; pop: itemData[] }) => {
+				{({
+					logos,
+					news,
+					pop,
+				}: {
+					logos: logoData[]
+					news: itemData[]
+					pop: itemData[]
+				}) => {
 					return (
 						<div className={'main'} ref={mainRef}>
 							<IndexSex />
-							<IndexSliderLogo name='Популярные бренды' logos={logos} divideArr={divideArr} />
+							<IndexSliderLogo
+								name='Популярные бренды'
+								logos={logos}
+								divideArr={divideArr}
+							/>
 							<IndexBanner />
-							<IndexSliderItem name='Новые поступления' items={news} divideArr={divideArr} />
+							<IndexSliderItem
+								name='Новые поступления'
+								items={news}
+								divideArr={divideArr}
+							/>
 							<IndexInfo />
-							<IndexSliderItem name='Популярные товары' items={pop} divideArr={divideArr} />
+							<IndexSliderItem
+								name='Популярные товары'
+								items={pop}
+								divideArr={divideArr}
+							/>
 						</div>
 					)
 				}}

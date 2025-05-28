@@ -1,7 +1,5 @@
-const client = require('../helpers/elk')
 const {
 	getUnisex,
-	getPrice,
 	getSort,
 	getBlockFilter,
 	getBooleanFilter,
@@ -10,7 +8,8 @@ const { elasticSearch } = require('./elasticSearch')
 
 async function getList(req, res) {
 	const size = req.params['page'] > 100 ? 0 : req.params['limit']
-	const skip = req.params['page'] > 100 ? 0 : size * (Number(req.params['page']) - 1)
+	const skip =
+		req.params['page'] > 100 ? 0 : size * (Number(req.params['page']) - 1)
 	const unisex = getUnisex(req)
 	const sort = getSort(req)
 	const filter = getBlockFilter(req)

@@ -19,7 +19,10 @@ export function HeaderMenuBlock({ params, name }: HeaderMenuBlockProps) {
 		} else {
 			if (menuActive === '') {
 				timerId = setTimeout(() => {
-					menuNav.current?.classList.remove(styles['menu_active'], 'menu_active')
+					menuNav.current?.classList.remove(
+						styles['menu_active'],
+						'menu_active'
+					)
 				}, 250)
 			} else {
 				menuNav.current?.classList.remove(styles['menu_active'], 'menu_active')
@@ -30,7 +33,7 @@ export function HeaderMenuBlock({ params, name }: HeaderMenuBlockProps) {
 
 	function link(e: MouseEvent, to: string) {
 		setMenuActive('')
-		linkTo(e, to)
+		linkTo(e, to, false)
 	}
 
 	return (
@@ -42,8 +45,12 @@ export function HeaderMenuBlock({ params, name }: HeaderMenuBlockProps) {
 			>
 				<HeaderMenuNav name={name} ul={params.ul1} link={link} />
 				<HeaderMenuNav name={name} ul={params.ul2} link={link} />
-				{params.ul3 && <HeaderMenuNav name={name} ul={params.ul3} link={link} />}
-				{params.ul4 && <HeaderMenuNav name={name} ul={params.ul4} link={link} />}
+				{params.ul3 && (
+					<HeaderMenuNav name={name} ul={params.ul3} link={link} />
+				)}
+				{params.ul4 && (
+					<HeaderMenuNav name={name} ul={params.ul4} link={link} />
+				)}
 			</div>
 			<div
 				className={cn(styles['menuImg'], {

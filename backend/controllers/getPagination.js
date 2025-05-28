@@ -1,5 +1,8 @@
-const client = require('../helpers/elk')
-const { getUnisex, getBlockFilter, getBooleanFilter } = require('../helpers/elasticConst')
+const {
+	getUnisex,
+	getBlockFilter,
+	getBooleanFilter,
+} = require('../helpers/elasticConst')
 const { elasticSearch } = require('./elasticSearch')
 
 async function getPagination(req, res) {

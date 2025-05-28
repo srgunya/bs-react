@@ -1,5 +1,5 @@
 import { HTMLAttributes } from 'react'
-import { itemData } from '../Index__item/IndexItem.props'
+import { itemData } from '../../interfaces/item.interface'
 
 export interface ListItemsProps extends HTMLAttributes<HTMLDivElement> {
 	items: itemData[]

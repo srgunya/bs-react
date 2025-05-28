@@ -5,7 +5,13 @@ import { Swiper } from 'swiper/react'
 import styles from './Slider.module.scss'
 import { SliderProps } from './Slider.props'
 
-export function Slider({ className, children, slidesPerView, slidesPerGroup, name }: SliderProps) {
+export function Slider({
+	className,
+	children,
+	slidesPerView,
+	slidesPerGroup,
+	name,
+}: SliderProps) {
 	return (
 		<Swiper
 			spaceBetween={24}
@@ -31,11 +37,24 @@ export function Slider({ className, children, slidesPerView, slidesPerGroup, nam
 			>
 				<div className={styles['sliderNav__name']}>{name}</div>
 				<div className={styles['sliderNav__pagi']}></div>
-				<button className={cn(styles['sliderNav__prev'], styles['sliderNav__button_disabled'])}>
-					<img src='/img/slider/arrow.png' alt='' className={styles['sliderNav__img']} />
+				<button
+					className={cn(
+						styles['sliderNav__prev'],
+						styles['sliderNav__button_disabled']
+					)}
+				>
+					<img
+						src='/img/slider/arrow.png'
+						alt=''
+						className={styles['sliderNav__img']}
+					/>
 				</button>
 				<button className={styles['sliderNav__next']}>
-					<img src='/img/slider/arrow.png' alt='' className={styles['sliderNav__img']} />
+					<img
+						src='/img/slider/arrow.png'
+						alt=''
+						className={styles['sliderNav__img']}
+					/>
 				</button>
 			</div>
 			{children}

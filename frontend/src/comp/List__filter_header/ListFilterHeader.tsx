@@ -55,12 +55,19 @@ export function ListFilterHeader({ listSearchParams }: ListFilterHeaderProps) {
 				Фильтр
 			</div>
 			<div
-				className={cn(styles['filterHeader__reset'], styles['filterHeader_hide'])}
+				className={cn(
+					styles['filterHeader__reset'],
+					styles['filterHeader_hide']
+				)}
 				ref={resetRef}
 				onClick={reset}
 			>
 				<button className={styles['filterHeader__button']}>
-					<img src='/img/filter/close.png' alt='' className={styles['filterHeader__img']} />
+					<img
+						src='/img/filter/close.png'
+						alt=''
+						className={styles['filterHeader__img']}
+					/>
 				</button>
 				<span className={styles['filterHeader__span']}>Сбросить фильтр</span>
 			</div>

@@ -5,7 +5,11 @@ import { AppDispatch } from '../../store/store'
 import styles from './ListFilterTitle.module.scss'
 import { ListFilterTitleProps } from './ListFilterTitle.props'
 
-export function ListFilterTitle({ children, searchName, listSearchParams }: ListFilterTitleProps) {
+export function ListFilterTitle({
+	children,
+	searchName,
+	listSearchParams,
+}: ListFilterTitleProps) {
 	const [searchParams, setSearchParams] = listSearchParams
 	const dispatch = useDispatch<AppDispatch>()
 

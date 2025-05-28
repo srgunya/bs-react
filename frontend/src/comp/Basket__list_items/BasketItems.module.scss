@@ -1,7 +1,7 @@
 .basketItems {
 	width: 37.8rem;
 	padding: 2.4rem 0 1.6rem 2.4rem;
-	max-height: 31.1rem;
+	max-height: calc(100vh - 52rem);
 	overflow-y: auto;
 	border-color: rgba(0, 0, 0, 0);
 	transition: border-color 0.3s ease;

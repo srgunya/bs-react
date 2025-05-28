@@ -14,7 +14,7 @@ export function Header() {
 
 	function link(e: MouseEvent, to: string) {
 		setMenuActive('')
-		linkTo(e, to)
+		linkTo(e, to, false)
 	}
 
 	function linkLogo(e: MouseEvent) {
@@ -48,7 +48,10 @@ export function Header() {
 					}}
 				>
 					<picture className={styles['HeaderLogo__img']}>
-						<img src='/img/header/logo.svg' className={styles['HeaderLogo__img']} />
+						<img
+							src='/img/header/logo.svg'
+							className={styles['HeaderLogo__img']}
+						/>
 					</picture>
 				</Link>
 				<HeaderNav link={link} />

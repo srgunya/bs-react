@@ -2,7 +2,13 @@ import cn from 'classnames'
 import { useRef } from 'react'
 import { ListSortProps } from './ListSort.props'
 
-export function ListSort({ styles, sortState, open, close, click }: ListSortProps) {
+export function ListSort({
+	styles,
+	sortState,
+	open,
+	close,
+	click,
+}: ListSortProps) {
 	const sortRef = useRef<HTMLUListElement>(null)
 	return (
 		<ul
@@ -23,11 +29,16 @@ export function ListSort({ styles, sortState, open, close, click }: ListSortProp
 				{sortState == 'default' && 'По умолчанию'}
 				{sortState == 'priceASC' && 'По возрастанию цены'}
 				{sortState == 'priceDESC' && 'По убыванию цены'}
-				<img src='/img/slider/arrow.png' alt='' className={styles['sort__img']} />
+				<img
+					src='/img/slider/arrow.png'
+					alt=''
+					className={styles['sort__img']}
+				/>
 			</li>
 			<li
 				className={cn(styles['sort__li'], {
-					[styles['sort__li_active']]: sortState == 'default' || sortState == 'Сортировка',
+					[styles['sort__li_active']]:
+						sortState == 'default' || sortState == 'Сортировка',
 				})}
 				data-sort='default'
 			>

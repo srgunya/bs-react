@@ -11,12 +11,12 @@ export function useLink() {
 	const navi = useNavigate()
 	const dispatch = useDispatch<AppDispatch>()
 
-	function linkTo(e: MouseEvent, to: string) {
+	function linkTo(e: MouseEvent, to: string, loading: boolean) {
 		e.preventDefault()
 		if (location.pathname == to && !searchParams.size) {
 			return false
 		} else {
-			dispatch(listActions.change({ lazy: true, loading: true }))
+			dispatch(listActions.change({ lazy: true, loading: loading }))
 			navi(to)
 		}
 	}

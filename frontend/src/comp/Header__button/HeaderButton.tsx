@@ -39,7 +39,11 @@ export function HeaderButton() {
 	return (
 		<div className={styles['headerBut']}>
 			{header_but.map((el, i) => (
-				<button className={cn(styles['headerBut__button'], el.class)} key={i} onClick={el.onClick}>
+				<button
+					className={cn(styles['headerBut__button'], el.class)}
+					key={i}
+					onClick={el.onClick}
+				>
 					<img src={el.img} className={styles['headerBut__img']} />
 					{el.class == 'button_basket' && basketState.length != 0 && (
 						<div className={styles['basket__count']}>

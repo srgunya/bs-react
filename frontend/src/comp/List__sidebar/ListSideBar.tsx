@@ -8,7 +8,11 @@ import { ListSort } from '../List__sidebar_sort/ListSort'
 import styles from './ListSideBar.module.scss'
 import { ListSideBarProps } from './ListSideBar.props'
 
-export function ListSideBar({ limit, sort, listSearchParams }: ListSideBarProps) {
+export function ListSideBar({
+	limit,
+	sort,
+	listSearchParams,
+}: ListSideBarProps) {
 	const location = useLocation()
 	const [searchParams, setSearchParams] = listSearchParams
 	const firstRender = useRef(true)
@@ -35,7 +39,10 @@ export function ListSideBar({ limit, sort, listSearchParams }: ListSideBarProps)
 	}, [limit])
 
 	function click(e: MouseEvent, ref: HTMLUListElement | null) {
-		if (e.target instanceof HTMLLIElement && e.target.parentNode instanceof Element) {
+		if (
+			e.target instanceof HTMLLIElement &&
+			e.target.parentNode instanceof Element
+		) {
 			if (e.target == e.target.parentNode.childNodes[0]) {
 				ref?.classList.toggle(styles['sort__ul_active'])
 				return
@@ -78,8 +85,20 @@ export function ListSideBar({ limit, sort, listSearchParams }: ListSideBarProps)
 
 	return (
 		<div className={styles['sort']}>
-			<ListLimit styles={styles} limitState={limitState} open={open} close={close} click={click} />
-			<ListSort styles={styles} sortState={sortState} open={open} close={close} click={click} />
+			<ListLimit
+				styles={styles}
+				limitState={limitState}
+				open={open}
+				close={close}
+				click={click}
+			/>
+			<ListSort
+				styles={styles}
+				sortState={sortState}
+				open={open}
+				close={close}
+				click={click}
+			/>
 		</div>
 	)
 }

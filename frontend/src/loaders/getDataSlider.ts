@@ -8,7 +8,7 @@ export async function getDataSlider<T>(url_count: string, url_id: string) {
 		return data
 	}
 
-	const ids = Array<number>(40)
+	const ids = Array<number>(url_count == '/logoCount' ? 40 : 15)
 	for (let i = 0; i < ids.length; ) {
 		const rndm = getRandomInt()
 		if (ids.indexOf(rndm) == -1) {

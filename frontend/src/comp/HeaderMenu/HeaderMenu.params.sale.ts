@@ -37,7 +37,11 @@ export const sale = {
 			text: 'Аксессуары',
 			img: '/img/header-menu/accessories.jpg',
 		},
-		{ to: '/sale/zhenskoe/', text: 'Женское', img: '/img/header-menu/women.jpg' },
+		{
+			to: '/sale/zhenskoe/',
+			text: 'Женское',
+			img: '/img/header-menu/women.jpg',
+		},
 		{ to: '/sale/obuv/', text: 'Обувь', img: '/img/header-menu/shoes.jpg' },
 		{ to: '/sale/muzhskoe/', text: 'Мужское', img: '/img/header-menu/men.jpg' },
 	],

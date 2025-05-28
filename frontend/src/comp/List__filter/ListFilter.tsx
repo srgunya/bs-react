@@ -23,7 +23,7 @@ export function ListFilter({ facets, listSearchParams }: ListFilterProps) {
 		if (params.minPrice != 0 && params.maxPrice != 0) {
 			setTimeout(() => {
 				filterRef.current?.classList.remove(styles['filter_hide'])
-			}, 300)
+			}, 100)
 		}
 	}, [params])
 
@@ -54,10 +54,13 @@ export function ListFilter({ facets, listSearchParams }: ListFilterProps) {
 						del = 110
 					}
 				} else if (lastScrollTop < top) {
-					const hieght = 1000 - (1745.5 - parseInt(styles.height))
+					const hieght = parseInt(styles.height) - window.innerHeight - 10
 					if (del <= -hieght) {
 						del = -hieght
 					}
+				}
+				if (window.innerHeight > parseInt(styles.height)) {
+					del = 110
 				}
 				filterRef.current.style.top = `${del}px`
 			}

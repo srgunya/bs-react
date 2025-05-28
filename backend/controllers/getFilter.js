@@ -1,5 +1,8 @@
-const client = require('../helpers/elk')
-const { getUnisex, getPrice, getBlockFilter, getBooleanFilter } = require('../helpers/elasticConst')
+const {
+	getUnisex,
+	getBlockFilter,
+	getBooleanFilter,
+} = require('../helpers/elasticConst')
 const { getAggs } = require('../helpers/elasticAggs')
 const { elasticSearch } = require('./elasticSearch')
 

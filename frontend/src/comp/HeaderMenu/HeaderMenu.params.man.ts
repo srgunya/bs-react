@@ -3,7 +3,10 @@ export const man = {
 		{ to: '/brandlist/', text: 'Все бренды' },
 		{ to: '/muzhskoe/adidas-originals/', text: 'adidas Originals' },
 		{ to: '/muzhskoe/cp-company/', text: 'C.P. Company' },
-		{ to: '/muzhskoe/comme-des-garcons-shirt/', text: 'Comme des Garcons SHIRT' },
+		{
+			to: '/muzhskoe/comme-des-garcons-shirt/',
+			text: 'Comme des Garcons SHIRT',
+		},
 		{ to: '/muzhskoe/edwin/', text: 'Edwin' },
 		{ to: '/muzhskoe/lacoste/', text: 'Lacoste' },
 		{ to: '/muzhskoe/levis/', text: 'Levis' },
@@ -37,6 +40,10 @@ export const man = {
 			text: 'Одежда',
 			img: '/img/header-menu/mens_clothing.jpg',
 		},
-		{ to: '/muzhskoe/obuv/', text: 'Обувь', img: '/img/header-menu/mens_footwear.jpg' },
+		{
+			to: '/muzhskoe/obuv/',
+			text: 'Обувь',
+			img: '/img/header-menu/mens_footwear.jpg',
+		},
 	],
 }

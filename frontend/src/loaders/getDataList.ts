@@ -41,18 +41,24 @@ export async function getList(
 	sort: string,
 	filterParams: filterParamsType
 ) {
-	const res = await fetch(`${PREFIX}/getList/${props.join(' ')}/${page}/${limit}/${sort}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(filterParams),
-	})
+	const res = await fetch(
+		`${PREFIX}/getList/${props.join(' ')}/${page}/${limit}/${sort}`,
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(filterParams),
+		}
+	)
 	const data: itemData[] = await res.json()
 	return data
 }
 
-export async function getFilter(props: string[], filterParams: filterParamsType) {
+export async function getFilter(
+	props: string[],
+	filterParams: filterParamsType
+) {
 	const res = await fetch(`${PREFIX}/getFilter/${props.join(' ')}`, {
 		method: 'POST',
 		headers: {
@@ -64,7 +70,10 @@ export async function getFilter(props: string[], filterParams: filterParamsType)
 	return data
 }
 
-export async function getPagination(props: string[], filterParams: filterParamsType) {
+export async function getPagination(
+	props: string[],
+	filterParams: filterParamsType
+) {
 	const res = await fetch(`${PREFIX}/getPagination/${props.join(' ')}`, {
 		method: 'POST',
 		headers: {
@@ -76,21 +85,31 @@ export async function getPagination(props: string[], filterParams: filterParamsT
 	return Number(data)
 }
 
-export async function getSearchParams(params: Params<string>, request: Request) {
+export async function getSearchParams(
+	params: Params<string>,
+	request: Request
+) {
 	const props: string[] = await new Promise(resolve => {
 		setTimeout(() => {
-			getParams(typeof params['*'] == 'string' ? params['*'] : '').then(data => {
-				resolve(data)
-			})
+			getParams(typeof params['*'] == 'string' ? params['*'] : '').then(
+				data => {
+					resolve(data)
+				}
+			)
 		}, 300)
 	})
 	const searchParams = new URL(request.url).searchParams
 	const page =
-		Number.isInteger(Number(searchParams.get('page'))) && Number(searchParams.get('page')) > 0
+		Number.isInteger(Number(searchParams.get('page'))) &&
+		Number(searchParams.get('page')) > 0
 			? Number(searchParams.get('page'))
 			: 1
 	const limit =
-		Number(searchParams.get('limit')) == 40 ? 40 : Number(searchParams.get('limit')) == 80 ? 80 : 20
+		Number(searchParams.get('limit')) == 40
+			? 40
+			: Number(searchParams.get('limit')) == 80
+			? 80
+			: 20
 	const sort =
 		searchParams.get('sort') == 'priceASC'
 			? 'priceASC'

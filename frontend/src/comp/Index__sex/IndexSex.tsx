@@ -13,7 +13,11 @@ export function IndexSex() {
 			{index_sex.map((el, i) => (
 				<Link to={el.to} className={styles['sex__link']} key={i}>
 					<picture className={styles['sex__pic'] + ' wrap_tr'}>
-						<img src={el.img} alt='' className={styles['sex__img'] + ' img_tr'} />
+						<img
+							src={el.img}
+							alt=''
+							className={styles['sex__img'] + ' img_tr'}
+						/>
 					</picture>
 					<div className={styles['sex__block']}>
 						<span className={styles['sex__span']}>{el.text}</span>

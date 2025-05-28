@@ -7,7 +7,11 @@ import { Slider } from '../Slider/Slider'
 import styles from './IndexSliderLogo.module.scss'
 import { IndexSliderLogoProps } from './IndexSliderLogo.props'
 
-export function IndexSliderLogo({ logos, name, divideArr }: IndexSliderLogoProps) {
+export function IndexSliderLogo({
+	logos,
+	name,
+	divideArr,
+}: IndexSliderLogoProps) {
 	const [newLogos] = useState(divideArr<logoData>(10, logos))
 
 	function logoSlider() {
@@ -29,7 +33,12 @@ export function IndexSliderLogo({ logos, name, divideArr }: IndexSliderLogoProps
 	}
 
 	return (
-		<Slider className={styles['indexSlider_logo']} slidesPerView={1} slidesPerGroup={1} name={name}>
+		<Slider
+			className={styles['indexSlider_logo']}
+			slidesPerView={1}
+			slidesPerGroup={1}
+			name={name}
+		>
 			{logoSlider()}
 		</Slider>
 	)

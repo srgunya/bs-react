@@ -20,7 +20,10 @@ export function ListNav({ params, brand }: ListNavProps) {
 	useLayoutEffect(() => {
 		ulRef.current?.childNodes.forEach(el => {
 			el.childNodes.forEach(el => {
-				if (el instanceof Element && el.classList.contains(styles['nav__link'])) {
+				if (
+					el instanceof Element &&
+					el.classList.contains(styles['nav__link'])
+				) {
 					el.classList.add(styles['nav__link_transition-none'])
 				}
 			})
@@ -30,7 +33,10 @@ export function ListNav({ params, brand }: ListNavProps) {
 	useEffect(() => {
 		ulRef.current?.childNodes.forEach(el => {
 			el.childNodes.forEach(el => {
-				if (el instanceof Element && el.classList.contains(styles['nav__link'])) {
+				if (
+					el instanceof Element &&
+					el.classList.contains(styles['nav__link'])
+				) {
 					el.classList.remove(styles['nav__link_transition-none'])
 				}
 			})
@@ -38,7 +44,7 @@ export function ListNav({ params, brand }: ListNavProps) {
 	}, [params])
 
 	function link(e: MouseEvent, to: string) {
-		linkTo(e, to)
+		linkTo(e, to, false)
 	}
 
 	function createUl() {
@@ -61,7 +67,8 @@ export function ListNav({ params, brand }: ListNavProps) {
 								const to =
 									i == params.length - 1
 										? location.pathname
-										: location.pathname.split('/').filter(el => el != '')[i] + '/'
+										: location.pathname.split('/').filter(el => el != '')[i] +
+										  '/'
 								link(e, to)
 							}}
 						>

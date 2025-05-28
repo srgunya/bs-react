@@ -1,7 +1,10 @@
 import cn from 'classnames'
 import { Link } from 'react-router-dom'
 import { PREFIX } from '../../helpers/API'
-import { IndexItemPrice, IndexItemSale } from '../Index__item_price/IndexItemPrice'
+import {
+	IndexItemPrice,
+	IndexItemSale,
+} from '../Index__item_price/IndexItemPrice'
 import { ListItemsSize } from '../List__items_size/ListItemsSize'
 import styles from './IndexItem.module.scss'
 import { IndexItemProps } from './IndexItem.props'
@@ -26,7 +29,11 @@ export function IndexItem({ item, name }: IndexItemProps) {
 			>
 				<div className={styles['item__cont']}>
 					<picture className={styles['item__pic'] + ' wrap_tr'}>
-						<img src={PREFIX + item.img} alt='' className={cn(styles['item__img'], 'img_tr')} />
+						<img
+							src={PREFIX + item.img}
+							alt=''
+							className={cn(styles['item__img'], 'img_tr')}
+						/>
 					</picture>
 					<span className={styles['item__brand']}>{item.brand}</span>
 					<span className={styles['item__type']}>{item.type}</span>
@@ -35,10 +42,14 @@ export function IndexItem({ item, name }: IndexItemProps) {
 					{name == 'list' && (
 						<>
 							<div className={styles['item__split']}>
-								<span className={styles['item__split_span']}>по {split}&nbsp;</span>
+								<span className={styles['item__split_span']}>
+									по {split}&nbsp;
+								</span>
 								x4 платежами
 							</div>
-							<span className={styles['item__signature']}>с партнёрами BRANDSHOP</span>
+							<span className={styles['item__signature']}>
+								с партнёрами BRANDSHOP
+							</span>
 						</>
 					)}
 				</div>
@@ -54,8 +65,16 @@ export function IndexItem({ item, name }: IndexItemProps) {
 					</div>
 				)}
 				<div className={styles['itemIcon']}>
-					<img src='/img/item/star.png' alt='' className={styles['itemIcon__icon']} />
-					<img src='/img/item/lupa.png' alt='' className={styles['itemIcon__icon']} />
+					<img
+						src='/img/item/star.png'
+						alt=''
+						className={styles['itemIcon__icon']}
+					/>
+					<img
+						src='/img/item/lupa.png'
+						alt=''
+						className={styles['itemIcon__icon']}
+					/>
 				</div>
 				<div
 					className={cn(styles['item__shadow'], {

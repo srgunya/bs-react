@@ -4,6 +4,7 @@
 	align-self: flex-start;
 	position: sticky;
 	top: 110px;
+	transition: opacity 0.3s ease;
 }
 .filter_hide {
 	opacity: 0;

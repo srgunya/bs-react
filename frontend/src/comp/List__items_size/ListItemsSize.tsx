@@ -32,7 +32,8 @@ export function ListItemsSize({ size, itemID }: ListItemsSizeProps) {
 	return (
 		<div className={styles['itemSize__wrap']}>
 			<button className={styles['itemSize__size']} onClick={clickSize}>
-				{size} <img src='/img/item/ok.png' alt='' className={styles['itemSize__ok']} />
+				{size}{' '}
+				<img src='/img/item/ok.png' alt='' className={styles['itemSize__ok']} />
 			</button>
 		</div>
 	)

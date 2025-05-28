@@ -33,7 +33,8 @@ export function HeaderMenuNav({ name, ul, link }: HeaderMenuNavProps) {
 						key={el.text}
 						className={cn({
 							[styles['menuNav__li_capital']]: arr.length === 14 && i === 0,
-							[styles['menuNav__li_brand']]: name === 'Бренды' && arr.length < 14 && i === 0,
+							[styles['menuNav__li_brand']]:
+								name === 'Бренды' && arr.length < 14 && i === 0,
 						})}
 					>
 						<Link
