@@ -16,6 +16,7 @@ import {
 import { getDataSlider } from './loaders/getDataSlider'
 import './main.scss'
 import { Brandlist } from './pages/BrandList/BrandList'
+import { Faq } from './pages/Faq/Faq'
 import { Index } from './pages/Index/Index'
 import { List } from './pages/List/List'
 import { store } from './store/store'
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
 						params: props,
 					})
 				},
+			},
+			{
+				path: '/faq',
+				element: <Faq />,
 			},
 		],
 	},

@@ -8,7 +8,12 @@ export function FooterTop() {
 		return ul.map((el, i) => {
 			if (el.h1) {
 				return (
-					<li className={styles['footerTop__li']} key={i}>
+					<li
+						className={cn(styles['footerTop__li'], {
+							[styles['footerTop__h1_bot']]: el.h1 === 'Отследить заказ',
+						})}
+						key={i}
+					>
 						<h1 className={styles['footerTop__h1']}>{el.h1}</h1>
 					</li>
 				)
@@ -20,7 +25,11 @@ export function FooterTop() {
 						})}
 						key={i}
 					>
-						<Link to={el.to} className={styles['footerTop__link']}>
+						<Link
+							to={el.to}
+							target={el.target}
+							className={styles['footerTop__link']}
+						>
 							<img src={el.img} className={styles['footerTop__img']} />
 							{el.text}
 						</Link>
@@ -31,6 +40,7 @@ export function FooterTop() {
 					<li className={styles['footerTop__li']} key={i}>
 						<Link
 							to={el.to}
+							target={el.target}
 							className={cn(
 								styles['footerTop__link_border'],
 								styles['footerTop__link']

@@ -11,9 +11,15 @@
 .footerTop__ul {
 	flex: 1;
 	margin-top: -2.4rem;
+	position: relative;
+}
+.footerTop__h1_bot {
+	position: absolute;
+	bottom: 4rem;
 }
 .footerTop__li_bot {
-	margin-bottom: 2.4rem;
+	position: absolute;
+	bottom: 0;
 }
 .footerTop__h1 {
 	font-size: 1.4rem;
