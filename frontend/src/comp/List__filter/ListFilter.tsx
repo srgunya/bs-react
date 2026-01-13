@@ -28,16 +28,14 @@ export function ListFilter({ facets, listSearchParams }: ListFilterProps) {
 	}, [params])
 
 	useLayoutEffect(() => {
-		const price = facets.discount_price.buckets.map(el => +el.key)
+		const price = facets.discount_price
 		const minPrice = Math.min(...price)
 		const maxPrice = Math.max(...price)
-		const sex = sortByAlphabet(facets.sex.buckets.map(el => el.key))
-		const category = sortByAlphabet(facets.category.buckets.map(el => el.key))
-		const color = sortByAlphabet(facets.color.buckets.map(el => el.key))
-		const size = sortSize(
-			Array.from(new Set(facets.size.buckets.map(el => el.key.split(',')).flat()))
-		)
-		const brand = sortByAlphabet(facets.brand.buckets.map(el => el.key))
+		const sex = sortByAlphabet(facets.sex)
+		const category = sortByAlphabet(facets.category)
+		const color = sortByAlphabet(facets.color)
+		const size = sortSize(Array.from(new Set(facets.size.flat())))
+		const brand = sortByAlphabet(facets.brand)
 		setParams({ minPrice, maxPrice, sex, category, color, size, brand })
 	}, [facets])
 
@@ -98,7 +96,10 @@ export function ListFilter({ facets, listSearchParams }: ListFilterProps) {
 	]
 
 	return (
-		<div className={cn(styles['filter'], styles['filter_hide'])} ref={filterRef}>
+		<div
+			className={cn(styles['filter'], styles['filter_hide'])}
+			ref={filterRef}
+		>
 			<ListFilterHeader listSearchParams={listSearchParams} />
 			<div className={styles['filter__title']}>Цена</div>
 			<ListFilterPrice

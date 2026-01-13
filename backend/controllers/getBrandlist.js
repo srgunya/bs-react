@@ -11,7 +11,7 @@ async function getBrandlist(req, res) {
 		unisex: null,
 		aggs: aggs,
 		from: null,
-		size: 0,
+		size: null,
 		sort: null,
 		filter: null,
 		filterBoolean: null,

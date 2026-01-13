@@ -28,7 +28,7 @@ export default function Basket() {
 			basketRef.current?.classList.remove(styles['basket_open'])
 			setTimeout(() => {
 				basketRef.current?.classList.add(styles['basket_none'])
-			}, 150)
+			}, 200)
 		}
 	}, [basketVisible, basketState.length])
 

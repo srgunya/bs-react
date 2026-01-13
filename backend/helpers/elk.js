@@ -13,4 +13,11 @@ const client = new Client({
 	},
 })
 
+client
+	.info()
+	.then(response =>
+		console.log('Подключение к серверу Elasticsearch успешно установлено')
+	)
+	.catch(error => console.error('Ошибка: ' + error))
+
 module.exports = client

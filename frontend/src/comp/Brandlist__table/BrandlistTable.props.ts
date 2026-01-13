@@ -1,5 +1,5 @@
+import { brandListData } from '../../interfaces/brandList.interface'
+
 export interface BrandlistTableProps {
-	table: {
-		[key: string]: string[]
-	}
+	table: brandListData
 }

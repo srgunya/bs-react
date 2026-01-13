@@ -8,7 +8,7 @@ export function Faq() {
 	function createBlock(faq: FaqProps[]) {
 		return faq.map(el => {
 			return (
-				<Link to='' className={styles['block']}>
+				<Link to='' className={styles['block']} key={el.h1}>
 					<picture className={styles['block__pic']}>
 						<img src={el.img} />
 					</picture>

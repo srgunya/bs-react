@@ -17,34 +17,48 @@ async function getFilter(req, res) {
 		unisex: unisex,
 		aggs: aggs,
 		from: null,
-		size: 0,
+		size: null,
 		sort: null,
 		filter: null,
 		filterBoolean: null,
 		func: 'search',
 	})
-	let params = {}
+
+	const filterFacets = {
+		discount_price: [],
+		sex: [],
+		category: [],
+		color: [],
+		size: [],
+		brand: [],
+	}
 	if (filterBoolean) {
 		const resultAggs = [
 			result.aggregations.inavtive,
 			result.aggregations.discount_price,
-			result.aggregations.pol,
-			result.aggregations.kategoriya,
-			result.aggregations.tsvet,
-			result.aggregations.razmer,
+			result.aggregations.sex,
+			result.aggregations.category,
+			result.aggregations.color,
+			result.aggregations.size,
 			result.aggregations.brand,
 		]
 		resultAggs.forEach(el => {
 			for (key in el) {
 				if (typeof el[key] == 'object') {
-					params[key] = el[key]
+					filterFacets[key] = el[key].buckets.map(el => {
+						return el.key
+					})
 				}
 			}
 		})
 	} else {
-		params = result.aggregations
+		for (let key in result.aggregations) {
+			filterFacets[key] = result.aggregations[key].buckets.map(el => {
+				return el.key
+			})
+		}
 	}
-	res.send(params)
+	res.send(filterFacets)
 }
 
 module.exports = getFilter

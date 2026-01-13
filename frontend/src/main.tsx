@@ -3,6 +3,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { createBrowserRouter, defer, RouterProvider } from 'react-router-dom'
+import { LazyLoader } from './helpers/LazyLoader'
 import { itemData } from './interfaces/item.interface'
 import { logoData } from './interfaces/logo.interface'
 import { Layout } from './layout/Layout/Layout'
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
 				path: '/',
 				element: <Index />,
 				loader: async () => {
+					await LazyLoader()
 					return defer({
 						logos: await getDataSlider<logoData>('/logoCount', '/getLogoById'),
 						news: await getDataSlider<itemData>('/itemCount', '/getItemById'),
@@ -41,6 +43,7 @@ const router = createBrowserRouter([
 				path: '/brandlist',
 				element: <Brandlist />,
 				loader: async () => {
+					await LazyLoader()
 					return defer({
 						lang: await getDataBrandlist('lang'),
 						table: await getDataBrandlist('table'),
@@ -51,6 +54,7 @@ const router = createBrowserRouter([
 				path: '*',
 				element: <List />,
 				loader: async ({ params, request }) => {
+					await LazyLoader()
 					sessionStorage.setItem('loader', 'List')
 					const { props, page, limit, sort, filterParams } =
 						await getSearchParams(params, request)
@@ -66,6 +70,10 @@ const router = createBrowserRouter([
 			{
 				path: '/faq',
 				element: <Faq />,
+				loader: async () => {
+					await LazyLoader()
+					return null
+				},
 			},
 		],
 	},

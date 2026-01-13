@@ -10,7 +10,7 @@
 	box-shadow: 0 10px 30px 0 $primary-10;
 	transform: translateY(2rem);
 	opacity: 0;
-	transition: transform 0.15s ease, opacity 0.15s ease;
+	transition: transform 0.2s ease-out, opacity 0.2s ease-out;
 }
 .basket_list {
 	max-height: inherit;

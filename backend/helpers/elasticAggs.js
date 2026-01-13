@@ -20,18 +20,24 @@ function getAggs(req, filterBoolean, filter) {
 					},
 				},
 				discount_price: {
-					aggs: active(req.body.price, filter, 'discount_price').aggs,
+					aggs: {
+						...(req.length != 0 && {
+							discount_price: {
+								terms: { field: 'discount_price', size: count() },
+							},
+						}),
+					},
 					filter: {
 						bool: {
 							filter: filter.filter(el => !('range' in el)),
 						},
 					},
 				},
-				pol: active(req.body.pol, filter, 'sex'),
-				kategoriya: active(req.body.kategoriya, filter, 'category'),
-				tsvet: active(req.body.tsvet, filter, 'color'),
-				razmer: active(req.body.razmer, filter, 'size'),
-				brand: active(req.body.brand, filter, 'brand', 'brand.keyword'),
+				...active(req.body.pol, filter, 'sex'),
+				...active(req.body.kategoriya, filter, 'category'),
+				...active(req.body.tsvet, filter, 'color'),
+				...active(req.body.razmer, filter, 'size'),
+				...active(req.body.brand, filter, 'brand', 'brand.keyword'),
 		  }
 		: {
 				...inavtive(req.body.price, 'discount_price'),
@@ -54,15 +60,15 @@ function inavtive(req, key, name) {
 	)
 }
 function active(req, fil, key, name) {
-	const active = {
-		aggs: {
-			...(req.length != 0 && {
-				[key]: {
-					terms: { field: name ? name : key, size: count() },
-				},
-			}),
-		},
-		...(key != 'discount_price' && {
+	return {
+		[key]: {
+			aggs: {
+				...(req.length != 0 && {
+					[key]: {
+						terms: { field: name ? name : key, size: count() },
+					},
+				}),
+			},
 			filter: {
 				bool: {
 					filter: fil.filter(
@@ -72,16 +78,8 @@ function active(req, fil, key, name) {
 					),
 				},
 			},
-		}),
+		},
 	}
-	const wrapper =
-		key == 'discount_price'
-			? active
-			: {
-					aggs: active.aggs,
-					filter: active.filter,
-			  }
-	return wrapper
 }
 
 module.exports = { getAggs }

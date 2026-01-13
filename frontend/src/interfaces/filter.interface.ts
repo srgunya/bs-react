@@ -1,25 +1,14 @@
 export interface filterData {
-	brand: {
-		buckets: { key: string }[]
-	}
-	category: {
-		buckets: { key: string }[]
-	}
-	color: {
-		buckets: { key: string }[]
-	}
-	discount_price: {
-		buckets: { key: string }[]
-	}
-	sex: {
-		buckets: { key: string }[]
-	}
-	size: {
-		buckets: { key: string }[]
-	}
+	discount_price: number[]
+	sex: string[]
+	category: string[]
+	color: string[]
+	size: string[]
+	brand: string[]
 }
 
 export interface filterParamsType {
+	price: number[]
 	pol: string[]
 	kategoriya: string[]
 	tsvet: string[]

@@ -44,7 +44,7 @@ export function ListNav({ params, brand }: ListNavProps) {
 	}, [params])
 
 	function link(e: MouseEvent, to: string) {
-		linkTo(e, to, false)
+		linkTo(e, to)
 	}
 
 	function createUl() {

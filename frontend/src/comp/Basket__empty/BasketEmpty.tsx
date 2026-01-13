@@ -19,7 +19,7 @@ export function BasketEmpty() {
 				to='/new/'
 				onClick={e => {
 					setBasketVisible(false)
-					linkTo(e, '/new/', false)
+					linkTo(e, '/new/')
 				}}
 				className={styles['basket__link']}
 			>

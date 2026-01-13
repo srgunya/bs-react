@@ -33,8 +33,9 @@ export function RangeSlider({
 	return (
 		<Box
 			sx={{
-				width: 200,
+				width: '100%',
 				paddingLeft: '8px',
+				paddingRight: '8px',
 				color: 'success.main',
 				'& .MuiSlider-thumb': {
 					width: '22px',

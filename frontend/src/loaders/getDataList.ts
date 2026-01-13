@@ -89,15 +89,9 @@ export async function getSearchParams(
 	params: Params<string>,
 	request: Request
 ) {
-	const props: string[] = await new Promise(resolve => {
-		setTimeout(() => {
-			getParams(typeof params['*'] == 'string' ? params['*'] : '').then(
-				data => {
-					resolve(data)
-				}
-			)
-		}, 300)
-	})
+	const props: string[] = await getParams(
+		typeof params['*'] == 'string' ? params['*'] : ''
+	)
 	const searchParams = new URL(request.url).searchParams
 	const page =
 		Number.isInteger(Number(searchParams.get('page'))) &&
@@ -126,7 +120,7 @@ export async function getSearchParams(
 			}
 		})
 		.filter(el => el)
-	const price = orderPrice?.length == 2 ? orderPrice : []
+	const price = (orderPrice?.length == 2 ? orderPrice : []) as number[]
 	const pol = searchParams.get('pol')?.split(',') ?? []
 	const kategoriya = searchParams.get('kategoriya')?.split(',') ?? []
 	const tsvet = searchParams.get('tsvet')?.split(',') ?? []

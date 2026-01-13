@@ -33,7 +33,7 @@ export function HeaderMenuBlock({ params, name }: HeaderMenuBlockProps) {
 
 	function link(e: MouseEvent, to: string) {
 		setMenuActive('')
-		linkTo(e, to, false)
+		linkTo(e, to)
 	}
 
 	return (

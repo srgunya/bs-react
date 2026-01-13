@@ -14,7 +14,7 @@ export function Header() {
 
 	function link(e: MouseEvent, to: string) {
 		setMenuActive('')
-		linkTo(e, to, false)
+		linkTo(e, to)
 	}
 
 	function linkLogo(e: MouseEvent) {

@@ -1,5 +1,6 @@
 import { soon } from '../comp/Brandlist__table/BrandlistTable.params'
 import { PREFIX } from '../helpers/API'
+import { brandListData } from '../interfaces/brandList.interface'
 
 export async function getDataBrandlist(func: string) {
 	const lang = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -12,16 +13,8 @@ export async function getDataBrandlist(func: string) {
 			const data: string[] = await res.json()
 			return data
 		}
-		const brands: string[] = await new Promise(resolve => {
-			setTimeout(() => {
-				getBrands().then(data => {
-					resolve(data)
-				})
-			}, 300)
-		})
-		const table = {} as {
-			[key: string]: string[]
-		}
+		const brands = await getBrands()
+		const table: brandListData = {}
 		lang.split('').forEach(el => {
 			table[el] = []
 		})

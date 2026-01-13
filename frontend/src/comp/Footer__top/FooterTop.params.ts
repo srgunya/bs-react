@@ -58,5 +58,5 @@ export const ulInfo = [
 	{ to: '', text: 'Контакты' },
 	{ to: '', text: 'Магазины' },
 	{ to: '', text: 'Блог' },
-	{ to: '', text: 'Вакансии' },
+	{ to: 'https://job.brandshop.ru/', text: 'Вакансии', target: '_blank' },
 ]
