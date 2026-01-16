@@ -5,6 +5,7 @@ import { IndexInfo } from '../../comp/Index__info/IndexInfo'
 import { IndexSex } from '../../comp/Index__sex/IndexSex'
 import { IndexSliderItem } from '../../comp/Index__slider_item/IndexSliderItem'
 import { IndexSliderLogo } from '../../comp/Index__slider_logo/IndexSliderLogo'
+import { divideArr } from '../../helpers/divideArr'
 import { useLoadPage } from '../../hooks/use-loadPage.hook'
 import { itemData } from '../../interfaces/item.interface'
 import { logoData } from '../../interfaces/logo.interface'
@@ -16,15 +17,6 @@ export function Index() {
 		pop: itemData[]
 	}
 	const mainRef = useLoadPage()
-
-	function divideArr<T>(num: number, arr: T[]) {
-		const size = num
-		const subarray: T[][] = []
-		for (let i = 0; i < Math.ceil(arr.length / size); i++) {
-			subarray[i] = arr.slice(i * size, i * size + size)
-		}
-		return subarray
-	}
 
 	return (
 		<Suspense>

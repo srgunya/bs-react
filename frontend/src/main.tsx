@@ -3,7 +3,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { createBrowserRouter, defer, RouterProvider } from 'react-router-dom'
-import { LazyLoader } from './helpers/LazyLoader'
+import { lazyLoader } from './helpers/lazyLoader'
 import { itemData } from './interfaces/item.interface'
 import { logoData } from './interfaces/logo.interface'
 import { Layout } from './layout/Layout/Layout'
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
 				path: '/',
 				element: <Index />,
 				loader: async () => {
-					await LazyLoader()
+					await lazyLoader()
 					return defer({
 						logos: await getDataSlider<logoData>('/logoCount', '/getLogoById'),
 						news: await getDataSlider<itemData>('/itemCount', '/getItemById'),
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
 				path: '/brandlist',
 				element: <Brandlist />,
 				loader: async () => {
-					await LazyLoader()
+					await lazyLoader()
 					return defer({
 						lang: await getDataBrandlist('lang'),
 						table: await getDataBrandlist('table'),
@@ -54,16 +54,21 @@ const router = createBrowserRouter([
 				path: '*',
 				element: <List />,
 				loader: async ({ params, request }) => {
-					await LazyLoader()
+					await lazyLoader()
 					sessionStorage.setItem('loader', 'List')
 					const { props, page, limit, sort, filterParams } =
 						await getSearchParams(params, request)
+					const { filter, notFound } = await getFilter(props, filterParams)
+					const sliderNotFound = notFound
+						? await getDataSlider<itemData>('/itemCount', '/getItemById')
+						: null
 					return defer({
 						items: await getList(props, page, limit, sort, filterParams),
-						filter: await getFilter(props, filterParams),
+						filter: filter,
 						pagination: await getPagination(props, filterParams),
 						listSearchParams: { page, limit, sort },
 						params: props,
+						sliderNotFound: sliderNotFound,
 					})
 				},
 			},
@@ -71,7 +76,7 @@ const router = createBrowserRouter([
 				path: '/faq',
 				element: <Faq />,
 				loader: async () => {
-					await LazyLoader()
+					await lazyLoader()
 					return null
 				},
 			},
@@ -84,5 +89,5 @@ createRoot(document.getElementById('root')!).render(
 		<Provider store={store}>
 			<RouterProvider router={router}></RouterProvider>
 		</Provider>
-	</StrictMode>
+	</StrictMode>,
 )

@@ -1,0 +1,19 @@
+.notFound {
+	padding: 6.4rem 0;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+}
+.notFound__num {
+	font-size: 7rem;
+	font-weight: normal;
+	margin-bottom: 6.4rem;
+}
+.notFound__p {
+	font-size: 2.4rem;
+	margin-bottom: 2.4rem;
+}
+.notFound__button {
+	width: 17rem;
+}

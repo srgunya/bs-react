@@ -1,4 +1,4 @@
-export async function LazyLoader() {
+export async function lazyLoader() {
 	await new Promise(resolve => {
 		setTimeout(() => {
 			resolve(null)

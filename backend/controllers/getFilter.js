@@ -58,7 +58,11 @@ async function getFilter(req, res) {
 			})
 		}
 	}
-	res.send(filterFacets)
+	if (filterFacets.discount_price.length == 0) {
+		res.status(404).send(filterFacets)
+	} else {
+		res.send(filterFacets)
+	}
 }
 
 module.exports = getFilter

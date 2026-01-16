@@ -25,7 +25,7 @@ export async function getParams(url: string) {
 	const wordIsTranslit = words.filter((el, i) =>
 		count[i] == '0' && words[i] != 'sale' && words[i] != 'new'
 			? true
-			: wordNotTranslit.push(el) && false
+			: wordNotTranslit.push(el) && false,
 	)
 	const wordIsRus = wordIsTranslit.map(el => translitToRus(el))
 
@@ -39,7 +39,7 @@ export async function getList(
 	page: number,
 	limit: number,
 	sort: string,
-	filterParams: filterParamsType
+	filterParams: filterParamsType,
 ) {
 	const res = await fetch(
 		`${PREFIX}/getList/${props.join(' ')}/${page}/${limit}/${sort}`,
@@ -49,7 +49,7 @@ export async function getList(
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(filterParams),
-		}
+		},
 	)
 	const data: itemData[] = await res.json()
 	return data
@@ -57,7 +57,7 @@ export async function getList(
 
 export async function getFilter(
 	props: string[],
-	filterParams: filterParamsType
+	filterParams: filterParamsType,
 ) {
 	const res = await fetch(`${PREFIX}/getFilter/${props.join(' ')}`, {
 		method: 'POST',
@@ -66,13 +66,13 @@ export async function getFilter(
 		},
 		body: JSON.stringify(filterParams),
 	})
-	const data: filterData = await res.json()
-	return data
+	const filter: filterData = await res.json()
+	return { filter, notFound: !res.ok }
 }
 
 export async function getPagination(
 	props: string[],
-	filterParams: filterParamsType
+	filterParams: filterParamsType,
 ) {
 	const res = await fetch(`${PREFIX}/getPagination/${props.join(' ')}`, {
 		method: 'POST',
@@ -87,10 +87,10 @@ export async function getPagination(
 
 export async function getSearchParams(
 	params: Params<string>,
-	request: Request
+	request: Request,
 ) {
 	const props: string[] = await getParams(
-		typeof params['*'] == 'string' ? params['*'] : ''
+		typeof params['*'] == 'string' ? params['*'] : '',
 	)
 	const searchParams = new URL(request.url).searchParams
 	const page =
@@ -102,14 +102,14 @@ export async function getSearchParams(
 		Number(searchParams.get('limit')) == 40
 			? 40
 			: Number(searchParams.get('limit')) == 80
-			? 80
-			: 20
+				? 80
+				: 20
 	const sort =
 		searchParams.get('sort') == 'priceASC'
 			? 'priceASC'
 			: searchParams.get('sort') == 'priceDESC'
-			? 'priceDESC'
-			: 'default'
+				? 'priceDESC'
+				: 'default'
 
 	const orderPrice = searchParams
 		.get('price')
