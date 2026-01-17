@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom'
 import { ListNav } from '../../comp/List__nav/ListNav'
+import { useLoadPage } from '../../hooks/use-loadPage.hook'
 import styles from './Faq.module.scss'
 import { faq } from './Faq.params'
-import { FaqProps } from './Faq.props'
 
 export function Faq() {
-	function createBlock(faq: FaqProps[]) {
-		return faq.map(el => {
+	const mainRef = useLoadPage()
+
+	function createBlock(arr: typeof faq) {
+		return arr.map(el => {
 			return (
-				<Link to='' className={styles['block']} key={el.h1}>
+				<Link to={el.to} className={styles['block']} key={el.h1}>
 					<picture className={styles['block__pic']}>
 						<img src={el.img} />
 					</picture>
@@ -19,9 +21,9 @@ export function Faq() {
 		})
 	}
 	return (
-		<div className={'main'}>
+		<div className={'main'} ref={mainRef}>
 			<div className={'sideBar'}>
-				<ListNav params={['Помощь покупателю']} brand={''} />
+				<ListNav params={['Помощь покупателю']} />
 			</div>
 			<div className={styles['table']}>{createBlock(faq)}</div>
 		</div>

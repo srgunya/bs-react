@@ -1,0 +1,98 @@
+.spoiler {
+	padding: 3.2rem 0;
+	border-bottom: 1px solid $primary-10;
+	line-height: 2.4rem;
+	a {
+		text-decoration: underline;
+		color: $primary-40;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+	h1 {
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 2.4rem;
+		font-weight: normal;
+		line-height: 2.8rem;
+		cursor: pointer;
+		&::after,
+		&::before {
+			content: '';
+			width: 20px;
+			height: 2px;
+			background-color: #c4c4c4;
+		}
+		&::before {
+			position: absolute;
+			right: 0;
+			transition: transform 0.5s ease;
+			transform: rotate(-90deg);
+		}
+	}
+	.spoiler__h1_open {
+		&::before {
+			transform: rotate(0deg);
+		}
+	}
+	h2 {
+		font-weight: normal;
+	}
+	.spoiler__info + h2 {
+		margin-top: 4.8rem;
+	}
+	h4 {
+		display: block;
+		margin-bottom: 2.4rem;
+	}
+	p {
+		margin-bottom: 2.4rem;
+	}
+	ul {
+		margin: 0 0 1.6rem 1.6rem;
+	}
+	h3 + ul {
+		margin-top: 2.4rem;
+	}
+	li:not(:last-child) {
+		margin-bottom: 2.4rem;
+	}
+	&:last-child {
+		border-bottom: 0;
+	}
+}
+.spoiler__cont {
+	overflow: hidden;
+	max-height: 0;
+	transition: max-height 0.5s ease;
+	& > :first-child {
+		margin-top: 3.2rem;
+	}
+	& > :last-child {
+		margin-bottom: 0;
+	}
+}
+.spoiler__info {
+	position: relative;
+	color: $primary-70;
+	border: 1px solid $primary-10;
+	border-radius: 0.4rem;
+	padding: 1rem 3.8rem 1rem 5.2rem;
+	line-height: 2.6rem;
+	&::before {
+		position: absolute;
+		top: 1rem;
+		left: 1.5rem;
+		content: '!';
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 50%;
+		background-color: $primary-50;
+		color: $white;
+	}
+}

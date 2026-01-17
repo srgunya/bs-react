@@ -56,5 +56,5 @@ export const BrandlistTable = forwardRef<HTMLDivElement, BrandlistTableProps>(
 				})}
 			</div>
 		)
-	}
+	},
 )

@@ -46,7 +46,7 @@ export const ulAdress = [
 
 export const ulHelp = [
 	{ h1: 'Поддержка' },
-	{ to: 'faq', text: 'Помощь покупателю' },
+	{ to: 'faq/', text: 'Помощь покупателю' },
 	{ to: '', text: 'Доставка и оплата' },
 	{ to: '', text: 'Возврат' },
 	{ to: '', text: 'Программа лояльности' },

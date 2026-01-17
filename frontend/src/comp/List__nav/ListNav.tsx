@@ -67,18 +67,19 @@ export function ListNav({ params, brand }: ListNavProps) {
 								const to =
 									i == params.length - 1
 										? location.pathname
-										: location.pathname.split('/').filter(el => el != '')[i] +
-										  '/'
+										: '/' +
+											location.pathname.split('/').filter(el => el != '')[i] +
+											'/'
 								link(e, to)
 							}}
 						>
 							{el == 'sale'
 								? 'Скидки'
 								: el == 'new'
-								? 'Новинки'
-								: /[a-zA-Z]/.test(el)
-								? linkBrand
-								: el}
+									? 'Новинки'
+									: /[a-zA-Z]/.test(el)
+										? linkBrand
+										: el}
 						</Link>
 					</li>
 				))}

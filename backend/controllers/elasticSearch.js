@@ -46,60 +46,60 @@ async function elasticSearch(body) {
 						],
 						...(filterBoolean && { filter: filter }),
 					},
-			  }
+				}
 			: req.params['props'] == 'new' || req.path == '/getBrands'
-			? {
-					bool: {
-						must: [{ match_all: {} }],
-						...(filterBoolean && { filter: filter }),
-					},
-			  }
-			: req.params['props'] == 'sale'
-			? {
-					bool: {
-						must: [
-							{
-								range: {
-									sale: {
-										gt: 0,
+				? {
+						bool: {
+							must: [{ match_all: {} }],
+							...(filterBoolean && { filter: filter }),
+						},
+					}
+				: req.params['props'] == 'sale'
+					? {
+							bool: {
+								must: [
+									{
+										range: {
+											sale: {
+												gt: 0,
+											},
+										},
 									},
-								},
+								],
+								...(filterBoolean && { filter: filter }),
 							},
-						],
-						...(filterBoolean && { filter: filter }),
-					},
-			  }
-			: {
-					bool: {
-						must: [
-							{
-								bool: {
-									should: [
-										{
-											match: {
-												list_prop: {
-													query: req.params['props'],
-													operator: 'AND',
-													fuzziness: 'AUTO',
+						}
+					: {
+							bool: {
+								must: [
+									{
+										bool: {
+											should: [
+												{
+													match: {
+														list_prop: {
+															query: req.params['props'],
+															operator: 'AND',
+															fuzziness: 'AUTO',
+														},
+													},
 												},
-											},
-										},
-										{
-											match: {
-												list_prop: {
-													query: unisex,
-													operator: 'AND',
-													fuzziness: 'AUTO',
+												{
+													match: {
+														list_prop: {
+															query: unisex,
+															operator: 'AND',
+															fuzziness: 'AUTO',
+														},
+													},
 												},
-											},
+											],
 										},
-									],
-								},
+									},
+								],
+								...(filterBoolean && { filter: filter }),
 							},
-						],
-						...(filterBoolean && { filter: filter }),
-					},
-			  }
+						}
 
 	return await client[func]({
 		index: 'bs_item',
