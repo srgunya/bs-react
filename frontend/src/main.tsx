@@ -15,9 +15,12 @@ import {
 	getSearchParams,
 } from './loaders/getDataList'
 import { getDataSlider } from './loaders/getDataSlider'
+import { notFound } from './loaders/notFound'
 import './main.scss'
 import { Brandlist } from './pages/BrandList/BrandList'
 import { Faq } from './pages/Faq/Faq'
+import { faq } from './pages/Faq/Faq.params'
+import { FaqId } from './pages/FaqId/FaqId'
 import { Index } from './pages/Index/Index'
 import { List } from './pages/List/List'
 import { store } from './store/store'
@@ -36,17 +39,6 @@ const router = createBrowserRouter([
 						logos: await getDataSlider<logoData>('/logoCount', '/getLogoById'),
 						news: await getDataSlider<itemData>('/itemCount', '/getItemById'),
 						pop: await getDataSlider<itemData>('/itemCount', '/getItemById'),
-					})
-				},
-			},
-			{
-				path: '/brandlist',
-				element: <Brandlist />,
-				loader: async () => {
-					await lazyLoader()
-					return defer({
-						lang: await getDataBrandlist('lang'),
-						table: await getDataBrandlist('table'),
 					})
 				},
 			},
@@ -73,11 +65,38 @@ const router = createBrowserRouter([
 				},
 			},
 			{
+				path: '/brandlist',
+				element: <Brandlist />,
+				loader: async () => {
+					await lazyLoader()
+					return defer({
+						lang: await getDataBrandlist('lang'),
+						table: await getDataBrandlist('table'),
+					})
+				},
+			},
+			{
 				path: '/faq',
 				element: <Faq />,
 				loader: async () => {
 					await lazyLoader()
 					return null
+				},
+			},
+			{
+				path: '/faq/:faqId',
+				element: <FaqId />,
+				loader: async ({ params }) => {
+					await lazyLoader()
+					const url = faq.map(el => el.to.slice(0, -1))
+					const sliderNotFound =
+						params.faqId && url.includes(params.faqId)
+							? null
+							: (await notFound()) &&
+								(await getDataSlider<itemData>('/itemCount', '/getItemById'))
+					return defer({
+						sliderNotFound: sliderNotFound,
+					})
 				},
 			},
 		],

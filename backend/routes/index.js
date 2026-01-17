@@ -8,6 +8,7 @@ const getList = require('./getList')
 const getPagination = require('./getPagination')
 const getFilter = require('./getFilter')
 const getBrandlist = require('./getBrandlist')
+const get404 = require('./get404')
 
 router.use('/', getCount)
 router.use('/', getById)
@@ -16,5 +17,6 @@ router.use('/', getList)
 router.use('/', getPagination)
 router.use('/', getFilter)
 router.use('/', getBrandlist)
+router.use('/', get404)
 
 module.exports = router
