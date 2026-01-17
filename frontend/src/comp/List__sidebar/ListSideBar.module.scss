@@ -35,7 +35,9 @@
 	border-bottom: 1px solid $primary-20;
 	user-select: none;
 	background-color: white;
-	transition: background-color 0.3s ease, color 0.3s ease;
+	transition:
+		background-color 0.3s ease,
+		color 0.3s ease;
 	&:hover {
 		background-color: $primary-10;
 		color: black !important;
