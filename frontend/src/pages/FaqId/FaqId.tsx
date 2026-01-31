@@ -1,17 +1,17 @@
 import { Suspense, useLayoutEffect, useState } from 'react'
 import { Await, useLoaderData, useParams } from 'react-router-dom'
-import { FaqIdPage } from '../../comp/FaqId__page/FaqIdPage'
+import { FaqIdAccordion } from '../../comp/FaqId__accordion/FaqIdAccordion'
 import { ListNav } from '../../comp/List__nav/ListNav'
 import { NotFound } from '../../comp/NotFound/NotFound'
 import { useLoadPage } from '../../hooks/use-loadPage.hook'
-import { faqIdData } from '../../interfaces/faqId.interface'
 import { itemData } from '../../interfaces/item.interface'
+import { PageData } from '../../interfaces/page.interface'
 import { faq } from '../Faq/Faq.params'
 
 export function FaqId() {
-	const { sliderNotFound, faqIdPage } = useLoaderData() as {
+	const { sliderNotFound, dataPage } = useLoaderData() as {
 		sliderNotFound: itemData[] | null
-		faqIdPage: faqIdData[] | null
+		dataPage: PageData[] | null
 	}
 	const mainRef = useLoadPage()
 	const id = useParams()
@@ -24,23 +24,23 @@ export function FaqId() {
 
 	return (
 		<Suspense>
-			<Await resolve={{ sliderNotFound, faqIdPage }}>
+			<Await resolve={{ sliderNotFound, dataPage }}>
 				{({
 					sliderNotFound,
-					faqIdPage,
+					dataPage,
 				}: {
 					sliderNotFound: itemData[] | null
-					faqIdPage: faqIdData[] | null
+					dataPage: PageData[] | null
 				}) => {
 					return (
 						<div className={'main'} ref={mainRef}>
 							{sliderNotFound && <NotFound sliderNotFound={sliderNotFound} />}
-							{faqIdPage && (
+							{dataPage && (
 								<>
 									<div className={'sideBar'}>
 										<ListNav params={['Помощь покупателю', listNavParams]} />
 									</div>
-									<FaqIdPage page={faqIdPage} />
+									<FaqIdAccordion page={dataPage} />
 								</>
 							)}
 						</div>

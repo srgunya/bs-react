@@ -11,7 +11,7 @@ export const icons = [
 	{ img: '/img/footer/cdek.svg' },
 ]
 export const copy = [
-	{ to: '', text: 'Пользовательское соглашение' },
-	{ to: '', text: 'Политика о конфиденциальности' },
+	{ to: '/oferta/', text: 'Пользовательское соглашение' },
+	{ to: '/privacy/', text: 'Политика о конфиденциальности' },
 	{ to: '', text: 'Карта сайта' },
 ]

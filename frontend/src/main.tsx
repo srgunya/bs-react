@@ -8,13 +8,13 @@ import { itemData } from './interfaces/item.interface'
 import { logoData } from './interfaces/logo.interface'
 import { Layout } from './layout/Layout/Layout'
 import { getDataBrandlist } from './loaders/getDataBrandlist'
-import { getDataFaqId } from './loaders/getDataFaqId'
 import {
 	getFilter,
 	getList,
 	getPagination,
 	getSearchParams,
 } from './loaders/getDataList'
+import { getDataPage } from './loaders/getDataPage'
 import { getDataSlider } from './loaders/getDataSlider'
 import { notFound } from './loaders/notFound'
 import './main.scss'
@@ -24,6 +24,7 @@ import { faq } from './pages/Faq/Faq.params'
 import { FaqId } from './pages/FaqId/FaqId'
 import { Index } from './pages/Index/Index'
 import { List } from './pages/List/List'
+import { OfertaPrivacy } from './pages/OfertaPrivacy/OfertaPrivacy'
 import { store } from './store/store'
 
 const router = createBrowserRouter([
@@ -95,13 +96,37 @@ const router = createBrowserRouter([
 							? null
 							: (await notFound()) &&
 								(await getDataSlider<itemData>('/itemCount', '/getItemById'))
-					const faqIdPage =
+					const dataPage =
 						params.faqId && url.includes(params.faqId)
-							? await getDataFaqId(params.faqId)
+							? await getDataPage(params.faqId)
 							: null
 					return defer({
 						sliderNotFound: sliderNotFound,
-						faqIdPage: faqIdPage,
+						dataPage: dataPage,
+					})
+				},
+			},
+			{
+				path: '/oferta',
+				element: <OfertaPrivacy />,
+				loader: async ({ request }) => {
+					await lazyLoader()
+					const pathname = new URL(request.url).pathname.replaceAll('/', '')
+					const dataPage = await getDataPage(pathname)
+					return defer({
+						dataPage: dataPage,
+					})
+				},
+			},
+			{
+				path: '/privacy',
+				element: <OfertaPrivacy />,
+				loader: async ({ request }) => {
+					await lazyLoader()
+					const pathname = new URL(request.url).pathname.replaceAll('/', '')
+					const dataPage = await getDataPage(pathname)
+					return defer({
+						dataPage: dataPage,
 					})
 				},
 			},
