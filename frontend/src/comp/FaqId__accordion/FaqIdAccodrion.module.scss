@@ -56,6 +56,9 @@
 	h3 + ul {
 		margin-top: 2.4rem;
 	}
+	li:has(ul):not(:last-child) {
+		margin-bottom: 4rem;
+	}
 	li:not(:last-child) {
 		margin-bottom: 2.4rem;
 	}

@@ -1,9 +1,12 @@
 import cn from 'classnames'
 import { Link } from 'react-router-dom'
+import { useLink } from '../../hooks/use-link.hook'
 import styles from './FooterTop.module.scss'
 import { ulAdress, ulHelp, ulInfo, ulSocial } from './FooterTop.params'
 import { FooterProps } from './FooterTop.props'
 export function FooterTop() {
+	const linkTo = useLink()
+
 	function createUl(ul: FooterProps) {
 		return ul.map((el, i) => {
 			if (el.h1) {
@@ -26,6 +29,9 @@ export function FooterTop() {
 						key={i}
 					>
 						<Link
+							onClick={e => {
+								linkTo(e, el.to)
+							}}
 							to={el.to}
 							target={el.target}
 							className={styles['footerTop__link']}
@@ -39,11 +45,14 @@ export function FooterTop() {
 				return (
 					<li className={styles['footerTop__li']} key={i}>
 						<Link
+							onClick={e => {
+								linkTo(e, el.to)
+							}}
 							to={el.to}
 							target={el.target}
 							className={cn(
 								styles['footerTop__link_border'],
-								styles['footerTop__link']
+								styles['footerTop__link'],
 							)}
 							key={i}
 						>

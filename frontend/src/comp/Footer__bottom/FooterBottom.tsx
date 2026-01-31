@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom'
+import { useLink } from '../../hooks/use-link.hook'
 import styles from './FooterBottom.module.scss'
 import { copy, icons } from './FooterBottom.params'
 export function FooterBottom() {
+	const linkTo = useLink()
+
 	return (
 		<div className={styles['footerBottom']}>
 			<ul className={styles['footerIcons']}>
@@ -17,7 +20,13 @@ export function FooterBottom() {
 				<li className={styles['footerCopy__item']}>© BRANDSHOP, 2024</li>
 				{copy.map((el, i) => (
 					<li className={styles['footerCopy__item']} key={i}>
-						<Link to={el.to} className={styles['footerCopy__link']}>
+						<Link
+							to={el.to}
+							onClick={e => {
+								linkTo(e, el.to)
+							}}
+							className={styles['footerCopy__link']}
+						>
 							{el.text}
 						</Link>
 					</li>
