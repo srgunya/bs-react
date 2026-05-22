@@ -1,8 +1,8 @@
 import { Suspense, useRef } from 'react'
 import { Await, useLoaderData } from 'react-router-dom'
-import { BrandlistBoard } from '../../comp/Brandlist__board/BrandlistBoard'
-import { BrandlistTable } from '../../comp/Brandlist__table/BrandlistTable'
-import { ListNav } from '../../comp/List__nav/ListNav'
+import { BrandlistBoard } from '../../components/Brandlist__board/BrandlistBoard'
+import { BrandlistTable } from '../../components/Brandlist__table/BrandlistTable'
+import { ListNav } from '../../components/List__nav/ListNav'
 import { useLoadPage } from '../../hooks/use-loadPage.hook'
 import { brandListData } from '../../interfaces/brandList.interface'
 

@@ -30,7 +30,7 @@ export function FooterTop() {
 					>
 						<Link
 							onClick={e => {
-								linkTo(e, el.to)
+								return !el.type && !el.target && linkTo(e, el.to)
 							}}
 							to={el.to}
 							target={el.target}
@@ -46,7 +46,7 @@ export function FooterTop() {
 					<li className={styles['footerTop__li']} key={i}>
 						<Link
 							onClick={e => {
-								linkTo(e, el.to)
+								return !el.type && !el.target && linkTo(e, el.to)
 							}}
 							to={el.to}
 							target={el.target}

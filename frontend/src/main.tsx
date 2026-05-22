@@ -18,13 +18,13 @@ import { getDataPage } from './loaders/getDataPage'
 import { getDataSlider } from './loaders/getDataSlider'
 import { notFound } from './loaders/notFound'
 import './main.scss'
+import { Accordion } from './pages/Accordion/Accordion'
 import { Brandlist } from './pages/BrandList/BrandList'
 import { Faq } from './pages/Faq/Faq'
 import { faq } from './pages/Faq/Faq.params'
-import { FaqId } from './pages/FaqId/FaqId'
 import { Index } from './pages/Index/Index'
 import { List } from './pages/List/List'
-import { OfertaPrivacy } from './pages/OfertaPrivacy/OfertaPrivacy'
+import { Loyalty } from './pages/Loyalty/Loyalty'
 import { store } from './store/store'
 
 const router = createBrowserRouter([
@@ -87,9 +87,12 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '/faq/:faqId',
-				element: <FaqId />,
+				element: <Accordion />,
 				loader: async ({ params }) => {
 					await lazyLoader()
+					const navParams = faq.filter(
+						el => params.faqId == el.to.slice(0, -1),
+					)[0]?.h1
 					const url = faq.map(el => el.to.slice(0, -1))
 					const sliderNotFound =
 						params.faqId && url.includes(params.faqId)
@@ -103,31 +106,55 @@ const router = createBrowserRouter([
 					return defer({
 						sliderNotFound: sliderNotFound,
 						dataPage: dataPage,
+						navParams: ['Помощь покупателю', navParams],
 					})
 				},
 			},
 			{
 				path: '/oferta',
-				element: <OfertaPrivacy />,
+				element: <Accordion />,
 				loader: async ({ request }) => {
 					await lazyLoader()
 					const pathname = new URL(request.url).pathname.replaceAll('/', '')
 					const dataPage = await getDataPage(pathname)
 					return defer({
 						dataPage: dataPage,
+						navParams: ['Пользовательское соглашение'],
 					})
 				},
 			},
 			{
 				path: '/privacy',
-				element: <OfertaPrivacy />,
+				element: <Accordion />,
 				loader: async ({ request }) => {
 					await lazyLoader()
 					const pathname = new URL(request.url).pathname.replaceAll('/', '')
 					const dataPage = await getDataPage(pathname)
 					return defer({
 						dataPage: dataPage,
+						navParams: ['Политика конфиденциальности'],
 					})
+				},
+			},
+			{
+				path: '/loyalty-program',
+				element: <Accordion />,
+				loader: async ({ request }) => {
+					await lazyLoader()
+					const pathname = new URL(request.url).pathname.replaceAll('/', '')
+					const dataPage = await getDataPage(pathname)
+					return defer({
+						dataPage: dataPage,
+						navParams: ['Программа лояльности'],
+					})
+				},
+			},
+			{
+				path: '/loyalty',
+				element: <Loyalty />,
+				loader: async () => {
+					await lazyLoader()
+					return null
 				},
 			},
 		],

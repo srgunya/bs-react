@@ -1,4 +1,4 @@
-import { soon } from '../comp/Brandlist__table/BrandlistTable.params'
+import { soon } from '../components/Brandlist__table/BrandlistTable.params'
 import { PREFIX } from '../helpers/API'
 import { brandListData } from '../interfaces/brandList.interface'
 

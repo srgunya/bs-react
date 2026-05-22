@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ListNav } from '../../comp/List__nav/ListNav'
+import { ListNav } from '../../components/List__nav/ListNav'
 import { useLoadPage } from '../../hooks/use-loadPage.hook'
 import styles from './Faq.module.scss'
 import { faq } from './Faq.params'

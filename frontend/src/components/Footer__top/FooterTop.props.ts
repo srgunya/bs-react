@@ -10,6 +10,7 @@ interface link {
 	text: string
 	img?: string
 	target?: string
+	type?: string
 }
 
 export type FooterProps = Array<h1 | link>

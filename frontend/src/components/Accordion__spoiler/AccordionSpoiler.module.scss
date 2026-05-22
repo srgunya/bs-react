@@ -37,6 +37,16 @@
 			transform: rotate(0deg);
 		}
 	}
+	.spoiler__h1_open_default {
+		&::before {
+			transition: none !important;
+			transform: rotate(0deg) !important;
+		}
+	}
+	.spoiler__cont_default {
+		transition: none !important;
+		max-height: inherit;
+	}
 	h2 {
 		font-weight: normal;
 	}

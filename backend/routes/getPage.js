@@ -7,6 +7,7 @@ const { discount } = require('../pages/faqId.discount')
 const { store } = require('../pages/faqId.store')
 const { oferta } = require('../pages/oferta')
 const { privacy } = require('../pages/privacy')
+const { loyalty } = require('../pages/loyalty')
 const router = express.Router()
 
 router.get('/orders_faq', (req, res) => {
@@ -32,6 +33,9 @@ router.get('/oferta', (req, res) => {
 })
 router.get('/privacy', (req, res) => {
 	res.send(privacy())
+})
+router.get('/loyalty-program', (req, res) => {
+	res.send(loyalty())
 })
 
 module.exports = router

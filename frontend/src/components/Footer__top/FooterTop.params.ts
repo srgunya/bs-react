@@ -28,8 +28,8 @@ export const ulSocial = [
 ]
 export const ulAdress = [
 	{ h1: 'Интернет-магазин' },
-	{ to: 'tel:+74954311330', text: '+7 (495) 544-57-70' },
-	{ to: 'tel:+78007752834', text: '+7 (800) 775-28-34' },
+	{ to: 'tel:+74954311330', text: '+7 (495) 544-57-70', type: 'tel' },
+	{ to: 'tel:+78007752834', text: '+7 (800) 775-28-34', type: 'tel' },
 	{ h1: 'Адреса магазинов' },
 	{
 		to: 'https://yandex.ru/maps/213/moscow/?ll=37.609982%2C55.772553&mode=whatshere&whatshere%5Bpoint%5D=37.609982%2C55.772553&whatshere%5Bzoom%5D=17&z=17',
@@ -47,9 +47,9 @@ export const ulAdress = [
 export const ulHelp = [
 	{ h1: 'Поддержка' },
 	{ to: '/faq/', text: 'Помощь покупателю' },
-	{ to: '', text: 'Доставка и оплата' },
-	{ to: '', text: 'Возврат' },
-	{ to: '', text: 'Программа лояльности' },
+	{ to: '/faq/shipping_faq/', text: 'Доставка и оплата' },
+	{ to: '/faq/exchange_faq/', text: 'Возврат' },
+	{ to: '/loyalty/', text: 'Программа лояльности' },
 	{ to: '', text: 'Партнеры' },
 ]
 
